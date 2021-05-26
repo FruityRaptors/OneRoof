@@ -1,0 +1,44 @@
+<template>
+  <div>
+    <form @submit.prevent="login">
+      <h2>Login</h2>
+      <input type="email" placeholder="Email address..." v-model="email" />
+      <input type="password" placeholder="password..." v-model="password" />
+      <button type="submit">Login</button>
+    </form>
+  </div>
+</template>
+
+<script>
+import firebase from 'firebase';
+
+export default {
+  name: "Login",
+  data() {
+    return {
+      // not sure if either of these are necessary yet
+      email: "",
+      password: "",
+    };
+  },
+  methods: {
+  login() {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(this.email, this.password)
+      .then(() => {
+        this.$store.state.user.email = this.email
+        this.$store.state.isUserLoggedIn = true
+        alert('Successfully logged in');
+        this.$router.push('/yourhome');
+      })
+      .catch(error => {
+         alert(error.message);
+      });
+  },
+},
+};
+</script>
+
+<style>
+</style>

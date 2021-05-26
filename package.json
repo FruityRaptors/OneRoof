@@ -1,5 +1,5 @@
 {
-  "name": "oneapp",
+  "name": "oneroof",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,6 +11,7 @@
     "apollo-server-express": "^2.24.1",
     "core-js": "^3.6.5",
     "express": "^4.17.1",
+    "firebase": "^8.6.2",
     "graphql": "^15.5.0",
     "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",
