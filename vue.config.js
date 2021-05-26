@@ -2,12 +2,12 @@ module.exports = {
   devServer: {
     port: 3000
   },
-  // THIS IS THE PWA MANIFEST I THINK
+  // THIS IS THE PWA MANIFEST. DETAILS HERE: https://web.dev/add-manifest/
   pwa: {
     manifestOptions: {
       name: "OneRoof",
-      short_name: "OneRoof",
-      start_url: "./",
+      // Is this path correct?
+      start_url: "./yourhome",
       display: "standalone",
       theme_color: "#000000",
       icons: [
