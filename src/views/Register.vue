@@ -8,3 +8,33 @@
     </form>
   </div>
 </template>
+
+<script>
+import firebase from 'firebase';
+
+export default {
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+  methods: {
+  register() {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(this.email, this.password)
+      .then(() => {
+        alert('Successfully registered! Please login.');
+        this.$router.push('/Home');
+      })
+      .catch(error => {
+        alert(error.message);
+      });
+  },
+},
+};
+</script>
+
+<style>
+</style>
