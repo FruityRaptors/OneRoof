@@ -1,0 +1,1 @@
+const typeDefs = require('./schema')

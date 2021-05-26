@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '../views/Login.vue'
+/* import Login from '../views/Login.vue' */
 import firebase from 'firebase'
 
 Vue.use(VueRouter)
@@ -8,8 +8,13 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
+    name: 'Register Request',
+  /*   component: Login */
+  },
+  {
+    path: '/login',
     name: 'Login',
-    component: Login
+    component: () => import('../views/Login.vue')
   },
   {
     path: '/register',

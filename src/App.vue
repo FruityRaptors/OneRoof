@@ -1,19 +1,25 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Login</router-link> |
-      <router-link to="/register">Register</router-link> |
-      <router-link to="/yourhome">Your Home</router-link> |
-      <button @click="logout">Logout</button>
+    <div class="nav">
+      <Navbar />
     </div>
-    <router-view />
+    <div class="auth-request-page">
+      Please authorize!
+      <router-view />
+    </div>
+    
   </div>
 </template>
 
 <script>
 import firebase from 'firebase'
+import Navbar from './components/Navbar'
 
 export default {
+  components: {
+    Navbar
+  },
+
   methods: {
   logout() {
     firebase
@@ -46,16 +52,17 @@ input {
   color: #2c3e50;
 }
 
-#nav {
+.nav {
   padding: 30px;
+  background-color:yellow;
 }
 
-#nav a {
+.nav a {
   font-weight: bold;
   color: #2c3e50;
 }
 
-#nav a.router-link-exact-active {
+.nav a.router-link-exact-active {
   color: #42b983;
 }
 </style>

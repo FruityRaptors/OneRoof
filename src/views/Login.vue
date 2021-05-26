@@ -27,6 +27,8 @@ export default {
       .auth()
       .signInWithEmailAndPassword(this.email, this.password)
       .then(() => {
+        this.$store.state.user.email = this.email
+        this.$store.state.isUserLoggedIn = true
         alert('Successfully logged in');
         this.$router.push('/yourhome');
       })
