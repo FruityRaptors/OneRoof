@@ -5,7 +5,7 @@ import router from './router'
 import './registerServiceWorker'
 import firebase from "firebase";
 
-var firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyCib4HhPZkKF0d5KV7SLypMe9Jx8ZUiVU8",
   authDomain: "oneroof-fd1d5.firebaseapp.com",
   databaseURL: "https://oneroof-fd1d5-default-rtdb.firebaseio.com",
