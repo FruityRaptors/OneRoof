@@ -1,4 +1,5 @@
-require('dotenv').config();
+import * as dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 
 //declare namespace & interface globally
@@ -15,7 +16,7 @@ declare global {
 class App {
     public application: express.Application;
     constructor() {
-        this.application = express();
+        // this.application = express();
     }
 }
 
