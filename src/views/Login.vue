@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import firebase from 'firebase';
+import firebase from "firebase";
 
 export default {
   name: "Login",
@@ -22,21 +22,21 @@ export default {
     };
   },
   methods: {
-  login() {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(this.email, this.password)
-      .then(() => {
-        this.$store.state.user.email = this.email
-        this.$store.state.isUserLoggedIn = true
-        alert('Successfully logged in');
-        this.$router.push('/yourhome');
-      })
-      .catch(error => {
-         alert(error.message);
-      });
+    login() {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(() => {
+          this.$store.state.user.email = this.email;
+          this.$store.state.isUserLoggedIn = true;
+          alert("Successfully logged in");
+          this.$router.push("/yourhome");
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    },
   },
-},
 };
 </script>
 

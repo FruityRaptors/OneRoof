@@ -16,9 +16,20 @@ export default new Vuex.Store({
   },
   //mutations obv mutate shit
   mutations: {
+    loadUser(state, email) {
+      state.user.email = email
+    },
+    toggleLoginBool(state) {
+      if (state.isUserLoggedIn === false) {
+        state.isUserLoggedIn = true
+      } else {
+        state.isUserLoggedIn = false
+      }
+    }
   },
   // Here be yer actions
   actions: {
+
     logoutUser() {
       firebase
         .auth()
@@ -31,6 +42,21 @@ export default new Vuex.Store({
         .catch(error => {
           alert(error.message);
           this.$router.push('/');
+        });
+    },
+
+    loginUser: (context) => {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(() => {
+          context.commit("loadUser", this.email)
+          context.commit("toggleLoginBool")
+          alert('Successfully logged in');
+          this.$router.push('/yourhome');
+        })
+        .catch(error => {
+           alert(error.message);
         });
     },
   },
