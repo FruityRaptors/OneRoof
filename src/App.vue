@@ -3,12 +3,36 @@
     <div id="nav">
       <router-link to="/">Login</router-link> |
       <router-link to="/register">Register</router-link> |
-      <router-link to="/home">Your Home</router-link>
+      <router-link to="/yourhome">Your Home</router-link> |
       <button @click="logout">Logout</button>
     </div>
     <router-view />
   </div>
 </template>
+
+<script>
+import firebase from 'firebase'
+
+export default {
+  methods: {
+  logout() {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        alert('Successfully logged out');
+        this.$router.push('/');
+      })
+      .catch(error => {
+        alert(error.message);
+        this.$router.push('/');
+      });
+  },
+},
+}
+
+</script>
+
 
 <style>
 input {

@@ -10,13 +10,33 @@
 </template>
 
 <script>
-/* import... */
+import firebase from 'firebase';
 
 export default {
   name: "Login",
-}
+  data() {
+    return {
+      // not sure if either of these are necessary yet
+      email: "",
+      password: "",
+    };
+  },
+  methods: {
+  login() {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(this.email, this.password)
+      .then(() => {
+        alert('Successfully logged in');
+        this.$router.push('/yourhome');
+      })
+      .catch(error => {
+         alert(error.message);
+      });
+  },
+},
+};
 </script>
 
 <style>
-
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit.prevent="login">
+    <form @submit.prevent="register">
       <h2>Register</h2>
       <input type="email" placeholder="Email address..." v-model="email" />
       <input type="password" placeholder="password..." v-model="password" />
@@ -13,6 +13,7 @@
 import firebase from 'firebase';
 
 export default {
+  name: "Register",
   data() {
     return {
       email: "",
@@ -26,7 +27,7 @@ export default {
       .createUserWithEmailAndPassword(this.email, this.password)
       .then(() => {
         alert('Successfully registered! Please login.');
-        this.$router.push('/Home');
+        this.$router.push('/yourhome');
       })
       .catch(error => {
         alert(error.message);

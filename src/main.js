@@ -6,12 +6,13 @@ import './registerServiceWorker'
 import firebase from "firebase";
 
 var firebaseConfig = {
-  apiKey: "YourConfigHere",
-  authDomain: "YourConfigHere",
-  projectId: "YourConfigHere",
-  storageBucket: "YourConfigHere",
-  messagingSenderId: "YourConfigHere",
-  appId: "YourConfigHere"
+  apiKey: "AIzaSyCib4HhPZkKF0d5KV7SLypMe9Jx8ZUiVU8",
+  authDomain: "oneroof-fd1d5.firebaseapp.com",
+  databaseURL: "https://oneroof-fd1d5-default-rtdb.firebaseio.com",
+  projectId: "oneroof-fd1d5",
+  storageBucket: "oneroof-fd1d5.appspot.com",
+  messagingSenderId: "260349058797",
+  appId: "1:260349058797:web:84b7911d3c63993316f6e4"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
