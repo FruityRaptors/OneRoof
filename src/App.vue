@@ -4,7 +4,6 @@
       <Navbar />
     </div>
     <div class="auth-request-page">
-      Please authorize!
       <router-view />
     </div>
     

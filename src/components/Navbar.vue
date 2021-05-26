@@ -1,9 +1,15 @@
 <template>
   <div class="navbar">
-    <router-link to="/login">Login</router-link> |
-    <router-link to="/register">Register you dummy</router-link> |
-    <router-link to="/yourhome">Your Home</router-link> |
-    <button @click="logout">Logout</button>
+    <div v-if="loggedInState !== true">
+      <router-link to="/login">Login</router-link> |
+      <router-link to="/register">Register you dummy</router-link> |
+      <router-link to="/yourhome">Your Home</router-link>
+    </div>
+    <div v-else>
+      <p>Welcome {{this.user.email}}</p>
+      <router-link to="/yourhome">Your Home</router-link> |
+      <button @click="logout">Logout</button>
+    </div>
   </div>
 </template>
 
@@ -20,9 +26,9 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.dispatch("logoutUser")
-    }
-  }
+      this.$store.dispatch("logoutUser");
+    },
+  },
 };
 </script>
 
