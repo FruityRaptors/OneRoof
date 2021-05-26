@@ -5,6 +5,7 @@ import firebase from 'firebase'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  // global state, yo!
   state: {
     user: {
       username: "",
@@ -13,8 +14,10 @@ export default new Vuex.Store({
     },
     isUserLoggedIn: false
   },
+  //mutations obv mutate shit
   mutations: {
   },
+  // Here be yer actions
   actions: {
     logoutUser() {
       firebase
@@ -31,6 +34,7 @@ export default new Vuex.Store({
         });
     },
   },
+  //why are there modules in $store again?
   modules: {
   }
 })
