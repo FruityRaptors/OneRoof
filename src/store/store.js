@@ -1,17 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import firebase from 'firebase'
+import router from '../router/index'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   // global state, yo!
   state: {
-    user: {
-      username: "",
-      email: "",
-      /* avatar_url: "", */
-    },
+    user: {},
     isUserLoggedIn: false
   },
   //mutations obv mutate shit
@@ -19,6 +16,11 @@ export default new Vuex.Store({
     loadUser(state, email) {
       state.user.email = email
     },
+
+    resetUser(state) {
+      state.user = {}
+    },
+    
     toggleLoginBool(state) {
       if (state.isUserLoggedIn === false) {
         state.isUserLoggedIn = true
@@ -30,30 +32,29 @@ export default new Vuex.Store({
   // Here be yer actions
   actions: {
 
-    logoutUser() {
+    logoutUser(context) {
       firebase
         .auth()
         .signOut()
         .then(() => {
-          alert('Successfully logged out');
-          //this is not working, why?
-          this.$router.push('/');
+          context.commit("toggleLoginBool")
+          context.commit("resetUser")
+          router.push('/');
         })
         .catch(error => {
           alert(error.message);
-          this.$router.push('/');
+          router.push('/');
         });
     },
 
-    loginUser: (context) => {
+    loginUser: (context, user) => {
       firebase
         .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
+        .signInWithEmailAndPassword(user.email, user.password)
         .then(() => {
-          context.commit("loadUser", this.email)
+          context.commit("loadUser", user.email)
           context.commit("toggleLoginBool")
-          alert('Successfully logged in');
-          this.$router.push('/yourhome');
+          router.push('/yourhome')
         })
         .catch(error => {
            alert(error.message);
