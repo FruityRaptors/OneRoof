@@ -82,7 +82,8 @@ export default new Vuex.Store({
           }`
           }
         }).then((response) => {
-          context.commit("setUser", response.data.data.getUserByEmail)
+          console.log("🔥 When this goes through we're in great shape! 🔥  ", response)
+          context.commit("getUser", response.data.data.getUserByEmail)
         });
       } catch (error) {
         console.log(`You got an ${error}`);
@@ -119,14 +120,15 @@ export default new Vuex.Store({
     },
 
     registerUser: (context, user) => {
+      console.log(user)
       firebase
         .auth()
         .createUserWithEmailAndPassword(user.email, user.password)
         .then(() => {
           context.commit("toggleLoginBool")
           context.dispatch("addUserToSQLDatabase", user)
-            .then((user) => {
-              context.dispatch("getUser", user.email)
+            .then(() => {
+              /* context.dispatch("getUser", user.email) */
               router.push('/yourhome')
               alert('Successfully registered! Please login.');
             })
