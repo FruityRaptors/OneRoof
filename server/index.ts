@@ -9,36 +9,28 @@ import {Todo} from "./entity/Todo";
 import {Users} from "./entity/Users"
 import { buildSchema } from 'type-graphql'
 import { userResolver } from "./resolvers/userResolver"
-
-// const PORT = process.env.PORT || 3000;
-// const app = express();
-
-connectDB().then(async connection => {
-    async function main(){
-        const schema = await buildSchema({
-            resolvers: [userResolver],
-            emitSchemaFile: true
-        })
-    
-        const app = express()
-    
-    
-        const server = new ApolloServer({
-            schema,
-        })
-    
-        server.applyMiddleware( {app} )
-    
-        app.listen(3000, () => 
-          console.log('is this shit even running?')
-        )
-    }
-    
-    main()
-})
+import { todoResolver } from "./resolvers/todoResolver";
 
 
-
+    (async () => {
+        const app = express();
+      
+        await connectDB()
+      
+        const apolloServer = new ApolloServer({
+          schema: await buildSchema({
+            resolvers: [userResolver, todoResolver],
+            validate: true
+          }),
+          context: ({ req, res }) => ({ req, res })
+        });
+      
+        apolloServer.applyMiddleware({ app, cors: false });
+        const port = process.env.PORT || 4000;
+        app.listen(port, () => {
+          console.log(`server started at http://localhost:${port}/graphql`);
+        });
+    })();
 
 
 
