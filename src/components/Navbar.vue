@@ -1,21 +1,31 @@
 <template>
-  <div class="navbar">
+    <div class="navbar">
     <div v-if="loggedInState !== true">
       <router-link to="/login">Login</router-link> |
       <router-link to="/register">Register you dummy</router-link> |
       <router-link to="/yourhome">Your Home</router-link>
     </div>
     <div v-else>
-      <p>Welcome {{this.user.email}}</p>
+      <p>Welcome {{this.$store.state.user.email}}</p>
       <router-link to="/yourhome">Your Home</router-link> |
       <button @click="logout">Logout</button>
     </div>
+  <todo-list />
   </div>
 </template>
 
 <script>
+// import TodoList from './TodoList.vue';
+
 export default {
+  data: () => ({
+      drawer: false,
+      group: null,
+    }),
   name: "Navbar",
+  components: { 
+  // TodoList
+  },
   computed: {
     loggedInState() {
       return this.$store.state.isUserLoggedIn;
@@ -39,6 +49,7 @@ export default {
       this.$store.dispatch("getUsers")
     }
   },
+  
 };
 </script>
 

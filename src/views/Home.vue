@@ -1,15 +1,6 @@
 <template>
   <div>
-    <h2>Dashboard</h2>
-    <p>This page is only visible to users that are currently logged in</p>
+    <h1>This doesn't have anything right now</h1>
   </div>
 </template>
 
-<script>
-export default {
-  name: "Your Home"
-};
-</script>
-
-<style>
-</style>
