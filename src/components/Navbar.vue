@@ -30,6 +30,10 @@ export default {
   mounted() {
     this.populateUsers()
   },
+ /*  mounted(){
+    this.$store.dispatch("getUsers")
+    console.log(this.$store.state.users)
+  }, */
   methods: {
     logout() {
       this.$store.dispatch("logoutUser");
