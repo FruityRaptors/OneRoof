@@ -3,7 +3,7 @@
    "host": "localhost",
    "port": 5432,
    "username": "postgres",
-   "password": "shinmone",
+   "password": "postgres",
    "database": "oneroof",
    "synchronize": true,
    "logging": true,
