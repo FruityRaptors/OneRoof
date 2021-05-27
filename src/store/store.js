@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import firebase from 'firebase'
 import router from '../router/index'
+import { textSpanContainsTextSpan } from 'typescript'
 
 Vue.use(Vuex)
 
@@ -9,10 +10,17 @@ export default new Vuex.Store({
   // global state, yo!
   state: {
     user: {},
+    users: [],
     isUserLoggedIn: false
   },
+
   //mutations obv mutate shit
   mutations: {
+
+    setUser(state, user) {
+      state.users = user;
+    },
+
     loadUser(state, email) {
       state.user.email = email
     },
@@ -31,6 +39,30 @@ export default new Vuex.Store({
   },
   // Here be yer actions
   actions: {
+
+    getUsers() {
+      try {
+        const result = axios({
+          method: "POST",
+          url: "https://localhost:4000/graphql",
+          data: {
+            query: `
+            {
+            getAllUsers{
+              id
+              username
+              house_key
+              email
+            }
+      
+            }`
+          }
+        });
+        context.commit("setUser", result)
+      } catch (error) {
+        console.log(`You got an ${error}`);
+      }
+          },
 
     logoutUser(context) {
       firebase
