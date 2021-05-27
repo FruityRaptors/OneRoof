@@ -24,6 +24,10 @@ export default {
       return this.$store.state.user;
     },
   },
+  mounted(){
+    this.$store.dispatch("getUsers")
+    console.log(this.$store.state.users)
+  },
   methods: {
     logout() {
       this.$store.dispatch("logoutUser");
