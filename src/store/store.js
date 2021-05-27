@@ -1,75 +1,67 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import firebase from 'firebase'
-import axios from 'axios';
+import router from '../router/index'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  // global state, yo!
   state: {
-    users: [],
-    user: {
-      username: "",
-      email: "",
-      /* avatar_url: "", */
-    },
+    user: {},
     isUserLoggedIn: false
   },
-
-  methods: {
-    async getUsers() {
-try {
-  const result = await axios({
-    method: "POST",
-    url: "https://localhost:4000/graphql",
-    data: {
-      query: `
-      {
-      getAllUsers{
-        id
-        username
-        house_key
-        email
-      }
-
-      }`
-    }
-  });
-  this.users
-}
-    }
-
-
-  },
-
-
-
-
-
-
-
-
-
-
-
+  //mutations obv mutate shit
   mutations: {
+    loadUser(state, email) {
+      state.user.email = email
+    },
+
+    resetUser(state) {
+      state.user = {}
+    },
+    
+    toggleLoginBool(state) {
+      if (state.isUserLoggedIn === false) {
+        state.isUserLoggedIn = true
+      } else {
+        state.isUserLoggedIn = false
+      }
+    }
   },
+  // Here be yer actions
   actions: {
-    logoutUser() {
+
+    logoutUser(context) {
       firebase
         .auth()
         .signOut()
         .then(() => {
-          alert('Successfully logged out');
-          //this is not working, why?
-          this.$router.push('/');
+          context.commit("toggleLoginBool")
+          context.commit("resetUser")
+          router.push('/');
         })
         .catch(error => {
           alert(error.message);
-          this.$router.push('/');
+          router.push('/');
+        });
+    },
+
+    loginUser: (context, user) => {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(user.email, user.password)
+        .then(() => {
+          context.commit("loadUser", user.email)
+          context.commit("toggleLoginBool")
+          router.push('/yourhome')
+        })
+        .catch(error => {
+           alert(error.message);
         });
     },
   },
+  //why are there modules in $store again?
   modules: {
   }
 })
