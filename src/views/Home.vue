@@ -1,15 +1,9 @@
 <template>
-  <div>
-    <h2>Dashboard</h2>
-    <p>This page is only visible to users that are currently logged in</p>
+  <div v-if="this.$store.state.isUserLoggedIn !== true">
+    <h1>Please click above to login or register!</h1>
+  </div>
+  <div v-else>
+    <h1>Here's where the chat will go!</h1>  
   </div>
 </template>
 
-<script>
-export default {
-  name: "Your Home"
-};
-</script>
-
-<style>
-</style>
