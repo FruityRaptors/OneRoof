@@ -1,6 +1,7 @@
 import { Query, Resolver, Mutation, Arg } from 'type-graphql'
 import { User } from '../schemas/userSchema'
 import { Users } from '../entity/Users'
+import { json } from 'express'
 
 @Resolver()
 export class userResolvers {
@@ -18,10 +19,10 @@ export class userResolvers {
     async createUser(
         @Arg('email') email: string,
         @Arg('username') username: string,
-        @Arg('house_key', () => String, { nullable: true }) house_key: string,
+        // @Arg('house_keys', () => String, { nullable: true }) house_keys: null | string,
         @Arg('isAdmin') isAdmin: boolean
         ){
-        await Users.insert({email, username, house_key, isAdmin})
+        await Users.insert({email, username, isAdmin})
         return email
     }
 
@@ -35,11 +36,24 @@ export class userResolvers {
             console.error("User not found!");
             return
         }
-        userToBeUpdated.house_key = house_key
+        
+        if(JSON.parse(userToBeUpdated.house_keys)){
+            const userRoomKeys = JSON.parse(userToBeUpdated.house_keys)
+            console.log(userRoomKeys)
+             userRoomKeys.push(house_key)
+             userToBeUpdated.house_keys = JSON.stringify(userRoomKeys)
+             await Users.save(userToBeUpdated)
+             return "Added more room!"
+        } else {
+            userToBeUpdated.house_keys = JSON.stringify([house_key])
+            await Users.save(userToBeUpdated)
+            return "Added room to user!"
+        }
+        
 
-        await Users.save(userToBeUpdated)
+      
 
-        return "Added room to user!"
+        
     }
 
 
