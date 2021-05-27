@@ -1,5 +1,5 @@
 {
-   "type": "postgres",
+   "type": "process",
    "host": "localhost",
    "port": 5432,
    "username": "evomatic",
