@@ -18,9 +18,9 @@ export default new Vuex.Store({
   mutations: {
 
     setUser(state, user) {
-      console.log('setting user state....')
-      state.users = user;
-      console.log(state.users)
+      console.log('setting user state....', user)
+      state.user = user;
+      console.log(state.user.house_key)
     },
 
     loadUser(state, email) {
@@ -42,8 +42,8 @@ export default new Vuex.Store({
   // Here be yer actions
   actions: {
 
-    getUsers(context) {
-      console.log('fetching all users...')
+    getUser(context, email) {
+      console.log('fetching user from database...')
       try {
        axios({
           method: "POST",
@@ -51,17 +51,17 @@ export default new Vuex.Store({
           data: {
             query: `
             {
-            getAllUser{
+            getUserByEmail(email:"${email}"){
               id
               username
               house_key
               email
-            }
+             }
             }`
           }
         }).then((response) => {
-          console.log(response.data.data.getAllUser)
-          context.commit("setUser", response.data.data.getAllUser)
+          /* console.log(response.data.data.getUserByEmail) */
+          context.commit("setUser", response.data.data.getUserByEmail)
         });
       } catch (error) {
         console.log(`You got an ${error}`);
@@ -90,6 +90,7 @@ export default new Vuex.Store({
         .then(() => {
           context.commit("loadUser", user.email)
           context.commit("toggleLoginBool")
+          context.dispatch("getUser", user.email)
           router.push('/yourhome')
         })
         .catch(error => {

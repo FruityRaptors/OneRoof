@@ -27,9 +27,18 @@ const routes = [
     component: () =>
         import('../views/Home.vue'),
         meta: {
-          authRequired: true,
-        },
-},
+          authRequired: false,
+        }
+  },
+  {
+    path: '/todo',
+    name: 'Todo List',
+    component: () =>
+        import('../views/TodoView.vue'),
+        meta: {
+          authRequired: false,
+        }    
+  },
 ]
 
 const router = new VueRouter({
