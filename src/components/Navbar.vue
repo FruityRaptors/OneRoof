@@ -6,7 +6,7 @@
       <router-link to="/yourhome">Your Home</router-link>
     </div>
     <div v-else>
-      <p>Welcome {{this.user.email}}</p>
+      <p>Welcome {{this.$store.state.user.email}}</p>
       <router-link to="/yourhome">Your Home</router-link> |
       <button @click="logout">Logout</button>
     </div>

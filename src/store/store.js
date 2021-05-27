@@ -73,17 +73,12 @@ export default new Vuex.Store({
           data: {
             query: `
           mutation{
-          getUserByEmail(User:"${user}"){
-            id
-            username
-            house_key
-            email
-           }
+          createUser(email:"${user.email}", username: "Jeff", house_key: "genericHouseKey", isAdmin: false )
           }`
           }
-        }).then((response) => {
-          console.log("🔥 When this goes through we're in great shape! 🔥  ", response)
-          context.commit("getUser", response.data.data.getUserByEmail)
+        }).then((response, user) => {
+          console.log("🔥 When this goes through we're in great shape! 🔥  ", response, user)
+          context.dispatch("getUser", response.data.data.createUser)
         });
       } catch (error) {
         console.log(`You got an ${error}`);

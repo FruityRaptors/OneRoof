@@ -14,7 +14,7 @@ export class userResolvers {
         return Users.findOne({ where: { email } })
     }
 
-    @Mutation(() => Boolean)
+    @Mutation(() => String)
     async createUser(
         @Arg('email') email: string,
         @Arg('username') username: string,
@@ -22,24 +22,24 @@ export class userResolvers {
         @Arg('isAdmin') isAdmin: boolean
         ){
         await Users.insert({email, username, house_key, isAdmin})
-        return true
+        return email
     }
 
-    @Mutation(() => Boolean)
+    @Mutation(() => String)
     async addToHouse(
         @Arg('email') email: string,
         @Arg('house_key') house_key: string
-    ) {
+    ){
         const userToBeUpdated = await Users.findOne({ where: { email }})
         if (!userToBeUpdated){
             console.error("User not found!");
             return
         }
-        userToBeUpdated['house_key'] = house_key
+        userToBeUpdated.house_key = house_key
 
-        await Users.update()
+        await Users.save(userToBeUpdated)
 
-        return true
+        return "Added room to user!"
     }
 
 
