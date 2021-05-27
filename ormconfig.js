@@ -1,12 +1,12 @@
-{
-   "type": "process",
-   "host": "localhost",
-   "port": 5432,
-   "username": "evomatic",
-   "password": "evomatic",
-   "database": "oneroof",
+module.exports = {
+   "type": "postgres",
+   "host": "127.0.0.1",
+   "port": process.env.DB_PORT,
+   "username": process.env.DB_USER,
+   "password": process.env.DB_PASS,
+   "database": process.env.DB_NAME,
    "synchronize": true,
-   "logging": true,
+   "logging": false,
    "entities": [
       "server/entity/**/*.ts"
    ],
