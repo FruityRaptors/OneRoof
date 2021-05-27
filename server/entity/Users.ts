@@ -19,7 +19,7 @@ export class Users extends BaseEntity {
     @Column({
         length: 50
     })
-    house_key: string;
+    house_keys: string;
 
     @Field(() => String)
     @Column({
