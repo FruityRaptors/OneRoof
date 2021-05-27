@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import firebase from 'firebase'
 import router from '../router/index'
-import { textSpanContainsTextSpan } from 'typescript'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -18,7 +18,9 @@ export default new Vuex.Store({
   mutations: {
 
     setUser(state, user) {
+      console.log('setting user state....')
       state.users = user;
+      console.log(state.users)
     },
 
     loadUser(state, email) {
@@ -40,25 +42,28 @@ export default new Vuex.Store({
   // Here be yer actions
   actions: {
 
-    getUsers() {
+    getUsers(context) {
+      console.log('fetching all users...')
       try {
-        const result = axios({
+       axios({
           method: "POST",
-          url: "https://localhost:4000/graphql",
+          url: "/graphql",
           data: {
             query: `
             {
-            getAllUsers{
+            getAllUser{
               id
               username
               house_key
               email
             }
-      
             }`
           }
+        }).then((response) => {
+          console.log(response.data.data.getAllUser)
+          context.commit("setUser", response.data.data.getAllUser)
         });
-        context.commit("setUser", result)
+
       } catch (error) {
         console.log(`You got an ${error}`);
       }
