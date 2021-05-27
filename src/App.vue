@@ -1,6 +1,6 @@
 <template>
   <v-app id="one-roof-app">
-    <v-navigation-drawer v-model="drawer" color="brown" app>
+    <v-navigation-drawer v-model="drawer" color="brown lighten-4" app>
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title"> OneRoof </v-list-item-title>
