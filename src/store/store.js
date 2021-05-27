@@ -35,7 +35,7 @@ try {
       }`
     }
   });
-  this
+  this.users
 }
     }
 
