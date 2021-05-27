@@ -1,6 +1,12 @@
 module.exports = {
   devServer: {
-    port: 3000
+    port: 3000,
+    proxy: {
+      "/graphql": {
+        target: "http://localhost:4000",
+        secure: false,
+      },
+    },
   },
   // THIS IS THE PWA MANIFEST. DETAILS HERE: https://web.dev/add-manifest/
   // We might need to make sure we have a valid apple touch icon, below
