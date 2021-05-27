@@ -1,32 +1,17 @@
 <template>
   <v-app id="one-roof-app">
-   <v-navigation-drawer 
-   v-model="drawer"
-   color="brown"
-   app>
+    <v-navigation-drawer v-model="drawer" color="brown" app>
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="title">
-            OneRoof
-          </v-list-item-title>
-          <v-list-item-subtitle>
-            Yamada Home
-          </v-list-item-subtitle>
+          <v-list-item-title class="title"> OneRoof </v-list-item-title>
+          <v-list-item-subtitle> Yamada Home </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
       <v-divider></v-divider>
 
-      <v-list
-        dense
-        nav
-      >
-        <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          :to="item.to"
-          link
-        >
+      <v-list dense nav>
+        <v-list-item v-for="item in items" :key="item.title" :to="item.to" link>
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -42,45 +27,50 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>OneRoof</v-toolbar-title>
+      <section v-if="this.$store.state.isUserLoggedIn !== true" class="login-options">
+        <router-link to="/login">Login</router-link> |
+        <router-link to="/register">Reg</router-link>
+      </section>
+      <section v-else>
+        <button @click="logout">Logout</button>
+      </section>
     </v-app-bar>
 
     <v-main>
-      <router-view></router-view>
+        <router-view></router-view>
     </v-main>
   </v-app>
 </template>
 
 
 <script>
-import firebase from 'firebase';
+/* import firebase from "firebase"; */
 // import Navbar from './components/Navbar.vue';
 
 export default {
   data: () => ({
-      drawer: null,
-      items: [
-          { title: 'Chat', icon: 'mdi-view-dashboard', to: '/yourhome' }, //Use to: to link views
-          { title: 'To-do', icon: 'mdi-format-list-checks', to: '/todo'}, 
-      ]
-    }),
-  name: 'App',
+    loginRerouteFlag: false,
+    drawer: null,
+    items: [
+      { title: "Chat", icon: "mdi-view-dashboard", to: "/yourhome" }, //Use to: to link views
+      { title: "To-do", icon: "mdi-format-list-checks", to: "/todo" },
+    ],
+  }),
+  name: "App",
   components: {
-    // Navbar 
+    // Navbar
   },
- methods: {
-  logout() {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        alert('Successfully logged out');
-        this.$router.push('/');
-      })
-      .catch(error => {
-        alert(error.message);
-        this.$router.push('/');
-      });
+  methods: {
+    logout() {
+      this.$store.dispatch("logoutUser");
+    },
   },
-},
-}
+};
 </script>
+
+<style>
+  .login-options {
+    right: 0;
+    padding: 5px
+  }
+</style>
