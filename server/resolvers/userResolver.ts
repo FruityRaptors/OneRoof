@@ -1,13 +1,12 @@
 import { Query, Resolver, Mutation, Arg } from 'type-graphql'
 import { User } from '../schemas/userSchema'
+import { Users } from '../entity/Users'
 
-@Resolver((of) => User)
+@Resolver()
 export class userResolver {
-    private users: User[] = []
-
-
-    @Query((returns) => [User], { nullable: true })
-    async getUsers(): Promise<User[]> {
-        return await this.users
+    @Query(() => [User])
+    getAllUser(){
+        return Users.find()
     }
+
 }
