@@ -3,6 +3,7 @@ module.exports = {
     port: 3000
   },
   // THIS IS THE PWA MANIFEST. DETAILS HERE: https://web.dev/add-manifest/
+  // We might need to make sure we have a valid apple touch icon, below
   pwa: {
     manifestOptions: {
       name: "OneRoof",
