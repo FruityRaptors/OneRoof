@@ -8,8 +8,8 @@ import { Field, ObjectType, InputType } from 'type-graphql';
         @Field()
         username: string
 
-        @Field()
-        house_key: string
+        @Field(() => String, { nullable: true })
+        house_keys: string
 
         @Field()
         email: string
