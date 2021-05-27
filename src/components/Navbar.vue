@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar">
+    <div class="navbar">
     <div v-if="loggedInState !== true">
       <router-link to="/login">Login</router-link> |
       <router-link to="/register">Register you dummy</router-link> |
@@ -15,12 +15,16 @@
 </template>
 
 <script>
-import TodoList from './TodoList.vue';
+// import TodoList from './TodoList.vue';
 
 export default {
+  data: () => ({
+      drawer: false,
+      group: null,
+    }),
   name: "Navbar",
   components: { 
-  TodoList
+  // TodoList
   },
   computed: {
     loggedInState() {
@@ -33,13 +37,10 @@ export default {
       return this.$store.state.users;
     }
   },
-  mounted() {
-    this.populateUsers()
+  mounted(){
+    this.$store.dispatch("getUser")
+    console.log(this.$store.state.users.house_key)
   },
- /*  mounted(){
-    this.$store.dispatch("getUsers")
-    console.log(this.$store.state.users)
-  }, */
   methods: {
     logout() {
       this.$store.dispatch("logoutUser");
@@ -48,6 +49,7 @@ export default {
       this.$store.dispatch("getUsers")
     }
   },
+  
 };
 </script>
 
