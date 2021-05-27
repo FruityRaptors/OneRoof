@@ -9,7 +9,7 @@ import { Field, ObjectType, InputType } from 'type-graphql';
         username: string
 
         @Field()
-        house_key: string
+        house_keys: string
 
         @Field()
         email: string
