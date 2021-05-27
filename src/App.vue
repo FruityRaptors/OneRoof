@@ -37,6 +37,7 @@
     </v-app-bar>
 
     <v-main>
+      <JoinHouse />
         <router-view></router-view>
     </v-main>
   </v-app>
@@ -44,6 +45,7 @@
 
 
 <script>
+import JoinHouse from './views/joinHouse.vue';
 /* import firebase from "firebase"; */
 // import Navbar from './components/Navbar.vue';
 
@@ -58,6 +60,7 @@ export default {
   }),
   name: "App",
   components: {
+    JoinHouse
     // Navbar
   },
   methods: {
