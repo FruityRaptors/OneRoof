@@ -9,7 +9,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   // global state, yo!
   state: {
-    user: {hi: "yep"},
+    user: {},
     users: [],
     isUserLoggedIn: false,
   },
