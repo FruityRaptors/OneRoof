@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import firebase from 'firebase'
 import router from '../router/index'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -9,10 +10,19 @@ export default new Vuex.Store({
   // global state, yo!
   state: {
     user: {},
-    isUserLoggedIn: false
+    users: [],
+    isUserLoggedIn: false,
   },
+
   //mutations obv mutate shit
   mutations: {
+
+    setUser(state, user) {
+      console.log('setting user state....')
+      state.users = user;
+      console.log(state.users)
+    },
+
     loadUser(state, email) {
       state.user.email = email
     },
@@ -20,7 +30,7 @@ export default new Vuex.Store({
     resetUser(state) {
       state.user = {}
     },
-    
+
     toggleLoginBool(state) {
       if (state.isUserLoggedIn === false) {
         state.isUserLoggedIn = true
@@ -31,6 +41,32 @@ export default new Vuex.Store({
   },
   // Here be yer actions
   actions: {
+
+    getUsers(context) {
+      console.log('fetching all users...')
+      try {
+       axios({
+          method: "POST",
+          url: "/graphql",
+          data: {
+            query: `
+            {
+            getAllUser{
+              id
+              username
+              house_key
+              email
+            }
+            }`
+          }
+        }).then((response) => {
+          console.log(response.data.data.getAllUser)
+          context.commit("setUser", response.data.data.getAllUser)
+        });
+      } catch (error) {
+        console.log(`You got an ${error}`);
+      }
+    },
 
     logoutUser(context) {
       firebase
@@ -57,7 +93,7 @@ export default new Vuex.Store({
           router.push('/yourhome')
         })
         .catch(error => {
-           alert(error.message);
+          alert(error.message);
         });
     },
   },

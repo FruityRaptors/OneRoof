@@ -23,11 +23,24 @@ export default {
     user() {
       return this.$store.state.user;
     },
+    users() {
+      return this.$store.state.users;
+    }
   },
+  mounted() {
+    this.populateUsers()
+  },
+ /*  mounted(){
+    this.$store.dispatch("getUsers")
+    console.log(this.$store.state.users)
+  }, */
   methods: {
     logout() {
       this.$store.dispatch("logoutUser");
     },
+    populateUsers() {
+      this.$store.dispatch("getUsers")
+    }
   },
 };
 </script>
