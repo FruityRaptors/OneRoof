@@ -27,13 +27,10 @@ export default {
       return this.$store.state.users;
     }
   },
-  mounted() {
-    this.populateUsers()
+  mounted(){
+    this.$store.dispatch("getUser")
+    console.log(this.$store.state.users.house_key)
   },
- /*  mounted(){
-    this.$store.dispatch("getUsers")
-    console.log(this.$store.state.users)
-  }, */
   methods: {
     logout() {
       this.$store.dispatch("logoutUser");
