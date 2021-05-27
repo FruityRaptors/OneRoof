@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import firebase from 'firebase';
 
 export default {
   name: "Register",
@@ -21,21 +20,12 @@ export default {
     };
   },
   methods: {
-  register() {
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(this.email, this.password)
-      .then(() => {
-        this.$store.state.user.email = this.email
-        this.$store.state.isUserLoggedIn = true
-        alert('Successfully registered! Please login.');
-        this.$router.push('/yourhome');
-      })
-      .catch(error => {
-        alert(error.message);
-      });
+    register() {
+      let email = this.email;
+      let password = this.password;
+      this.$store.dispatch("registerUser", { email, password });
+    },
   },
-},
 };
 </script>
 
