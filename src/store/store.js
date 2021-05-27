@@ -2,16 +2,17 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import firebase from 'firebase'
 import router from '../router/index'
-import { textSpanContainsTextSpan } from 'typescript'
+/* import { textSpanContainsTextSpan } from 'typescript' */
+import axios from 'axios'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   // global state, yo!
   state: {
-    user: {},
+    user: {hi: "yep"},
     users: [],
-    isUserLoggedIn: false
+    isUserLoggedIn: false,
   },
 
   //mutations obv mutate shit
@@ -28,7 +29,7 @@ export default new Vuex.Store({
     resetUser(state) {
       state.user = {}
     },
-    
+
     toggleLoginBool(state) {
       if (state.isUserLoggedIn === false) {
         state.isUserLoggedIn = true
@@ -44,7 +45,7 @@ export default new Vuex.Store({
       try {
         const result = axios({
           method: "POST",
-          url: "https://localhost:4000/graphql",
+          url: "/graphql",
           data: {
             query: `
             {
@@ -58,11 +59,12 @@ export default new Vuex.Store({
             }`
           }
         });
+        // eslint-disable-next-line no-undef
         context.commit("setUser", result)
       } catch (error) {
         console.log(`You got an ${error}`);
       }
-          },
+    },
 
     logoutUser(context) {
       firebase
@@ -89,7 +91,7 @@ export default new Vuex.Store({
           router.push('/yourhome')
         })
         .catch(error => {
-           alert(error.message);
+          alert(error.message);
         });
     },
   },
