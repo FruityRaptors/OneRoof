@@ -4,6 +4,7 @@
       <Navbar />
     </div>
     <div class="auth-request-page">
+      Hekka rad
       <router-view />
     </div>
     
@@ -13,6 +14,7 @@
 <script>
 import firebase from 'firebase'
 import Navbar from './components/Navbar'
+
 
 export default {
   components: {
@@ -52,8 +54,12 @@ input {
 }
 
 .nav {
-  padding: 30px;
+  padding: 10px;
   background-color:yellow;
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 100vw
 }
 
 .nav a {
