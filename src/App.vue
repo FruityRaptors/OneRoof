@@ -2,6 +2,7 @@
   <v-app id="one-roof-app">
    <v-navigation-drawer 
    v-model="drawer"
+   color="brown"
    app>
       <v-list-item>
         <v-list-item-content>
