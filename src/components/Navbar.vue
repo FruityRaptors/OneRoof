@@ -25,8 +25,8 @@ export default {
     },
   },
   mounted(){
-    this.$store.dispatch("getUsers")
-    console.log(this.$store.state.users)
+    this.$store.dispatch("getUser")
+    console.log(this.$store.state.users.house_key)
   },
   methods: {
     logout() {
