@@ -5,13 +5,41 @@ import { Users } from '../entity/Users'
 @Resolver()
 export class userResolvers {
     @Query(() => [User])
-    getAllUser() {
+    getAllUsers() {
         return Users.find()
     }
 
     @Query(() => User)
     getUserByEmail(@Arg("email") email: string) {
         return Users.findOne({ where: { email } })
+    }
+
+    @Mutation(() => String)
+    async createUser(
+        @Arg('email') email: string,
+        @Arg('username') username: string,
+        @Arg('house_key', () => String, { nullable: true }) house_key: string,
+        @Arg('isAdmin') isAdmin: boolean
+        ){
+        await Users.insert({email, username, house_key, isAdmin})
+        return email
+    }
+
+    @Mutation(() => String)
+    async addToHouse(
+        @Arg('email') email: string,
+        @Arg('house_key') house_key: string
+    ){
+        const userToBeUpdated = await Users.findOne({ where: { email }})
+        if (!userToBeUpdated){
+            console.error("User not found!");
+            return
+        }
+        userToBeUpdated.house_key = house_key
+
+        await Users.save(userToBeUpdated)
+
+        return "Added room to user!"
     }
 
 
