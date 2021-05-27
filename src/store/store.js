@@ -23,10 +23,6 @@ export default new Vuex.Store({
       console.log(state.user.house_key)
     },
 
-    loadUser(state, email) {
-      state.user.email = email
-    },
-
     resetUser(state) {
       state.user = {}
     },
@@ -45,7 +41,7 @@ export default new Vuex.Store({
     getUser(context, email) {
       console.log('fetching user from database...')
       try {
-       axios({
+        axios({
           method: "POST",
           url: "/graphql",
           data: {
@@ -60,7 +56,32 @@ export default new Vuex.Store({
             }`
           }
         }).then((response) => {
-          /* console.log(response.data.data.getUserByEmail) */
+          context.commit("setUser", response.data.data.getUserByEmail)
+        });
+      } catch (error) {
+        console.log(`You got an ${error}`);
+      }
+    },
+
+    // Here's the logic to update
+    addUserToSQLDatabase(context, user) {
+      console.log('fetching user from database...')
+      try {
+        axios({
+          method: "POST",
+          url: "/graphql",
+          data: {
+            query: `
+          mutation{
+          getUserByEmail(User:"${user}"){
+            id
+            username
+            house_key
+            email
+           }
+          }`
+          }
+        }).then((response) => {
           context.commit("setUser", response.data.data.getUserByEmail)
         });
       } catch (error) {
@@ -88,7 +109,6 @@ export default new Vuex.Store({
         .auth()
         .signInWithEmailAndPassword(user.email, user.password)
         .then(() => {
-          context.commit("loadUser", user.email)
           context.commit("toggleLoginBool")
           context.dispatch("getUser", user.email)
           router.push('/yourhome')
@@ -97,6 +117,24 @@ export default new Vuex.Store({
           alert(error.message);
         });
     },
+
+    registerUser: (context, user) => {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(user.email, user.password)
+        .then(() => {
+          context.commit("toggleLoginBool")
+          context.dispatch("addUserToSQLDatabase", user)
+            .then((user) => {
+              context.dispatch("getUser", user.email)
+              router.push('/yourhome')
+              alert('Successfully registered! Please login.');
+            })
+        })
+        .catch(error => {
+          alert(error.message);
+        });
+    }
   },
   //why are there modules in $store again?
   modules: {
