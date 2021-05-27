@@ -4,9 +4,9 @@ import { ApolloServer } from 'apollo-server-express'
 import { connectDB } from "./database";
 import {Request, Response} from "express";
 import  express  from "express";
-import * as bodyParser from "body-parser";
+/* import * as bodyParser from "body-parser";
 import {Todo} from "./entity/Todo";
-import {Users} from "./entity/Users"
+import {Users} from "./entity/Users" */
 import { buildSchema } from 'type-graphql'
 import { userResolvers } from "./resolvers/userResolvers"
 import { todoResolver } from "./resolvers/todoResolver";
@@ -28,7 +28,7 @@ import { todoResolver } from "./resolvers/todoResolver";
         apolloServer.applyMiddleware({ app, cors: false });
         const port = process.env.PORT || 4000;
         app.listen(port, () => {
-          console.log(`server started at http://localhost:${port}/graphql`);
+          console.log(`server started at http://localhost:${port}/`);
         });
     })();
 

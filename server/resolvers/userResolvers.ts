@@ -5,7 +5,7 @@ import { Users } from '../entity/Users'
 @Resolver()
 export class userResolvers {
     @Query(() => [User])
-    getAllUser() {
+    getAllUsers() {
         return Users.find()
     }
 
