@@ -32,7 +32,7 @@ export class userResolvers {
 
     //To Add Rooms to User
     @Mutation(() => String)
-    async addToHouse(
+    async addToRoom(
         @Arg('email') email: string,
         @Arg('house_key') house_key: string
     ){
