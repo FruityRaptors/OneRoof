@@ -35,7 +35,7 @@ export class userResolvers {
             console.error("User not found!");
             return
         }
-        userToBeUpdated.house_key = house_key
+        userToBeUpdated.house_keys = house_key
 
         await Users.save(userToBeUpdated)
 

@@ -2,7 +2,7 @@ import "dotenv/config";
 import "reflect-metadata";
 import { ApolloServer } from 'apollo-server-express'
 import { connectDB } from "./database";
-import {Request, Response} from "express";
+/* import {Request, Response} from "express"; */
 import  express  from "express";
 /* import * as bodyParser from "body-parser";
 import {Todo} from "./entity/Todo";
