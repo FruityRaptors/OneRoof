@@ -8,7 +8,7 @@ import  express  from "express";
 import {Todo} from "./entity/Todo";
 import {Users} from "./entity/Users" */
 import { buildSchema } from 'type-graphql'
-import { userResolver } from "./resolvers/userResolver"
+import { userResolvers } from "./resolvers/userResolvers"
 import { todoResolver } from "./resolvers/todoResolver";
 
 
@@ -19,7 +19,7 @@ import { todoResolver } from "./resolvers/todoResolver";
       
         const apolloServer = new ApolloServer({
           schema: await buildSchema({
-            resolvers: [userResolver, todoResolver],
+            resolvers: [userResolvers, todoResolver],
             validate: true
           }),
           context: ({ req, res }) => ({ req, res })
