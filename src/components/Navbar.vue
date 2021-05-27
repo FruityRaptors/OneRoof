@@ -23,6 +23,9 @@ export default {
     user() {
       return this.$store.state.user;
     },
+    users() {
+      return this.$store.state.users;
+    }
   },
   mounted(){
     this.$store.dispatch("getUser")
@@ -32,6 +35,9 @@ export default {
     logout() {
       this.$store.dispatch("logoutUser");
     },
+    populateUsers() {
+      this.$store.dispatch("getUsers")
+    }
   },
 };
 </script>
