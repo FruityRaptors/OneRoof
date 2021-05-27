@@ -73,7 +73,7 @@ export default new Vuex.Store({
           data: {
             query: `
           mutation{
-          createUser(email:"${user.email}", username: "Jeff", house_key: "genericHouseKey", isAdmin: false )
+          createUser(email:"${user.email}", username: "${user.username}", house_key: "genericHouseKey", isAdmin: false )
           }`
           }
         }).then((response, user) => {
