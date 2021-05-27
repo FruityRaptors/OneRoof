@@ -18,10 +18,9 @@ export class userResolvers {
     async createUser(
         @Arg('email') email: string,
         @Arg('username') username: string,
-        @Arg('house_key', () => String, { nullable: true }) house_key: string,
         @Arg('isAdmin') isAdmin: boolean
         ){
-        await Users.insert({email, username, house_key, isAdmin})
+        await Users.insert({email, username, isAdmin})
         return email
     }
 
