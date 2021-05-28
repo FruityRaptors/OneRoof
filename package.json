@@ -16,6 +16,7 @@
     "express": "^4.17.1",
     "firebase": "^8.6.2",
     "graphql": "^15.5.0",
+    "keygenerator": "^1.0.4",
     "mysql": "^2.14.1",
     "nodemon": "^2.0.7",
     "pg": "^8.6.0",
