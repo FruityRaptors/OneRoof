@@ -9,6 +9,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    testUser: {
+      id: 1,
+      username: "DAddy",
+      house_key: "testhousekey",
+      email: "testerEmail",
+      isAdmin: false
+    },
     //Current logged in User information
     user: {},
     isUserLoggedIn: false,
@@ -196,32 +203,32 @@ createHouse:(context, payload) => {
 //Todolist related actions starts
 ///////
 
-getTodos(context, email) {
-  console.log(`Getting Todos`)
-  try {
-    axios({
-      method: "POST",
-      url: "/graphql",
-      data: {
-        query: `
-        {
-        getAllTodos(){
-          id
-          todo
-          date
-          creatorid
-          victimid
-         }
-        }`
-      }
-      .then((data) => {
-        console.log("Here's the data we collected!", data)
-      })
-    })
+// getTodos(context, email) {
+//   console.log(`Getting Todos`)
+//   try {
+//     axios({
+//       method: "POST",
+//       url: "/graphql",
+//       data: {
+//         query: `
+//         {
+//         getAllTodos(){
+//           id
+//           todo
+//           date
+//           creatorid
+//           victimid
+//          }
+//         }`
+//       }
+//       .then((data) => {
+//         console.log("Here's the data we collected!", data)
+//       })
+//     })
     
-  }catch {
-    alert("Error with getting Todos!")
-  }},
+//   }catch {
+//     alert("Error with getting Todos!")
+//   }},
 
 ///////
 //Todolist related actions ends
