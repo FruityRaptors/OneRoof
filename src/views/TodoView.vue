@@ -52,27 +52,11 @@ export default {
   data() {
     return {
       newTodoMessage: '',
-      todos: [
-        // {
-        //   id: 1,
-        //   todo: "testing",
-        //   assignee: "the id is 1",
-        //   complete: false,
-        // },
-        // {
-        //   id: 2,
-        //   todo: "testing FURTHER",
-        //   assignee: "the id is 2",
-        //   complete: false,
-        // },
-        // {
-        //   id: 3,
-        //   todo: "testing EVEN FURTHER BEYOND",
-        //   assignee: "the id is THREEEEEEE",
-        //   complete: false,
-        // },
-      ],
+      todos: [],
     };
+  },
+  mounted() {
+    this.$store.dispatch("getTodos")
   },
   methods: {
     addTodo() {
