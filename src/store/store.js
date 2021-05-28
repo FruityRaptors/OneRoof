@@ -32,6 +32,10 @@ export default new Vuex.Store({
         state.isUserLoggedIn = false
       }
     },
+    addTodos(state, todos) {
+      console.log("SETTING TODOS", todos)
+      state.todos = todos
+    }
   },
 
   actions: {
@@ -195,33 +199,60 @@ createHouse:(context, payload) => {
 ///////
 //Todolist related actions starts
 ///////
-
-getTodos(context, email) {
+// gets todos from database
+getTodos(context) {
   console.log(`Getting Todos`)
-  try {
-    axios({
-      method: "POST",
-      url: "/graphql",
-      data: {
-        query: `
-        {
-        getAllTodos(){
-          id
-          todo
-          date
-          creatorid
-          victimid
-         }
-        }`
+      try {
+        axios({
+          method: "POST",
+          url: "/graphql",
+          data: {
+            query: `
+            {
+              getAllTodos{
+                id
+                creatorid
+                victimid
+                todo
+                date
+              }
+            }`
+          }
+        }) 
+          .then((response) => {
+            console.log(response.data.data.getAllTodos)
+            context.commit("addTodos", response.data.data.getAllTodos)
+            console.log("CONSOLE LOG THE STATE TODO",this.state.todos)
+        }) 
+      } catch(error) {
+        console.log("This is your error", error)
       }
-      .then((data) => {
-        console.log("Here's the data we collected!", data)
-      })
-    })
-    
-  }catch {
-    alert("Error with getting Todos!")
-  }},
+},
+
+// deletes specified todo from database
+deleteTodo(context, todos) {
+  console.log(`Deleting Todo`)
+      try {
+        axios({
+          method: "POST",
+          url: "/graphql",
+          data: {
+            query: `
+            mutation{
+              deleteTodo(id:"${todos[0].id})
+            }`
+          }
+        }) 
+          .then((response) => {
+            console.log(response.data.data.getAllTodos)
+        }) 
+      } catch(error) {
+        console.log("This is your error", error)
+      }
+},
+
+
+
 
 ///////
 //Todolist related actions ends
