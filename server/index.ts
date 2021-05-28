@@ -10,16 +10,18 @@ import {Users} from "./entity/Users" */
 import { buildSchema } from 'type-graphql'
 import { userResolvers } from "./resolvers/userResolvers"
 import { todoResolver } from "./resolvers/todoResolver";
+import { houseResolver } from "./resolvers/houseResolver"
 
 
     (async () => {
         const app = express();
       
+    console.log('connecting type orm...')
         await connectDB()
       
         const apolloServer = new ApolloServer({
           schema: await buildSchema({
-            resolvers: [userResolvers, todoResolver],
+            resolvers: [userResolvers, todoResolver, houseResolver],
             validate: true
           }),
           context: ({ req, res }) => ({ req, res })
@@ -27,6 +29,8 @@ import { todoResolver } from "./resolvers/todoResolver";
       
         apolloServer.applyMiddleware({ app, cors: false });
         const port = process.env.PORT || 4000;
+
+    console.log('launching server...')
         app.listen(port, () => {
           console.log(`server started at http://localhost:${port}/`);
         });

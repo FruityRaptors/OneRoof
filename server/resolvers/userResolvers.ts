@@ -1,33 +1,38 @@
 import { Query, Resolver, Mutation, Arg } from 'type-graphql'
 import { User } from '../schemas/userSchema'
 import { Users } from '../entity/Users'
-import { json } from 'express'
 
 @Resolver()
 export class userResolvers {
+
+    //SHOULD NOT BE USED IN PRODUCTION get all user
     @Query(() => [User])
     getAllUsers() {
         return Users.find()
     }
 
+    //Get single user by their Email
     @Query(() => User)
     getUserByEmail(@Arg("email") email: string) {
         return Users.findOne({ where: { email } })
     }
 
+
+    //To Creat new User with empty room
     @Mutation(() => String)
     async createUser(
         @Arg('email') email: string,
         @Arg('username') username: string,
-        // @Arg('house_keys', () => String, { nullable: true }) house_keys: null | string,
         @Arg('isAdmin') isAdmin: boolean
         ){
         await Users.insert({email, username, isAdmin})
         return email
     }
 
+
+    //To Add Rooms to User
     @Mutation(() => String)
-    async addToHouse(
+    async addToRoom(
         @Arg('email') email: string,
         @Arg('house_key') house_key: string
     ){
@@ -39,28 +44,16 @@ export class userResolvers {
         
         if(JSON.parse(userToBeUpdated.house_keys)){
             const userRoomKeys = JSON.parse(userToBeUpdated.house_keys)
-            console.log(userRoomKeys)
              userRoomKeys.push(house_key)
              userToBeUpdated.house_keys = JSON.stringify(userRoomKeys)
              await Users.save(userToBeUpdated)
              return "Added more room!"
         } else {
-            userToBeUpdated.house_keys = JSON.stringify([house_key])
-            await Users.save(userToBeUpdated)
-            return "Added room to user!"
+             userToBeUpdated.house_keys = JSON.stringify([house_key])
+             await Users.save(userToBeUpdated)
+             return "Added room to user!"
         }
         
-
-      
-
-        
     }
-
-
-    // @Query(() => Book)
-    // book(@Arg("id") id: string) {
-    //     return Book.findOne({ where: { id } });
-    // }
-
 }
 
