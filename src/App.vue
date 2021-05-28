@@ -49,7 +49,6 @@
     <v-main>
 
       <!-- Placeholder to test components -->
-      <Chat/>
       <!-- Placeholder to test components -->
 
         <router-view></router-view>
@@ -62,7 +61,6 @@
 
 
 <script>
-import Chat from './views/chat'
 /* import firebase from "firebase"; */
 // import Navbar from './components/Navbar.vue';
 
@@ -77,7 +75,6 @@ export default {
   }),
   name: "App",
   components: {
-    Chat
     // Navbar
   },
   methods: {

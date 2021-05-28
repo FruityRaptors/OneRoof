@@ -28,7 +28,7 @@
                 <v-list-item-title :class="{ 'text-decoration-line-through' : todo.complete}">
                     {{ todo.todo }}
                 </v-list-item-title>
-                <v-list-item-subtitle>{{ todo.assignee }}</v-list-item-subtitle>
+                <v-list-item-subtitle>{{ todo.victimid }}</v-list-item-subtitle>
               </v-list-item-content>
               <v-list-item-action>
           <v-btn icon @click.stop="deleteTodo(todo.id)">
@@ -56,6 +56,7 @@ export default {
     };
   },
   mounted() {
+    this.todos = this.$store.state.todos
     this.$store.dispatch("getTodos")
   },
   methods: {
@@ -66,7 +67,7 @@ export default {
             assignee: "Gotta get from database",
             complete: false,
         }
-        this.todos.push(newTodo)
+        this.$store.state.todos.push(newTodo) //send to state?
         this.newTodoMessage = ''
     },
     completeTodo(id) {
