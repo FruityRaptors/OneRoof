@@ -6,6 +6,7 @@ import './registerServiceWorker'
 import firebase from "firebase";
 import vuetify from './plugins/vuetify'
 
+// This is ok, we can expose this on the client side
 const firebaseConfig = {
   apiKey: "AIzaSyCib4HhPZkKF0d5KV7SLypMe9Jx8ZUiVU8",
   authDomain: "oneroof-fd1d5.firebaseapp.com",

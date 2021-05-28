@@ -49,7 +49,6 @@
 
 export default {
   data: () => ({
-    loginRerouteFlag: false,
     drawer: null,
     items: [
       { title: "Chat", icon: "mdi-view-dashboard", to: "/yourhome" }, //Use to: to link views
