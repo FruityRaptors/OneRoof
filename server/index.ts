@@ -16,9 +16,13 @@ import { houseResolver } from "./resolvers/houseResolver"
     (async () => {
         const app = express();
       
-    console.log('connecting type orm...')
-        await connectDB()
-      
+        try{
+          await connectDB()
+        } catch (err) {
+          console.log(err)
+        }
+        
+ 
         const apolloServer = new ApolloServer({
           schema: await buildSchema({
             resolvers: [userResolvers, todoResolver, houseResolver],
