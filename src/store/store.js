@@ -7,20 +7,16 @@ import axios from 'axios'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  // global state, yo!
   state: {
+    //Current logged in User information
     user: {},
-    users: [],
     isUserLoggedIn: false,
   },
 
-  //mutations obv mutate shit
   mutations: {
-
     setUser(state, user) {
-      console.log('setting user state....', user)
+      console.log('Mutating user state....')
       state.user = user;
-      console.log(state.user.house_key)
     },
 
     resetUser(state) {
@@ -33,13 +29,18 @@ export default new Vuex.Store({
       } else {
         state.isUserLoggedIn = false
       }
-    }
+    },
   },
-  // Here be yer actions
+
   actions: {
 
-    getUser(context, email) {
-      console.log('fetching user from database...')
+///////
+//User related actions starts
+///////
+
+//Fetches user and set user to front end state
+getUser(context, email) {
+      console.log(`Getting User: ${email} from the database...`)
       try {
         axios({
           method: "POST",
@@ -50,21 +51,37 @@ export default new Vuex.Store({
             getUserByEmail(email:"${email}"){
               id
               username
-              house_key
+              house_keys
               email
              }
             }`
           }
         }).then((response) => {
-          context.commit("setUser", response.data.data.getUserByEmail)
+            console.log(`fetched ${response.data.data.getUserByEmail}...`)
+
+          //If fetched user belonged to a house, set user normally
+          if(response.data.data.getUserByEmail.house_key){
+
+            console.log(`User already belonged to chat room(s)... going to home page`)
+            context.commit("setUser", response.data.data.getUserByEmail)
+            router.push('/yourhome')
+
+          } else {
+
+            console.log(`User doesn't have a home... going to join a home page`)
+            //if they don't belonged to any house.. should route to JOIN A HOUSE page
+            context.commit("setUser", response.data.data.getUserByEmail)
+            //Should route to Join a house page
+
+          }
         });
       } catch (error) {
         console.log(`You got an ${error}`);
       }
     },
 
-    // Here's the logic to update
-    addUserToSQLDatabase(context, user) {
+//Adds user to the database after they have registered
+addUserToSQLDatabase(context, user) {
       console.log('fetching user from database...')
       try {
         axios({
@@ -78,6 +95,7 @@ export default new Vuex.Store({
           }
         }).then((response, user) => {
           console.log("🔥 When this goes through we're in great shape! 🔥  ", response, user)
+          //User should be added and now we will fetch the user from our Database...
           context.dispatch("getUser", response.data.data.createUser)
         });
       } catch (error) {
@@ -85,7 +103,50 @@ export default new Vuex.Store({
       }
     },
 
-    logoutUser(context) {
+//Creating a new chat room + pushes it to the database + assigning it to the front end state
+createChatRoom:(context, payload) => {
+      console.log(payload)
+      try{
+        axios({
+        method: "POST",
+        url: "/graphql",
+        data: {
+          query: `
+        mutation{
+        addToRoom(email:"${payload.email}", house_key:"${payload.roomkey}")
+        }`
+        }
+      })
+      console.log(`User: ${payload.email} created and joined room... re-fetching user from database...`)
+      context.dispatch("getUser", payload.email)
+    } catch (err) {
+      console.log(err)
+      }
+  },
+
+///////
+//User related actions ends
+///////
+
+
+///////
+//Todolist related actions starts
+///////
+
+placeholderFunction(context){
+    console.log(context)
+  },
+
+///////
+//Todolist related actions ends
+///////
+
+
+///////
+//Firebase related actions starts
+///////
+
+logoutUser(context) {
       firebase
         .auth()
         .signOut()
@@ -98,42 +159,46 @@ export default new Vuex.Store({
           alert(error.message);
           router.push('/');
         });
-    },
+},
 
-    loginUser: (context, user) => {
+loginUser: (context, user) => {
       firebase
         .auth()
         .signInWithEmailAndPassword(user.email, user.password)
         .then(() => {
           context.commit("toggleLoginBool")
           context.dispatch("getUser", user.email)
-          router.push('/yourhome')
         })
         .catch(error => {
           alert(error.message);
         });
-    },
+},
 
-    registerUser: (context, user) => {
-      console.log(user)
+registerUser: (context, user) => {
       firebase
         .auth()
         .createUserWithEmailAndPassword(user.email, user.password)
         .then(() => {
           context.commit("toggleLoginBool")
+
+          console.log('Adding user to the database...')
+          //Add user to Database
           context.dispatch("addUserToSQLDatabase", user)
             .then(() => {
-              /* context.dispatch("getUser", user.email) */
+              //this should instead route user to JOIN A HOUSE page
               router.push('/yourhome')
-              alert('Successfully registered! Please login.');
+              alert('Successfully registered!');
             })
         })
-        .catch(error => {
+    .catch(error => {
           alert(error.message);
-        });
-    }
+    });
+},
+
+////
+//Firebase related action ends
+////
+
   },
-  //why are there modules in $store again?
-  modules: {
-  }
+
 })

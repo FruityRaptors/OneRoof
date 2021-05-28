@@ -15,6 +15,7 @@ import { todoResolver } from "./resolvers/todoResolver";
     (async () => {
         const app = express();
       
+    console.log('connecting type orm...')
         await connectDB()
       
         const apolloServer = new ApolloServer({
@@ -27,6 +28,8 @@ import { todoResolver } from "./resolvers/todoResolver";
       
         apolloServer.applyMiddleware({ app, cors: false });
         const port = process.env.PORT || 4000;
+
+    console.log('launching server...')
         app.listen(port, () => {
           console.log(`server started at http://localhost:${port}/`);
         });
