@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import firebase from 'firebase'
 import router from '../router/index'
 import axios from 'axios'
+import keygen from 'keygenerator'
 
 Vue.use(Vuex)
 
@@ -103,9 +104,33 @@ addUserToSQLDatabase(context, user) {
       }
     },
 
+///////
+//User related actions ends
+///////
+
+
+
+///////
+//House related actions starts
+///////
+
 //Creating a new chat room + pushes it to the database + assigning it to the front end state
-createChatRoom:(context, payload) => {
-      console.log(payload)
+createHouse:(context, payload) => {
+  let roomkey = keygen._()
+
+      console.log(`Adding ${payload.homename} to database...`)
+      axios({
+        method: "POST",
+        url: "/graphql",
+        data: {
+          query: `{
+            mutation{
+              createHouseWithName(house_name:"${payload.homename}", house_key:"${roomkey}")
+            }
+          }`
+        }
+      })
+      console.log(`Assigning room to user: ${payload.email}`)
       try{
         axios({
         method: "POST",
@@ -113,7 +138,7 @@ createChatRoom:(context, payload) => {
         data: {
           query: `
         mutation{
-        addToRoom(email:"${payload.email}", house_key:"${payload.roomkey}")
+        addToRoom(email:"${payload.email}", house_key:"${roomkey}")
         }`
         }
       })
@@ -124,9 +149,29 @@ createChatRoom:(context, payload) => {
       }
   },
 
+  joinHouse:(context, payload) => {
+    console.log(`Joining ${payload.email} to room ${payload.roomkey}`)
+
+    axios({
+      method: "POST",
+      url: "/graphql",
+      data: {
+        query: `
+      mutation{
+      addToRoom(email:"${payload.email}", house_key:"${roomkey}")
+      }`
+      }
+    })
+
+
+
+  },
+
 ///////
-//User related actions ends
+//House related actions ends
 ///////
+
+
 
 
 ///////
@@ -140,6 +185,8 @@ placeholderFunction(context){
 ///////
 //Todolist related actions ends
 ///////
+
+
 
 
 ///////

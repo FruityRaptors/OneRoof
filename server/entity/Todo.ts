@@ -1,5 +1,5 @@
 import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, OneToOne, ManyToMany, JoinTable, BaseEntity} from "typeorm";
-import {Users} from "./Users"
+import { Users } from "./Users"
 import { ObjectType, Field, ID } from "type-graphql";
 
 @Entity()
@@ -30,13 +30,14 @@ export class Todo extends BaseEntity {
     @Column()
     date: string;
 
-    @Field(() => [String])
-    @ManyToMany(() => Users)
-    @JoinTable()
-    victimid: Users[]
+    @Field(() => String)
+    @OneToOne(() => Users)
+    // victimid: Users["username"]
+    victimid: string;
 
     @Field(() => String)
     @OneToOne(() => Users)
-    creatorid: Users
+    // creatorid: Users["username"]
+    creatorid: string;
 
 } 
