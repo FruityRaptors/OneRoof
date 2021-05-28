@@ -9,6 +9,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    testUser: {
+      id: 1,
+      username: "DAddy",
+      house_key: "testhousekey",
+      email: "testerEmail",
+      isAdmin: false
+    },
     //Current logged in User information
     user: {},
     isUserLoggedIn: false,
