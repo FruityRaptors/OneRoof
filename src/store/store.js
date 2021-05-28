@@ -9,7 +9,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   // global state, yo!
   state: {
-    user: {},
+    loggedInUser: {},
     users: [],
     isUserLoggedIn: false,
   },
@@ -18,13 +18,13 @@ export default new Vuex.Store({
   mutations: {
 
     setUser(state, user) {
-      console.log('setting user state....', user)
-      state.user = user;
-      console.log(state.user.house_key)
+      /* console.log('setting user state....', user) */
+      state.loggedInUser = user;
+     /*  console.log(state.loggedInUser.house_key) */
     },
 
     resetUser(state) {
-      state.user = {}
+      state.loggedInUser = {}
     },
 
     toggleLoginBool(state) {
@@ -78,6 +78,7 @@ export default new Vuex.Store({
           }
         }).then((response, user) => {
           console.log("🔥 When this goes through we're in great shape! 🔥  ", response, user)
+          // createUser returns just the email
           context.dispatch("getUser", response.data.data.createUser)
         });
       } catch (error) {

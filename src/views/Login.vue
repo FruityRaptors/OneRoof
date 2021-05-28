@@ -26,18 +26,6 @@ export default {
       let email = this.email;
       let password = this.password;
       this.$store.dispatch("loginUser", { email, password })
-     /*  firebase
-        .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then(() => {
-          this.$store.state.user.email = this.email;
-          this.$store.state.isUserLoggedIn = true;
-          alert("Successfully logged in");
-          this.$router.push("/yourhome");
-        })
-        .catch((error) => {
-          alert(error.message);
-        }); */
     },
   },
 };
