@@ -104,7 +104,7 @@ addUserToSQLDatabase(context, user) {
     },
 
 //Creating a new chat room + pushes it to the database + assigning it to the front end state
-joinChatRoom:(context, payload) => {
+createChatRoom:(context, payload) => {
       console.log(payload)
       try{
         axios({

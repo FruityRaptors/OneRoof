@@ -60,7 +60,7 @@ data(){
 },
 methods: {
     joinHouse(){
-        this.$store.dispatch("joinChatRoom", {email: this.$store.state.user.email, roomkey: this.homename})
+        this.$store.dispatch("createChatRoom", {email: this.$store.state.user.email, roomkey: this.homename})
     }
 }
 
