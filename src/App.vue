@@ -49,7 +49,7 @@
     <v-main>
 
       <!-- Placeholder to test components -->
-      <JoinHouse /> 
+      <Chat/>
       <!-- Placeholder to test components -->
 
         <router-view></router-view>
@@ -62,7 +62,7 @@
 
 
 <script>
-import JoinHouse from './views/joinHouse.vue';
+import Chat from './views/chat'
 /* import firebase from "firebase"; */
 // import Navbar from './components/Navbar.vue';
 
@@ -77,7 +77,7 @@ export default {
   }),
   name: "App",
   components: {
-    JoinHouse
+    Chat
     // Navbar
   },
   methods: {

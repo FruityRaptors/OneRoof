@@ -5,7 +5,7 @@ import { Todos } from '../entity/Todo'
 @Resolver()
 export class todoResolver {
     @Query(() => [Todos])
-    getAllTodo(){
+    getAllTodos(){
         return Todos.find()
     }
 

@@ -12,6 +12,7 @@ export default new Vuex.Store({
     //Current logged in User information
     user: {},
     isUserLoggedIn: false,
+    todos: [],
   },
 
   mutations: {
@@ -195,9 +196,32 @@ createHouse:(context, payload) => {
 //Todolist related actions starts
 ///////
 
-placeholderFunction(context){
-    console.log(context)
-  },
+getTodos(context, email) {
+  console.log(`Getting Todos`)
+  try {
+    axios({
+      method: "POST",
+      url: "/graphql",
+      data: {
+        query: `
+        {
+        getAllTodos(){
+          id
+          todo
+          date
+          creatorid
+          victimid
+         }
+        }`
+      }
+      .then((data) => {
+        console.log("Here's the data we collected!", data)
+      })
+    })
+    
+  }catch {
+    alert("Error with getting Todos!")
+  }},
 
 ///////
 //Todolist related actions ends
