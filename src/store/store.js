@@ -36,7 +36,7 @@ export default new Vuex.Store({
   actions: {
 
 ///////
-//User related actions starts
+//User related actions start
 ///////
 
 //Fetches user and set user to front end state
@@ -111,7 +111,7 @@ addUserToSQLDatabase(context, user) {
 
 
 ///////
-//House related actions starts
+//House related actions start
 ///////
 
 //Creating a new chat room + pushes it to the database + assigning it to the front end state
@@ -152,19 +152,36 @@ createHouse:(context, payload) => {
   joinHouse:(context, payload) => {
     console.log(`Joining ${payload.email} to room ${payload.roomkey}`)
 
-    axios({
+  //Check if house exists in the database
+    let checkExists = axios({
       method: "POST",
       url: "/graphql",
       data: {
-        query: `
-      mutation{
-      addToRoom(email:"${payload.email}", house_key:"${roomkey}")
-      }`
+        query: `{
+          {
+            getHouseName(house_key:"${payload}"){
+              house_key
+              house_name
+            }
+          }
+        }`
       }
     })
-
-
-
+//If so, add to the user
+    if (checkExists){
+      axios({
+        method: "POST",
+        url: "/graphql",
+        data: {
+          query: `
+        mutation{
+        addToRoom(email:"${payload.email}", house_key:"${payload}")
+        }`
+        }
+      })
+    } else {
+      alert('House Key error!')
+    }
   },
 
 ///////

@@ -1,31 +1,36 @@
-import { Query, Resolver, Mutation, Arg } from 'type-graphql'
-import { User } from '../schemas/userSchema'
-import { Users } from '../entity/Users'
-import { Todo } from '../entity/Todo'
+import { Query, Resolver, Mutation, Arg, } from 'type-graphql'
+import { Todos } from '../entity/Todo'
 // import { Todo } from '../schemas/todoSchema'
 
 @Resolver()
 export class todoResolver {
-    @Query(() => [Todo])
+    @Query(() => [Todos])
     getAllTodo(){
-        return Todo.find()
+        return Todos.find()
     }
 
 
-    //Create new Todo
+    //Create new Todo. Need to add category(?)
     @Mutation(() => String)
     async createTodo(
-        @Arg('todo') todo: string,
-        @Arg('house_key') house_key: string,
-        @Arg('date') date: string,
-        @Arg('victimid') victimid: string,
+        @Arg('todo') todo: string,             //Manual input
+        @Arg('date') date: string,             //Assign Automatically using JS date
+        @Arg('victimid') victimid: string,     //From Assignee dropdown(?)
+        @Arg('creatorid') creatorid: string,   //Automatic from user who created todo?
         ){
-        // const victimid = await Users.findOne({where: { victimid }})
 
-        await Todo.insert({ todo, house_key, date, victimid })
-        return todo
+        await Todos.insert({ todo, date, victimid, creatorid })
+        return "New Todo Added!"
       }
 
+    //Delete a todo by id
+    @Mutation(() => String)
+    async deleteTodo(
+        @Arg('id') id: number, 
+    ){
+        await Todos.delete(id)
+        return "Todo deleted!"
+    }
 }
 
 
