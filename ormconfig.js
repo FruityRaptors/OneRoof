@@ -1,5 +1,5 @@
 module.exports = {
-   "type": "pg",
+   "type": "postgres",
    "host": process.env.CLOUD_SQL_CONNECTION_NAME || "127.0.0.1",
    "port": process.env.DB_PORT,
    "username": process.env.DB_USER,

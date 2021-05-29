@@ -7,7 +7,7 @@
     "server": "ts-node server/index.ts",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "concurrently \"npm run serve\" \"npm run server\""
+    "start": "concurrently \"npm run serve\" \"ts-node server/index.ts\""
   },
   "dependencies": {
     "@google-cloud/storage": "^5.8.5",
@@ -28,6 +28,7 @@
     "type-graphql": "^1.1.1",
     "typeorm": "0.2.32",
     "vue": "^2.6.11",
+    "vue-avatar": "^2.3.3",
     "vue-router": "^3.2.0",
     "vuetify": "^2.4.0",
     "vuex": "^3.4.0"
