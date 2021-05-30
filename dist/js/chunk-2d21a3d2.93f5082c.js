@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d21a3d2"],{bb51:function(e,t,n){"use strict";n.r(t);var s=function(){var e=this,t=e.$createElement,n=e._self._c||t;return!0!==this.$store.state.isUserLoggedIn?n("div",[n("h1",[e._v("Please click above to login or register!")])]):n("div",[n("h1",[e._v("Here's where the chat will go!")])])},r=[],i=n("2877"),l={},o=Object(i["a"])(l,s,r,!1,null,null,null);t["default"]=o.exports}}]);
-//# sourceMappingURL=chunk-2d21a3d2.93f5082c.js.map
