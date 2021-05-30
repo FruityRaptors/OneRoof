@@ -7,7 +7,7 @@
     "server": "ts-node server/index.ts",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "concurrently \"npm run serve\" \"ts-node server/index.ts\""
+    "start": "ts-node server/index.ts"
   },
   "dependencies": {
     "@google-cloud/storage": "^5.8.5",
