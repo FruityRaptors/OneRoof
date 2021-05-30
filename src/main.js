@@ -3,7 +3,7 @@ import App from './App.vue'
 import store from './store/store'
 import router from './router'
 import './registerServiceWorker'
-import firebase from "firebase";
+import firebase from "firebase/app";
 import vuetify from './plugins/vuetify'
 
 // This is ok, we can expose this on the client side
