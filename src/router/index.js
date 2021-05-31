@@ -26,7 +26,7 @@ const routes = [
     component: () =>
       import('../views/Chat.vue'),
     meta: {
-      authRequired: true,
+      authRequired: false,
     }
   },
   {
@@ -35,7 +35,7 @@ const routes = [
     component: () =>
       import('../views/Profile.vue'),
     meta: {
-      authRequired: true,
+      authRequired: false,
     }
   },
   {
@@ -44,7 +44,7 @@ const routes = [
     component: () =>
       import('../views/TodoView.vue'),
     meta: {
-      authRequired: true,
+      authRequired: false,
     }
   },
 ]
