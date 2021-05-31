@@ -66,7 +66,7 @@ export default {
             todo: this.newTodoMessage,
             date: Date.now(),
             victimid: "maybe in a future update",
-            creatorid: "gotta find a way to get this from signed in user",
+            creatorid: this.$store.state.user.username,
             complete: false,
         }
         await this.$store.dispatch("addTodo", newTodo)
