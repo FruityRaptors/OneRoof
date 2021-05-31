@@ -80,7 +80,7 @@ methods: {
     },
 
     joinHouse(){
-        this.$store.dispatch("joinHouse", this.roomkey)
+        this.$store.dispatch("joinHouse", {email: this.$store.state.user.email, roomkey: this.roomkey})
     }
 } // Method End
 
