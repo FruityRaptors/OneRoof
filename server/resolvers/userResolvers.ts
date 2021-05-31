@@ -17,7 +17,6 @@ export class userResolvers {
         return Users.findOne({ where: { email } })
     }
 
-
     //To Creat new User with empty room
     @Mutation(() => String)
     async createUser(
@@ -72,7 +71,6 @@ export class userResolvers {
              await Users.save(userToBeUpdated)
              return "Added room to user!"
         }
-        
     }
 }
 

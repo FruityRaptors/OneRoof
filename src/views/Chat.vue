@@ -1,11 +1,12 @@
 <template>
   <div class="view chat">
-    <section clas="chat-box">
-      <v-card
-        max-height="600"
-        max-width="500"
+    
+<!-- chat section start -->
+    <v-container id="chat-box" class="chat-box" v-on:update="$vuetify.goTo(99999)">
+
+<!-- message container starts -->
+      <v-container
         elevation="0"
-        color="white"
         v-for="message in messages"
         :key="message.id"
         :class="
@@ -13,34 +14,53 @@
             ? 'text-right d-flex align-end flex-column mx-auto'
             : 'text-left d-flex align-start flex-column  mx-auto'
         "
-      >
-        <v-card class="pl-2" elevation="0" color="white" shaped max-width="200">
-          <Avatar :username="message.username"></Avatar>
-          <v-card-subtitle class="username">{{
-            message.username
-          }}</v-card-subtitle>
-          <v-chip
-            class="mb-2 mr-4"
+        >
+        
+<!-- Username and Avatar starts -->
+        <v-container class="lighten-4 mb-0 pb-0 pl-0" elevation="0" max-width="200">
+          <v-avatar size="20">
+            <Avatar :username="message.username" :size="20"></Avatar>
+          </v-avatar>
+          <v-card-subtitle class="d-inline-flex">
+            {{message.username}}
+          </v-card-subtitle>
+        </v-container>
+<!-- Username and Avatar ends -->
+
+<!-- Message box starts -->
+          <v-card
+            rounded
+            max-width="250"
+            class="mb-2 mr-4 pa-2"
             :color="
-              message.username == username ? 'primary' : 'light-green accent-1'
+              message.username == username ? 'orange light-3 white--text font-weight-medium text-justify' : 'orange light-1 accent-1 font-weight-medium'
             "
-            >{{ message.content }}</v-chip
-          >
-        </v-card>
-      </v-card>
-    </section>
+            >{{ message.content }}
+            </v-card>
+<!-- Message box ends -->
+
+
+      </v-container>
+<!-- message container ends -->
+
+    </v-container>
+<!-- chat section ends -->
+
+<!-- input and send section start -->
     <footer>
-      <form @submit.prevent="sendMessage">
+      <v-form @submit.prevent="sendMessage(); $vuetify.goTo(99999)">
         <input
           type="text"
           v-model="inputMessage"
           placeholder="Write your message..."
         />
         <input type="submit" value="Send" />
-      </form>
+      </v-form>
     </footer>
+<!-- input and send section start -->
   </div>
 </template>
+
 
 <script>
 import firebase from "firebase";
@@ -52,17 +72,19 @@ export default {
     return {
       inputMessage: "",
       messages: [],
-      username: this.$store.state.testUser.username,
+      username: this.$store.state.user.username,
     };
   }, // Data ends
+
   components: {
     Avatar,
-  },
-
+  }, //Components ends
+  
   mounted() {
     const messagesRef = firebase
       .database()
-      .ref(this.$store.state.testUser.house_key);
+      .ref(this.$store.state.user.house_keys[0])
+      .limitToLast(50);
 
     messagesRef.on("value", (snapshot) => {
       const data = snapshot.val();
@@ -77,6 +99,8 @@ export default {
       });
 
       this.messages = messages;
+
+      this.scrollBottom()
     });
   }, // Mounted Ends
 
@@ -84,14 +108,14 @@ export default {
     sendMessage() {
       const messagesRef = firebase
         .database()
-        .ref(this.$store.state.testUser.house_key);
+        .ref(this.$store.state.user.house_keys[0]);
 
       if (this.inputMessage === "" || this.inputMessage === null) {
         return;
       }
 
       const message = {
-        username: this.$store.state.testUser.username,
+        username: this.$store.state.user.username,
         content: this.inputMessage,
       };
 
@@ -99,7 +123,10 @@ export default {
 
       this.inputMessage = "";
     },
-  }, // Methods end
+     scrollBottom(){
+        return this.$vuetify.goTo(99999)
+      }
+  }, // Method ends
 };
 </script>
 
@@ -116,7 +143,7 @@ export default {
   display: flex;
   justify-content: center;
   min-height: 100vh;
-  background-color: burlywood;
+  background-color: whitesmoke;
 
   &.login {
     align-items: center;

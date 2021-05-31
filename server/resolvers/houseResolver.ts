@@ -1,7 +1,7 @@
 import { Query, Resolver, Mutation, Arg } from 'type-graphql'
 import { House } from '../schemas/houseSchema'
 import { Houses } from '../entity/Houses'
-// import { Todo } from '../schemas/todoSchema'
+
 
 @Resolver()
 export class houseResolver {
@@ -18,5 +18,4 @@ export class houseResolver {
         await Houses.insert({ house_name, house_key })
         return `${house_name} has been added to database!`
     }
-
 }
