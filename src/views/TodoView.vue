@@ -55,9 +55,10 @@ export default {
       todos: [],
     };
   },
-  mounted() {
-    this.todos = this.$store.state.todos
-    this.$store.dispatch("getTodos")
+ async mounted() {
+   console.log("before await")
+   await this.$store.dispatch("getTodos");
+   this.todos = this.$store.state.todos;  
   },
   methods: {
     addTodo() {
@@ -74,8 +75,9 @@ export default {
         let todo = this.todos.filter(todo => todo.id === id)[0]
         todo.complete = !todo.complete
     },
-    deleteTodo(id) {
+    async deleteTodo(id) {
         this.todos = this.todos.filter(todo => todo.id !== id)
+        await this.$store.dispatch("deleteTodo", id)
     }
   },
 };

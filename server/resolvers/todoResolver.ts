@@ -4,7 +4,7 @@ import { Todos } from '../entity/Todo'
 
 @Resolver()
 export class todoResolver {
-    @Query(() => [Todos])
+    @Query(() => [Todos])   
     getAllTodos(){
         return Todos.find()
     }
@@ -17,9 +17,10 @@ export class todoResolver {
         @Arg('date') date: string,             //Assign Automatically using JS date
         @Arg('victimid') victimid: string,     //From Assignee dropdown(?)
         @Arg('creatorid') creatorid: string,   //Automatic from user who created todo?
+        @Arg('complete') complete: boolean,    //For strikethrough/highglights
         ){
 
-        await Todos.insert({ todo, date, victimid, creatorid })
+        await Todos.insert({ todo, date, victimid, creatorid, complete })
         return "New Todo Added!"
       }
 
