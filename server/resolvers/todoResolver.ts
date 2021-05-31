@@ -29,7 +29,7 @@ export class todoResolver {
     async deleteTodo(
         @Arg('id') id: number, 
     ){
-        await Todos.delete(id)
+        await  Todos.delete( id )
         return "Todo deleted!"
     }
 }

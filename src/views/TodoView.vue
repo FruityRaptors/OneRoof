@@ -1,6 +1,7 @@
 <template>
   <div> 
     <div class="todo-page" id="todo-page-container">
+<!-- Add todo input field-->
          <v-text-field
             v-model="newTodoMessage"
             @click:append="addTodo"
@@ -12,7 +13,9 @@
             color="black lighten-3"
             clearable
             hide-details
-          ></v-text-field>
+          >
+          </v-text-field>
+<!-- todo list -->
       <v-list v-if="todos.length" class="pt-0" two-line flat>
         <div id="todo-container" v-for="todo in todos" :key="todo.id">
           <v-list-item @click="completeTodo(todo.id)" :class="{ 'green lighten-4' : todo.complete }">
@@ -28,11 +31,12 @@
                 <v-list-item-subtitle>{{ todo.victimid }}</v-list-item-subtitle>
               </v-list-item-content>
               <v-list-item-action>
+<!-- First Button. Currently does nothing -->
           <v-btn icon>
             <v-icon>mdi-delete</v-icon>
           </v-btn>
-          <v-btn icon @click.stop="modals.deleteTodo = true"> 
-            <!-- @click.stop="deleteTodo(todo.id)" -->
+<!-- Delete Button -->
+          <v-btn icon @click.stop="setState(todo)" > 
             <v-icon color="brown lighten-3">mdi-delete-sweep-outline</v-icon>
           </v-btn>
         </v-list-item-action>
@@ -41,13 +45,15 @@
           <v-divider></v-divider>
         </div>
       </v-list>
+<!-- No Todos if todo list is empty -->
       <div v-else>
         <div id="no-todo-bg">
           NO TODOS
         </div>
       </div>
     </div>
-    <DeleteModal v-if="modals.deleteTodo" v-bind:todo='todo' />
+<!-- Delete Modal -->
+          <DeleteModal v-if="modals.deleteTodo" :todo="currentId" @closeModal="modals.deleteTodo = false"  @clicked="deleteFromModal" />
   </div>
 </template>
 
@@ -57,16 +63,18 @@ import DeleteModal from './Modals/DeleteModal.vue'
 
 export default {
   name: "Home",
+  props: ['todo'],
   components: {
     DeleteModal
   },
   data() {
     return {
-      newTodoMessage: 'HERE I CAM',
+      newTodoMessage: 'HERE I AM',
       todos: [],
       modals: {
         deleteTodo: false,
       },
+      currentId: ''
     };
   },
  async mounted() {
@@ -84,7 +92,7 @@ export default {
             complete: false,
         }
         await this.$store.dispatch("addTodo", newTodo)
-        this.newTodoMessage = ''
+        this.newTodoMessage = 
         await this.$store.dispatch("getTodos");
         this.todos = this.$store.state.todos;  
     },
@@ -93,8 +101,21 @@ export default {
         todo.complete = !todo.complete
     },
     async deleteTodo(id) {
-        this.todos = this.todos.filter(todo => todo.id !== id)
+        console.log("THIS IS THE ID",id)
+        this.$store.state.todos = this.$store.state.filter(todo => todo.id !== id)
+        this.todos = this.$store.state.todos
         await this.$store.dispatch("deleteTodo", id)
+    },
+
+    async setState(todo){
+      console.log('abracadabra...', todo.id)
+      this.modals.deleteTodo = true
+      this.currentId = todo.id
+    },
+    async deleteFromModal(){
+      await this.$store.dispatch('deleteTodo', this.currentId)
+      await this.$store.dispatch("getTodos")
+      this.todos = this.$store.state.todos
     }
   },
 };

@@ -1,6 +1,5 @@
  <template>
  <v-dialog
-      persistent
       max-width="290"
       :value = "true"
     >   
@@ -14,12 +13,12 @@
           <v-btn
             color="green lighten-0"
             text
-            @click="dialog = false"
+            @click="$emit('closeModal')"
           >
             Cancel
           </v-btn>
           <v-btn
-            @click="$store.dispatch('deleteTodo', todo.id)"
+             @click="onClickDeleteButton"
             color="green lighten-0"
             text
           >
@@ -33,7 +32,20 @@
  <script>
  export default {
     name: 'Test',
-    props: ['todo']
+    props: ['todo'],
+    data(){
+      return {
+       
+      }
+    },
+    methods: {
+        onClickDeleteButton() {
+          console.log(this.$props.todo)
+            this.$emit('closeModal');
+            this.$emit('clicked');
+        }
+    }
 };
  </script>
- 
+ <!-- $store.dispatch('deleteTodo', todo.id) -->
+ <!-- @click="$emit('closeModal'); -->
