@@ -30,6 +30,11 @@ export default new Vuex.Store({
       console.log(`User state is now ${state.user}} and logged in is ${state.isUserLoggedIn}`)
     },
 
+    setUsername(state, username) {
+      console.log('setting new username to', username)
+      state.user.username = username
+    },
+
     resetUser(state) {
       state.loggedInUser = {}
     },
@@ -37,6 +42,7 @@ export default new Vuex.Store({
     toggleLoginBool(state) {
       state.isUserLoggedIn = !state.isUserLoggedIn
     },
+
     addTodosToList(state, todos) {
       console.log("SETTING TODOS", todos)
       state.todos = todos
