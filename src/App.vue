@@ -79,7 +79,7 @@ export default {
 
 <style>
 .login-options {
-  right: 0;
+  margin-left: auto;
   padding: 5px;
 }
 .profile-clickable {
