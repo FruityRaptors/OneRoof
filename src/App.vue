@@ -74,6 +74,9 @@ export default {
   components: {
     Avatar,
   },
+  mounted() {
+    this.$store.dispatch("checkIfLoggedInUser")
+  }
 };
 </script>
 
