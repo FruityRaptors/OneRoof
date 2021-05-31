@@ -1,5 +1,8 @@
 <template>
-  <v-app id="one-roof-app">
+<v-container v-if="this.$store.state.isUserLoggedIn !== true">
+  <Login />
+</v-container>
+  <v-app v-else id="one-roof-app">
     <!-- Nav drawer starts -->
     <v-navigation-drawer v-model="drawer" color="brown" app>
       <!-- Navbar title start -->
@@ -60,6 +63,7 @@
 
 <script>
 import Avatar from "vue-avatar";
+import Login from './views/Login.vue';
 
 export default {
   data: () => ({
@@ -73,6 +77,7 @@ export default {
   name: "App",
   components: {
     Avatar,
+    Login
   },
 };
 </script>
