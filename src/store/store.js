@@ -20,6 +20,7 @@ export default new Vuex.Store({
     user: {},
     isUserLoggedIn: false,
     todos: [],
+    // areTodosLoaded: false, // add a way to change it to false
   },
 
   mutations: {
@@ -36,9 +37,11 @@ export default new Vuex.Store({
     toggleLoginBool(state) {
       state.isUserLoggedIn = !state.isUserLoggedIn
     },
-    addTodos(state, todos) {
+    addTodosToList(state, todos) {
       console.log("SETTING TODOS", todos)
       state.todos = todos
+      state.areTodosLoaded = true;
+      console.log("TODOS SET", state.todos)
     }
   },
 
@@ -194,14 +197,14 @@ export default new Vuex.Store({
 
 
 
-    ///////
-    //Todolist related actions starts
-    ///////
-    // gets todos from database
-    getTodos(context) {
-      console.log(`Getting Todos`)
+///////
+//Todolist related actions starts
+///////
+// gets todos from database
+ async getTodos(context) {
+  console.log(`Getting Todos`)
       try {
-        axios({
+       await axios({
           method: "POST",
           url: "/graphql",
           data: {
@@ -213,23 +216,24 @@ export default new Vuex.Store({
                 victimid
                 todo
                 date
+                complete
               }
             }`
           }
         })
           .then((response) => {
-            console.log(response.data.data.getAllTodos)
-            context.commit("addTodos", response.data.data.getAllTodos)
-            console.log("CONSOLE LOG THE STATE TODO", this.state.todos)
-          })
-      } catch (error) {
+            console.log("ABOUT TO COMMIT")
+            context.commit("addTodosToList", response.data.data.getAllTodos)
+            console.log("AFTER COMMIT")
+        }) 
+      } catch(error) {
         console.log("This is your error", error)
       }
     },
 
-    // deletes specified todo from database
-    deleteTodo(context, todos) {
-      console.log(`Deleting Todo`)
+// deletes specified todo from database
+deleteTodo(context, id) {
+  console.log(`Deleting Todo`)
       try {
         axios({
           method: "POST",
@@ -237,7 +241,7 @@ export default new Vuex.Store({
           data: {
             query: `
             mutation{
-              deleteTodo(id:"${todos[0].id})
+              deleteTodo(id:${id})
             }`
           }
         })
@@ -248,6 +252,36 @@ export default new Vuex.Store({
         console.log("This is your error", error)
       }
     },
+
+// add a todo and updates database
+async addTodo(context, newTodo) {
+  console.log('Adding a todo to database')
+    try {
+      await axios({
+        method: "POST",
+        url: "/graphql",
+        data: {
+          query: `
+          mutation {
+            createTodo(
+              todo: "${newTodo.todo}", 
+              date: "${newTodo.date}",
+              victimid: "${newTodo.victimid}",
+              creatorid: "${newTodo.creatorid}",
+              complete: ${newTodo.complete}
+            )
+          }`
+        }
+      }).then((response => {
+        console.log("GOT TO THEN")
+        console.log(response.data.data.getAllTodos)
+        context.commit("addTodosToList", response.data.data.getAllTodos)
+      }))
+    } catch(error) {
+      console.log("GOT HERE")
+      console.log("This is your error, error")
+    }
+},
 
 
 
@@ -262,21 +296,6 @@ export default new Vuex.Store({
     ///////
     //Firebase related actions starts
     ///////
-
-    logoutUser(context) {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          context.commit("toggleLoginBool")
-          context.commit("resetUser")
-          router.push('/');
-        })
-        .catch(error => {
-          alert(error.message);
-          router.push('/');
-        });
-    },
 
     loginUser: (context, user) => {
       firebase
@@ -308,6 +327,29 @@ export default new Vuex.Store({
           alert(error.message);
         });
     },
+
+    logoutUser(context) {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          console.log("logging out user")
+          context.commit("toggleLoginBool")
+          context.commit("resetUser")
+          router.push('/');
+        })
+        .catch(error => {
+          alert(error.message);
+          router.push('/');
+        });
+    },
+
+    checkIfLoggedInUser(context) {
+      const user = firebase.auth().currentUser
+      if(user) {
+        context.dispatch("getUser", user.email)
+      }
+    }
 
     ////
     //Firebase related action ends

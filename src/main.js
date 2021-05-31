@@ -22,9 +22,15 @@ firebase.initializeApp(firebaseConfig);
 
 Vue.config.productionTip = false
 
-new Vue({
-  store,
-  router,
-  vuetify,
-  render: h => h(App)
-}).$mount('#app')
+let app;
+firebase
+  .auth().onAuthStateChanged(() => {
+    if (!app) {
+      app = new Vue({
+        store,
+        router,
+        vuetify,
+        render: h => h(App)
+      }).$mount('#app')
+    }
+  })
