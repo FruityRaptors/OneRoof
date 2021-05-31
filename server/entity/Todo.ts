@@ -42,4 +42,8 @@ export class Todos extends BaseEntity {
     @Column()
     creatorid: string;
 
+    @Field(() => Boolean)
+    @Column()
+    complete: boolean;
+
 } 
