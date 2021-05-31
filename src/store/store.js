@@ -29,6 +29,11 @@ export default new Vuex.Store({
       state.user = user;
     },
 
+    setUsername(state, username) {
+      console.log('setting new username to', username)
+      state.user.username = username
+    },
+
     resetUser(state) {
       state.loggedInUser = {}
     },
@@ -40,6 +45,7 @@ export default new Vuex.Store({
         state.isUserLoggedIn = false
       }
     },
+
     addTodosToList(state, todos) {
       console.log("SETTING TODOS", todos)
       state.todos = todos
@@ -73,8 +79,6 @@ export default new Vuex.Store({
             }`
           }
         }).then((response) => {
-          console.log(`fetched ${response.data.data.getUserByEmail}...`)
-
           //If fetched user belonged to a house, set user normally
           if (response.data.data.getUserByEmail.house_key) {
 
