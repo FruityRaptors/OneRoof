@@ -1,33 +1,18 @@
 <template>
-  <div>
-    <form @submit.prevent="register">
-      <h2>Register</h2>
-      <section>
-        <label for="name">What do your housemates call you?</label>
-        <input id="name" type="text" placeholder="name..." v-model="username" />
-      </section>
-      <section>
-        <label for="email">Please enter a valid email address</label>
-        <input
-          id="email"
-          type="email"
-          placeholder="Email address..."
-          v-model="email"
-        />
-      </section>
-      <section>
-        <label for="password">Enter a password, at least 6 characters</label>
-        <input
-          id="password"
-          type="password"
-          placeholder="password..."
-          v-model="password"
-        />
-      </section>
+  <v-card>
+    <v-card-title>
+      Register
+    </v-card-title>
 
-      <button type="submit">Register</button>
-    </form>
-  </div>
+    <v-text-field v-model="email" label="Email"></v-text-field>
+    <v-text-field v-model="password" label="Password"></v-text-field>
+    <v-text-field v-model="username" label="Username"></v-text-field>
+
+    <v-btn @click="register">
+      Register
+    </v-btn>
+    
+  </v-card>
 </template>
 
 <script>
@@ -45,7 +30,7 @@ export default {
       let email = this.email;
       let password = this.password;
       let username = this.username;
-      this.$store.dispatch("registerUser", { email, password, username });
+      this.$store.dispatch("registerUser", {email: email, password: password, username: username});
     },
   },
 };
