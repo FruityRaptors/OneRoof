@@ -32,7 +32,7 @@ import { houseResolver } from "./resolvers/houseResolver"
         });
       
         apolloServer.applyMiddleware({ app, cors: false });
-        const port = process.env.PORT || 4000;
+        const port = process.env.PORT || 8080;
 
     console.log('launching server...')
         app.listen(port, () => {

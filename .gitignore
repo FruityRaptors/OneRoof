@@ -5,5 +5,5 @@ build/
 tmp/
 temp/
 .env
-app.yaml
 .gcloudignore
+cloudsql/
