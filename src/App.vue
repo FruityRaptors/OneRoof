@@ -63,7 +63,6 @@
 // import Chat from './views/chat.vue';
 /* import firebase from "firebase"; */
 // import Navbar from './components/Navbar.vue';
-// import Chat from "./views/chat"
 
 export default {
   data: () => ({
@@ -76,7 +75,7 @@ export default {
   }),
   name: "App",
   components: {
-    // Chat
+    /* Chat */
   },
   methods: {
     logout() {
