@@ -26,6 +26,7 @@ export default new Vuex.Store({
     setUser(state, user) {
       console.log('Mutating user state....')
       state.user = user;
+      console.log(`User state is now ${state.user}} and logged in is ${state.isUserLoggedIn}`)
     },
 
     resetUser(state) {
@@ -50,7 +51,7 @@ export default new Vuex.Store({
     //Fetches user and set user to front end state
     getUser(context, email) {
       console.log(`Getting User: ${email} from the database...`)
-      try {
+
         axios({
           method: "POST",
           url: "/graphql",
@@ -66,30 +67,24 @@ export default new Vuex.Store({
             }`
           }
         }).then((response) => {
-          console.log("entire response from getUser", response.data.data.getUserByEmail)
-          console.log("User house key..", response.data.data.getUserByEmail.house_key)
+          context.commit("toggleLoginBool")
 
           //If fetched user belonged to a house, set user normally
-          if (response.data.data.getUserByEmail.house_key) {
-
-            console.log(`User already belonged to chat room(s)... going to home page`)
+          if (response.data.data.getUserByEmail.house_keys) {
+            let housekey = JSON.parse(response.data.data.getUserByEmail.house_keys)
+            response.data.data.getUserByEmail.house_keys = housekey
             context.commit("setUser", response.data.data.getUserByEmail)
-            context.commit("toggleLoginBool")
+            console.log(`User already belonged to chat room(s)... going to home page`)  
             router.push('/yourhome')
-
+            return
           } else {
-
-            console.log(`User doesn't have a home... going to join a home page`)
-            context.commit("setUser", response.data.data.getUserByEmail)
-            context.commit("toggleLoginBool")
+          context.commit("setUser", response.data.data.getUserByEmail)
+           console.log(`User doesn't have a home... going to join a home page`)
             //Should route to Join a house page, THE FOLLOWING LINE SHOULD BE DELETED!
-            router.push('/joinhouse')
-
+           router.push('/joinhouse')
           }
         });
-      } catch (error) {
-        console.log(`You got an ${error}`);
-      }
+      
     },
 
     //Adds user to the database after they have registered
@@ -109,7 +104,6 @@ export default new Vuex.Store({
         }).then(() => {
           context.dispatch("getUser", email)
         });
-      
     },
 
     ///////
@@ -126,16 +120,15 @@ export default new Vuex.Store({
     createHouse: (context, payload) => {
       let roomkey = keygen._()
 
-      console.log(`Adding ${payload.homename} to database...`)
+      console.log(`Adding ${payload.homename} to database... with the key ${roomkey}`)
       axios({
         method: "POST",
         url: "/graphql",
         data: {
-          query: `{
+          query: `
             mutation{
               createHouseWithName(house_name:"${payload.homename}", house_key:"${roomkey}")
-            }
-          }`
+            }`
         }
       }).then(()=> {
         axios({
@@ -164,30 +157,34 @@ export default new Vuex.Store({
         url: "/graphql",
         data: {
           query: `{
-          {
-            getHouseName(house_key:"${payload}"){
+            getHouseName(house_key:"${payload.roomkey}"){
               house_key
               house_name
             }
-          }
         }`
         }
+      }).then(() => {
+        console.log('Adding to home!')
+          //If so, add to the user
+        if (checkExists) {
+          axios({
+            method: "POST",
+            url: "/graphql",
+            data: {
+              query: `
+          mutation{
+          addToRoom(email:"${payload.email}", house_key:"${payload.roomkey}")
+          }`
+            }
+          })
+        } else {
+          alert('House Key error!')
+        }
+      }).then(() => {
+        console.log('success!')
+        context.dispatch("getUser", payload.email)
       })
-      //If so, add to the user
-      if (checkExists) {
-        axios({
-          method: "POST",
-          url: "/graphql",
-          data: {
-            query: `
-        mutation{
-        addToRoom(email:"${payload.email}", house_key:"${payload}")
-        }`
-          }
-        })
-      } else {
-        alert('House Key error!')
-      }
+    
     },
 
     ///////
@@ -303,8 +300,6 @@ export default new Vuex.Store({
         .auth()
         .createUserWithEmailAndPassword(user.email, user.password)
         .then(() => {
-          context.commit("toggleLoginBool")
-
           console.log('Adding user to the database...')
           //Add user to Database
           context.dispatch("addUserToSQLDatabase", {email: user.email, username: user.username })

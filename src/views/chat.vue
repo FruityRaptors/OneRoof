@@ -72,7 +72,7 @@ export default {
     return {
       inputMessage: "",
       messages: [],
-      username: this.$store.state.testUser.username,
+      username: this.$store.state.user.username,
     };
   }, // Data ends
 
@@ -83,7 +83,7 @@ export default {
   mounted() {
     const messagesRef = firebase
       .database()
-      .ref(this.$store.state.testUser.house_key)
+      .ref(this.$store.state.user.house_keys[0])
       .limitToLast(50);
 
     messagesRef.on("value", (snapshot) => {
@@ -108,14 +108,14 @@ export default {
     sendMessage() {
       const messagesRef = firebase
         .database()
-        .ref(this.$store.state.testUser.house_key);
+        .ref(this.$store.state.user.house_keys[0]);
 
       if (this.inputMessage === "" || this.inputMessage === null) {
         return;
       }
 
       const message = {
-        username: this.$store.state.testUser.username,
+        username: this.$store.state.user.username,
         content: this.inputMessage,
       };
 

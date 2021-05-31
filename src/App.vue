@@ -1,14 +1,14 @@
 <template>
-<v-container v-if="this.$store.state.isUserLoggedIn === false">
+<v-container v-if="this.$store.state.isUserLoggedIn == false">
   <Login v-if="this.login === true"/>
   <!-- <Register v-if="this.Login === false"/> -->
-  <Register v-if="this.login !== true"/>
+  <Register v-if="this.login === false"/>
   <v-btn @click="toggleRegLog">
     Register
   </v-btn>
 </v-container>
 
-  <v-app v-else id="one-roof-app">
+<v-app v-else id="one-roof-app">
     <!-- Nav drawer starts -->
     <v-navigation-drawer v-model="drawer" color="brown" app>
       <!-- Navbar title start -->

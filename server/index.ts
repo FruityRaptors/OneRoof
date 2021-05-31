@@ -12,7 +12,7 @@ import { houseResolver } from "./resolvers/houseResolver"
 (async () => {
   console.log("spinning up express")
   const app = express();
-console.log("connecting to SQL database")
+  console.log("connecting to SQL database")
   try {
     await connectDB()
   } catch (err) {
