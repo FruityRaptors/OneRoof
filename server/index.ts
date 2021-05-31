@@ -19,7 +19,7 @@ console.log("connecting to SQL database")
     console.log(err)
   }
 
-  console.log('Starting Apollow Server')
+  console.log('Starting Apollo Server')
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
       resolvers: [userResolvers, todoResolver, houseResolver],

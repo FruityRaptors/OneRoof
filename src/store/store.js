@@ -33,11 +33,7 @@ export default new Vuex.Store({
     },
 
     toggleLoginBool(state) {
-      if (state.isUserLoggedIn === false) {
-        state.isUserLoggedIn = true
-      } else {
-        state.isUserLoggedIn = false
-      }
+      state.isUserLoggedIn = !state.isUserLoggedIn
     },
     addTodos(state, todos) {
       console.log("SETTING TODOS", todos)
@@ -70,7 +66,8 @@ export default new Vuex.Store({
             }`
           }
         }).then((response) => {
-          console.log(`fetched ${response.data.data.getUserByEmail}...`)
+          console.log("entire response from getUser", response.data.data.getUserByEmail)
+          console.log("User house key..", response.data.data.getUserByEmail.house_key)
 
           //If fetched user belonged to a house, set user normally
           if (response.data.data.getUserByEmail.house_key) {
@@ -97,8 +94,9 @@ export default new Vuex.Store({
 
     //Adds user to the database after they have registered
     addUserToSQLDatabase(context, user) {
-      console.log('fetching user from database...')
-      try {
+      let email = user.email
+      console.log(`adding ${user.email} ${user.username} to database...`)
+  
         axios({
           method: "POST",
           url: "/graphql",
@@ -108,14 +106,10 @@ export default new Vuex.Store({
           createUser(email:"${user.email}", username: "${user.username}", isAdmin: false )
           }`
           }
-        }).then((response, user) => {
-          console.log("🔥 When this goes through we're in great shape! 🔥  ", response, user)
-          //User should be added and now we will fetch the user from our Database...
-          context.dispatch("getUser", response.data.data.createUser)
+        }).then(() => {
+          context.dispatch("getUser", email)
         });
-      } catch (error) {
-        console.log(`You got an ${error}`);
-      }
+      
     },
 
     ///////
@@ -143,9 +137,7 @@ export default new Vuex.Store({
             }
           }`
         }
-      })
-      console.log(`Assigning room to user: ${payload.email}`)
-      try {
+      }).then(()=> {
         axios({
           method: "POST",
           url: "/graphql",
@@ -156,11 +148,11 @@ export default new Vuex.Store({
         }`
           }
         })
+
+      }).then(() => {
         console.log(`User: ${payload.email} created and joined room... re-fetching user from database...`)
         context.dispatch("getUser", payload.email)
-      } catch (err) {
-        console.log(err)
-      }
+      })
     },
 
     joinHouse: (context, payload) => {
@@ -315,12 +307,7 @@ export default new Vuex.Store({
 
           console.log('Adding user to the database...')
           //Add user to Database
-          context.dispatch("addUserToSQLDatabase", user)
-            .then(() => {
-              //this should instead route user to JOIN A HOUSE page
-              router.push('/joinhouse')
-              alert('Successfully registered!');
-            })
+          context.dispatch("addUserToSQLDatabase", {email: user.email, username: user.username })
         })
         .catch(error => {
           alert(error.message);

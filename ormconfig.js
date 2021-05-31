@@ -4,7 +4,7 @@ module.exports = {
    "port": 5432,
    "username": process.env.DB_USER,
    "password": process.env.DB_PASS,
-   "database": process.env.DB_NAME,
+   "database": "oneroof",
    "synchronize": true,
    "logging": false,
    "entities": [

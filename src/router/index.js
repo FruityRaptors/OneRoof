@@ -46,7 +46,17 @@ const routes = [
     meta: {
       authRequired: false,
     }
+    
   },
+  {
+    path: '/joinhouse',
+    name: 'joinHouse',
+    component: () =>
+      import('../views/JoinHouse.vue'),
+    meta: {
+      authRequired: true,
+    }
+  }
 ]
 
 const router = new VueRouter({

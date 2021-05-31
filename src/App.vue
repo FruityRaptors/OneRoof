@@ -1,7 +1,13 @@
 <template>
-<v-container v-if="this.$store.state.isUserLoggedIn !== true">
-  <Login />
+<v-container v-if="this.$store.state.isUserLoggedIn === false">
+  <Login v-if="this.login === true"/>
+  <!-- <Register v-if="this.Login === false"/> -->
+  <Register v-if="this.login !== true"/>
+  <v-btn @click="toggleRegLog">
+    Register
+  </v-btn>
 </v-container>
+
   <v-app v-else id="one-roof-app">
     <!-- Nav drawer starts -->
     <v-navigation-drawer v-model="drawer" color="brown" app>
@@ -64,6 +70,7 @@
 <script>
 import Avatar from "vue-avatar";
 import Login from './views/Login.vue';
+import Register from './views/Register'
 
 export default {
   data: () => ({
@@ -73,21 +80,21 @@ export default {
       { title: "Chat", icon: "mdi-view-dashboard", to: "/yourhome" }, //Use to: to link views
       { title: "To-do", icon: "mdi-format-list-checks", to: "/todo" },
     ],
+    login: true,
   }),
   name: "App",
   components: {
     Avatar,
-    Login
+    Login,
+    Register
+  },
+  methods: {
+    toggleRegLog(){
+      this.login = !this.login
+    }
   },
 };
 </script>
 
 <style>
-.login-options {
-  margin-left: auto;
-  padding: 5px;
-}
-.profile-clickable {
-  margin-left: auto;
-}
 </style>
