@@ -51,7 +51,7 @@ export default {
   name: "Home",
   data() {
     return {
-      newTodoMessage: '',
+      newTodoMessage: 'HERE I CAM',
       todos: [],
     };
   },
@@ -61,15 +61,18 @@ export default {
    this.todos = this.$store.state.todos;  
   },
   methods: {
-    addTodo() {
+    async addTodo() {
         let newTodo = {
-            id: Date.now(),
             todo: this.newTodoMessage,
-            assignee: "Gotta get from database",
+            date: Date.now(),
+            victimid: "maybe in a future update",
+            creatorid: "gotta find a way to get this from signed in user",
             complete: false,
         }
-        this.$store.state.todos.push(newTodo) //send to state?
+        await this.$store.dispatch("addTodo", newTodo)
         this.newTodoMessage = ''
+        await this.$store.dispatch("getTodos");
+        this.todos = this.$store.state.todos;  
     },
     completeTodo(id) {
         let todo = this.todos.filter(todo => todo.id === id)[0]

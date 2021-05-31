@@ -40,7 +40,7 @@ export default new Vuex.Store({
         state.isUserLoggedIn = false
       }
     },
-    addTodos(state, todos) {
+    addTodosToList(state, todos) {
       console.log("SETTING TODOS", todos)
       state.todos = todos
       state.areTodosLoaded = true;
@@ -232,7 +232,7 @@ createHouse:(context, payload) => {
         }) 
           .then((response) => {
             console.log("ABOUT TO COMMIT")
-            context.commit("addTodos", response.data.data.getAllTodos)
+            context.commit("addTodosToList", response.data.data.getAllTodos)
             console.log("AFTER COMMIT")
         }) 
       } catch(error) {
@@ -263,29 +263,31 @@ deleteTodo(context, id) {
 },
 
 // add a todo and updates database
-addTodo(context, todo, date, victimid, creatorid, complete) {
+async addTodo(context, newTodo) {
   console.log('Adding a todo to database')
     try {
-      axios({
+      await axios({
         method: "POST",
         url: "/graphql",
         data: {
           query: `
           mutation {
             createTodo(
-              todo: ${todo}, 
-              date: ${date},
-              victimid: ${victimid},
-              creatorid: ${creatorid},
-              complete: ${complete}
-
+              todo: "${newTodo.todo}", 
+              date: "${newTodo.date}",
+              victimid: "${newTodo.victimid}",
+              creatorid: "${newTodo.creatorid}",
+              complete: ${newTodo.complete}
             )
           }`
         }
       }).then((response => {
+        console.log("GOT TO THEN")
         console.log(response.data.data.getAllTodos)
+        context.commit("addTodosToList", response.data.data.getAllTodos)
       }))
     } catch(error) {
+      console.log("GOT HERE")
       console.log("This is your error, error")
     }
 },
