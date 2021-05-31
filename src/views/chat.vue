@@ -99,7 +99,7 @@ export default {
 
       this.inputMessage = "";
     },
-  }, // Method ends
+  }, // Methods end
 };
 </script>
 

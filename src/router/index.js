@@ -24,7 +24,7 @@ const routes = [
     path: '/yourhome',
     name: 'Your Home',
     component: () =>
-        import('../views/Home.vue'),
+        import('../views/Chat.vue'),
         meta: {
           authRequired: false,
         }
