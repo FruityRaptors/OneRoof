@@ -20,6 +20,7 @@ export default new Vuex.Store({
     user: {},
     isUserLoggedIn: false,
     todos: [],
+    // areTodosLoaded: false, // add a way to change it to false
   },
 
   mutations: {
@@ -42,6 +43,8 @@ export default new Vuex.Store({
     addTodos(state, todos) {
       console.log("SETTING TODOS", todos)
       state.todos = todos
+      state.areTodosLoaded = true;
+      console.log("TODOS SET", state.todos)
     }
   },
 
@@ -55,7 +58,7 @@ export default new Vuex.Store({
 getUser(context, email) {
       console.log(`Getting User: ${email} from the database...`)
       try {
-        axios({
+       axios({
           method: "POST",
           url: "/graphql",
           data: {
@@ -207,10 +210,10 @@ createHouse:(context, payload) => {
 //Todolist related actions starts
 ///////
 // gets todos from database
-getTodos(context) {
+ async getTodos(context) {
   console.log(`Getting Todos`)
       try {
-        axios({
+       await axios({
           method: "POST",
           url: "/graphql",
           data: {
@@ -222,14 +225,15 @@ getTodos(context) {
                 victimid
                 todo
                 date
+                complete
               }
             }`
           }
         }) 
           .then((response) => {
-            console.log(response.data.data.getAllTodos)
+            console.log("ABOUT TO COMMIT")
             context.commit("addTodos", response.data.data.getAllTodos)
-            console.log("CONSOLE LOG THE STATE TODO",this.state.todos)
+            console.log("AFTER COMMIT")
         }) 
       } catch(error) {
         console.log("This is your error", error)
@@ -237,7 +241,7 @@ getTodos(context) {
 },
 
 // deletes specified todo from database
-deleteTodo(context, todos) {
+deleteTodo(context, id) {
   console.log(`Deleting Todo`)
       try {
         axios({
@@ -246,7 +250,7 @@ deleteTodo(context, todos) {
           data: {
             query: `
             mutation{
-              deleteTodo(id:"${todos[0].id})
+              deleteTodo(id:${id})
             }`
           }
         }) 
@@ -256,6 +260,34 @@ deleteTodo(context, todos) {
       } catch(error) {
         console.log("This is your error", error)
       }
+},
+
+// add a todo and updates database
+addTodo(context, todo, date, victimid, creatorid, complete) {
+  console.log('Adding a todo to database')
+    try {
+      axios({
+        method: "POST",
+        url: "/graphql",
+        data: {
+          query: `
+          mutation {
+            createTodo(
+              todo: ${todo}, 
+              date: ${date},
+              victimid: ${victimid},
+              creatorid: ${creatorid},
+              complete: ${complete}
+
+            )
+          }`
+        }
+      }).then((response => {
+        console.log(response.data.data.getAllTodos)
+      }))
+    } catch(error) {
+      console.log("This is your error, error")
+    }
 },
 
 

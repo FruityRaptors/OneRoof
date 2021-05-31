@@ -20,15 +20,15 @@ const routes = [
     name: 'Register',
     component: () => import('../views/Register.vue')
   },
-  {
-    path: '/yourhome',
-    name: 'Your Home',
-    component: () =>
-        import('../views/Chat.vue'),
-        meta: {
-          authRequired: false,
-        }
-  },
+  // {
+  //   path: '/yourhome',
+  //   name: 'Your Home',
+  //   component: () =>
+  //       import('../views/Chat.vue'),
+  //       meta: {
+  //         authRequired: false,
+  //       }
+  // },
   {
     path: '/todo',
     name: 'Todo List',
