@@ -1,6 +1,9 @@
 <template>
   <div class="view chat">
+<!-- chat section start -->
     <section clas="chat-box">
+
+<!-- message container starts -->
       <v-card
         max-height="600"
         max-width="500"
@@ -13,9 +16,12 @@
             ? 'text-right d-flex align-end flex-column mx-auto'
             : 'text-left d-flex align-start flex-column  mx-auto'
         "
-      >
+        >
+        
         <v-card class="pl-2" elevation="0" color="white" shaped max-width="200">
-          <Avatar :username="message.username"></Avatar>
+          <v-avatar size="20">
+            <Avatar :username="message.username"></Avatar>
+          </v-avatar>
           <v-card-subtitle class="username">{{
             message.username
           }}</v-card-subtitle>
@@ -28,7 +34,12 @@
           >
         </v-card>
       </v-card>
+<!-- message container ends -->
+
     </section>
+<!-- chat section ends -->
+
+<!-- input and send section start -->
     <footer>
       <form @submit.prevent="sendMessage">
         <input
@@ -39,6 +50,9 @@
         <input type="submit" value="Send" />
       </form>
     </footer>
+<!-- input and send section start -->
+
+
   </div>
 </template>
 

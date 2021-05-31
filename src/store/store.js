@@ -11,7 +11,7 @@ export default new Vuex.Store({
   state: {
     testUser: {
       id: 1,
-      username: "DAddy",
+      username: "Jay",
       house_key: "testhousekey",
       email: "testerEmail",
       isAdmin: false
