@@ -275,21 +275,6 @@ export default new Vuex.Store({
     //Firebase related actions starts
     ///////
 
-    logoutUser(context) {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          context.commit("toggleLoginBool")
-          context.commit("resetUser")
-          router.push('/');
-        })
-        .catch(error => {
-          alert(error.message);
-          router.push('/');
-        });
-    },
-
     loginUser: (context, user) => {
       firebase
         .auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
@@ -327,6 +312,29 @@ export default new Vuex.Store({
           alert(error.message);
         });
     },
+
+    logoutUser(context) {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          console.log("logging out user")
+          context.commit("toggleLoginBool")
+          context.commit("resetUser")
+          router.push('/');
+        })
+        .catch(error => {
+          alert(error.message);
+          router.push('/');
+        });
+    },
+
+    checkIfLoggedInUser(context) {
+      const user = firebase.auth().currentUser
+      if(user) {
+        context.dispatch("getUser", user.email)
+      }
+    }
 
     ////
     //Firebase related action ends

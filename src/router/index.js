@@ -22,7 +22,7 @@ const routes = [
   },
   {
     path: '/yourhome',
-    name: 'Your Home',
+    name: 'Chat',
     component: () =>
       import('../views/Chat.vue'),
     meta: {
@@ -58,9 +58,6 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const currentUser = firebase.auth().currentUser;
   const authRequired = to.matched.some(record => record.meta.authRequired);
-
-  console.log("current user:", currentUser)
-  console.log("auth required", authRequired)
   
   if (authRequired == true && !currentUser) {
     alert('You must be logged in to see this page');

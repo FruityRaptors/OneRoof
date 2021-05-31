@@ -1,7 +1,4 @@
 <template>
-  <!-- <div v-if="this.$store.state.isUserLoggedIn !== true">
-    <h1>Please click above to login or register!</h1>
-  </div>  add v-else to line 5--->
   <div> 
     <div class="todo-page" id="todo-page-container">
          <v-text-field
