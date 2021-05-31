@@ -83,11 +83,10 @@ export default new Vuex.Store({
           } else {
 
             console.log(`User doesn't have a home... going to join a home page`)
-            //if they don't belonged to any house.. should route to JOIN A HOUSE page
             context.commit("setUser", response.data.data.getUserByEmail)
             context.commit("toggleLoginBool")
             //Should route to Join a house page, THE FOLLOWING LINE SHOULD BE DELETED!
-            router.push('/yourhome')
+            router.push('/joinhouse')
 
           }
         });
@@ -319,7 +318,7 @@ export default new Vuex.Store({
           context.dispatch("addUserToSQLDatabase", user)
             .then(() => {
               //this should instead route user to JOIN A HOUSE page
-              router.push('/yourhome')
+              router.push('/joinhouse')
               alert('Successfully registered!');
             })
         })

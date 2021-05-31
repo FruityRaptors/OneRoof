@@ -22,7 +22,7 @@ const routes = [
   },
   {
     path: '/yourhome',
-    name: 'Your Home',
+    name: 'Chat',
     component: () =>
       import('../views/Chat.vue'),
     meta: {
