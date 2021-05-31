@@ -100,4 +100,7 @@ export default {
 </script>
 
 <style>
+.profile-clickable {
+  margin-left: auto
+}
 </style>

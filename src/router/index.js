@@ -50,7 +50,7 @@ const routes = [
   },
   {
     path: '/joinhouse',
-    name: 'joinHouse',
+    name: 'JoinHouse',
     component: () =>
       import('../views/JoinHouse.vue'),
     meta: {

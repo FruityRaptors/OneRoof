@@ -64,7 +64,7 @@
 <script>
 export default {
 
-    name: "joinHouse",
+    name: "JoinHouse",
 
 data(){
     return {
