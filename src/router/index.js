@@ -35,7 +35,7 @@ const routes = [
     component: () =>
       import('../views/Profile.vue'),
     meta: {
-      authRequired: true,
+      authRequired: false,
     }
   },
   {
@@ -56,15 +56,17 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.authRequired)) {
-    if (firebase.auth().currentUser) {
-      next();
-    } else {
-      alert('You must be logged in to see this page');
-      next({
-        path: '/',
-      });
-    }
+  const currentUser = firebase.auth().currentUser;
+  const authRequired = to.matched.some(record => record.meta.authRequired);
+
+  console.log("current user:", currentUser)
+  console.log("auth required", authRequired)
+  
+  if (authRequired == true && !currentUser) {
+    alert('You must be logged in to see this page');
+    next({
+      path: '/',
+    });
   } else {
     next();
   }
