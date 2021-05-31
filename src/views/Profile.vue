@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Hello, {{ this.username }}</h1>
-    <button @click="logout">Logout {{ this.username }}</button>
+    <button @click="logout">Logout</button>
     <UpdateUser @setProfilePageUsername="changeUsername" />
   </div>
 </template>
