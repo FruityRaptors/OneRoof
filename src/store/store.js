@@ -47,12 +47,12 @@ export default new Vuex.Store({
 
   actions: {
 
-///////
-//User related actions start
-///////
+    ///////
+    //User related actions start
+    ///////
 
-//Fetches user and set user to front end state
-getUser(context, email) {
+    //Fetches user and set user to front end state
+    getUser(context, email) {
       console.log(`Getting User: ${email} from the database...`)
       try {
         axios({
@@ -70,13 +70,14 @@ getUser(context, email) {
             }`
           }
         }).then((response) => {
-            console.log(`fetched ${response.data.data.getUserByEmail}...`)
+          console.log(`fetched ${response.data.data.getUserByEmail}...`)
 
           //If fetched user belonged to a house, set user normally
-          if(response.data.data.getUserByEmail.house_key){
+          if (response.data.data.getUserByEmail.house_key) {
 
             console.log(`User already belonged to chat room(s)... going to home page`)
             context.commit("setUser", response.data.data.getUserByEmail)
+            context.commit("toggleLoginBool")
             router.push('/yourhome')
 
           } else {
@@ -84,7 +85,9 @@ getUser(context, email) {
             console.log(`User doesn't have a home... going to join a home page`)
             //if they don't belonged to any house.. should route to JOIN A HOUSE page
             context.commit("setUser", response.data.data.getUserByEmail)
-            //Should route to Join a house page
+            context.commit("toggleLoginBool")
+            //Should route to Join a house page, THE FOLLOWING LINE SHOULD BE DELETED!
+            router.push('/yourhome')
 
           }
         });
@@ -93,8 +96,8 @@ getUser(context, email) {
       }
     },
 
-//Adds user to the database after they have registered
-addUserToSQLDatabase(context, user) {
+    //Adds user to the database after they have registered
+    addUserToSQLDatabase(context, user) {
       console.log('fetching user from database...')
       try {
         axios({
@@ -116,19 +119,19 @@ addUserToSQLDatabase(context, user) {
       }
     },
 
-///////
-//User related actions ends
-///////
+    ///////
+    //User related actions ends
+    ///////
 
 
 
-///////
-//House related actions start
-///////
+    ///////
+    //House related actions start
+    ///////
 
-//Creating a new chat room + pushes it to the database + assigning it to the front end state
-createHouse:(context, payload) => {
-  let roomkey = keygen._()
+    //Creating a new chat room + pushes it to the database + assigning it to the front end state
+    createHouse: (context, payload) => {
+      let roomkey = keygen._()
 
       console.log(`Adding ${payload.homename} to database...`)
       axios({
@@ -143,33 +146,33 @@ createHouse:(context, payload) => {
         }
       })
       console.log(`Assigning room to user: ${payload.email}`)
-      try{
+      try {
         axios({
-        method: "POST",
-        url: "/graphql",
-        data: {
-          query: `
+          method: "POST",
+          url: "/graphql",
+          data: {
+            query: `
         mutation{
         addToRoom(email:"${payload.email}", house_key:"${roomkey}")
         }`
-        }
-      })
-      console.log(`User: ${payload.email} created and joined room... re-fetching user from database...`)
-      context.dispatch("getUser", payload.email)
-    } catch (err) {
-      console.log(err)
+          }
+        })
+        console.log(`User: ${payload.email} created and joined room... re-fetching user from database...`)
+        context.dispatch("getUser", payload.email)
+      } catch (err) {
+        console.log(err)
       }
-  },
+    },
 
-  joinHouse:(context, payload) => {
-    console.log(`Joining ${payload.email} to room ${payload.roomkey}`)
+    joinHouse: (context, payload) => {
+      console.log(`Joining ${payload.email} to room ${payload.roomkey}`)
 
-  //Check if house exists in the database
-    let checkExists = axios({
-      method: "POST",
-      url: "/graphql",
-      data: {
-        query: `{
+      //Check if house exists in the database
+      let checkExists = axios({
+        method: "POST",
+        url: "/graphql",
+        data: {
+          query: `{
           {
             getHouseName(house_key:"${payload}"){
               house_key
@@ -177,38 +180,38 @@ createHouse:(context, payload) => {
             }
           }
         }`
-      }
-    })
-//If so, add to the user
-    if (checkExists){
-      axios({
-        method: "POST",
-        url: "/graphql",
-        data: {
-          query: `
+        }
+      })
+      //If so, add to the user
+      if (checkExists) {
+        axios({
+          method: "POST",
+          url: "/graphql",
+          data: {
+            query: `
         mutation{
         addToRoom(email:"${payload.email}", house_key:"${payload}")
         }`
-        }
-      })
-    } else {
-      alert('House Key error!')
-    }
-  },
+          }
+        })
+      } else {
+        alert('House Key error!')
+      }
+    },
 
-///////
-//House related actions ends
-///////
-
-
+    ///////
+    //House related actions ends
+    ///////
 
 
-///////
-//Todolist related actions starts
-///////
-// gets todos from database
-getTodos(context) {
-  console.log(`Getting Todos`)
+
+
+    ///////
+    //Todolist related actions starts
+    ///////
+    // gets todos from database
+    getTodos(context) {
+      console.log(`Getting Todos`)
       try {
         axios({
           method: "POST",
@@ -225,20 +228,20 @@ getTodos(context) {
               }
             }`
           }
-        }) 
+        })
           .then((response) => {
             console.log(response.data.data.getAllTodos)
             context.commit("addTodos", response.data.data.getAllTodos)
-            console.log("CONSOLE LOG THE STATE TODO",this.state.todos)
-        }) 
-      } catch(error) {
+            console.log("CONSOLE LOG THE STATE TODO", this.state.todos)
+          })
+      } catch (error) {
         console.log("This is your error", error)
       }
-},
+    },
 
-// deletes specified todo from database
-deleteTodo(context, todos) {
-  console.log(`Deleting Todo`)
+    // deletes specified todo from database
+    deleteTodo(context, todos) {
+      console.log(`Deleting Todo`)
       try {
         axios({
           method: "POST",
@@ -249,30 +252,30 @@ deleteTodo(context, todos) {
               deleteTodo(id:"${todos[0].id})
             }`
           }
-        }) 
+        })
           .then((response) => {
             console.log(response.data.data.getAllTodos)
-        }) 
-      } catch(error) {
+          })
+      } catch (error) {
         console.log("This is your error", error)
       }
-},
+    },
 
 
 
 
-///////
-//Todolist related actions ends
-///////
+    ///////
+    //Todolist related actions ends
+    ///////
 
 
 
 
-///////
-//Firebase related actions starts
-///////
+    ///////
+    //Firebase related actions starts
+    ///////
 
-logoutUser(context) {
+    logoutUser(context) {
       firebase
         .auth()
         .signOut()
@@ -285,22 +288,26 @@ logoutUser(context) {
           alert(error.message);
           router.push('/');
         });
-},
+    },
 
-loginUser: (context, user) => {
+    loginUser: (context, user) => {
       firebase
-        .auth()
-        .signInWithEmailAndPassword(user.email, user.password)
+        .auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
         .then(() => {
-          context.commit("toggleLoginBool")
-          context.dispatch("getUser", user.email)
+          firebase.auth().signInWithEmailAndPassword(user.email, user.password)
+            .then(() => {
+              context.dispatch("getUser", user.email)
+            })
+            .catch(error => {
+              alert(error.message);
+            });
         })
         .catch(error => {
           alert(error.message);
         });
-},
+    },
 
-registerUser: (context, user) => {
+    registerUser: (context, user) => {
       firebase
         .auth()
         .createUserWithEmailAndPassword(user.email, user.password)
@@ -316,14 +323,14 @@ registerUser: (context, user) => {
               alert('Successfully registered!');
             })
         })
-    .catch(error => {
+        .catch(error => {
           alert(error.message);
-    });
-},
+        });
+    },
 
-////
-//Firebase related action ends
-////
+    ////
+    //Firebase related action ends
+    ////
 
   },
 

@@ -1,21 +1,19 @@
 <template>
   <v-app id="one-roof-app">
-    
-<!-- Nav drawer starts -->
+    <!-- Nav drawer starts -->
     <v-navigation-drawer v-model="drawer" color="brown" app>
-
-<!-- Navbar title start -->
+      <!-- Navbar title start -->
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title"> OneRoof </v-list-item-title>
           <v-list-item-subtitle> Yamada Home </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
-<!-- Nav bar title ends -->
+      <!-- Nav bar title ends -->
 
       <v-divider></v-divider>
 
-<!-- Navigation bar start -->
+      <!-- Navigation bar start -->
       <v-list dense nav>
         <v-list-item v-for="item in items" :key="item.title" :to="item.to" link>
           <v-list-item-icon>
@@ -26,44 +24,42 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-<!-- Navigation bar ends -->
-
+      <!-- Navigation bar ends -->
     </v-navigation-drawer>
-<!-- Nav drawer ends -->
+    <!-- Nav drawer ends -->
 
-<!-- App top bar start -->
+    <!-- App top bar start -->
     <v-app-bar app>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>OneRoof</v-toolbar-title>
-      <section v-if="this.$store.state.isUserLoggedIn !== true" class="login-options">
+      <section
+        v-if="this.$store.state.isUserLoggedIn !== true"
+        class="login-options"
+      >
         <router-link to="/login">Login</router-link> |
         <router-link to="/register">Reg</router-link>
       </section>
-      <section v-else>
-        <button @click="logout">Logout</button>
+      <section v-else class="profile-clickable">
+        <router-link to="/profile"
+          ><Avatar :username="this.$store.state.user.username"></Avatar
+        ></router-link>
       </section>
     </v-app-bar>
-<!-- App top bar ends -->
+    <!-- App top bar ends -->
 
-<!-- Main app component -->
+    <!-- Main app component -->
     <v-main>
-
       <!-- Placeholder to test components -->
       <!-- Placeholder to test components -->
-      <Chat />
-        <router-view></router-view>
-
+      <router-view></router-view>
     </v-main>
-<!-- Main app ends -->
-
+    <!-- Main app ends -->
   </v-app>
 </template>
 
 
 <script>
-/* import firebase from "firebase"; */
-// import Navbar from './components/Navbar.vue';
-import Chat from "./views/chat"
+import Avatar from "vue-avatar";
 
 export default {
   data: () => ({
@@ -76,19 +72,17 @@ export default {
   }),
   name: "App",
   components: {
-    Chat
-  },
-  methods: {
-    logout() {
-      this.$store.dispatch("logoutUser");
-    },
+    Avatar,
   },
 };
 </script>
 
 <style>
-  .login-options {
-    right: 0;
-    padding: 5px
-  }
+.login-options {
+  margin-left: auto;
+  padding: 5px;
+}
+.profile-clickable {
+  margin-left: auto;
+}
 </style>
