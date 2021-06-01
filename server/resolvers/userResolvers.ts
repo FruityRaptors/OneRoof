@@ -16,10 +16,25 @@ export class userResolvers {
     getUserByEmail(@Arg("email") email: string) {
         return Users.findOne({ where: { email } })
     }
+
     //Get all users in a with a house
     @Query(() => [User])
-    getUsersByHousekey(@Arg("house_keys") house_keys: string) {
-        return Users.find({ where: { house_keys } })
+    async getUsersByHousekey(@Arg("house_keys") house_keys: string) {
+       let allUsers = await this.getAllUsers()
+        
+       let result = allUsers.filter((user) => {
+
+           let house_keysArr = JSON.parse(user.house_keys)
+           
+           if(!house_keysArr[0]){
+               return
+           }
+           if (house_keysArr[0] === house_keys){
+                return user
+            }
+        })
+
+        return result
     }
 
     //To Create new User with empty room

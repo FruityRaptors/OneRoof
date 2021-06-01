@@ -20,11 +20,11 @@ export class Todos extends BaseEntity {
     // @Column()
     // category: number;
 
-    // @Field(() => String)
-    // @Column({
-    //     length: 50
-    // })
-    // house_key: string;
+    @Field(() => String)
+    @Column({
+        length: 50
+    })
+    house_key: string;
 
     @Field(() => String)
     @Column()
