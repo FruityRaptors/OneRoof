@@ -1,14 +1,12 @@
 <template>
-<v-container v-if="this.$store.state.isUserLoggedIn == false">
-  <Login v-if="this.login === true"/>
-  <!-- <Register v-if="this.Login === false"/> -->
-  <Register v-if="this.login === false"/>
-  <v-btn @click="toggleRegLog">
-    Register
-  </v-btn>
-</v-container>
+  <v-container v-if="this.$store.state.isUserLoggedIn == false">
+    <Login v-if="this.login === true" />
+    <!-- <Register v-if="this.Login === false"/> -->
+    <Register v-if="this.login === false" />
+    <v-btn @click="toggleRegLog"> Register </v-btn>
+  </v-container>
 
-<v-app v-else id="one-roof-app">
+  <v-app v-else id="one-roof-app">
     <!-- Nav drawer starts -->
     <v-navigation-drawer v-model="drawer" color="brown" app>
       <!-- Navbar title start -->
@@ -30,6 +28,9 @@
           </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-content v-if="item.notifications" id="notifications">
+            <v-list-item-title>{{ item.notifications }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -69,16 +70,25 @@
 
 <script>
 import Avatar from "vue-avatar";
-import Login from './views/Login.vue';
-import Register from './views/Register'
+import Login from "./views/Login.vue";
+import Register from "./views/Register";
 
 export default {
   data: () => ({
-    loginRerouteFlag: false,
     drawer: null,
     items: [
-      { title: "Chat", icon: "mdi-view-dashboard", to: "/yourhome" }, //Use to: to link views
-      { title: "To-do", icon: "mdi-format-list-checks", to: "/todo" },
+      {
+        title: "Chat",
+        icon: "mdi-view-dashboard",
+        to: "/yourhome",
+        notifications: 0,
+      }, //Use to: to link views
+      {
+        title: "To-do",
+        icon: "mdi-format-list-checks",
+        to: "/todo",
+        notifications: 0,
+      },
     ],
     login: true,
   }),
@@ -86,21 +96,30 @@ export default {
   components: {
     Avatar,
     Login,
-    Register
+    Register,
   },
   methods: {
-    toggleRegLog(){
-      this.login = !this.login
-    }
+    toggleRegLog() {
+      this.login = !this.login;
+    },
   },
   mounted() {
-    this.$store.dispatch("checkIfLoggedInUser")
-  }
+    this.$store.dispatch("checkIfLoggedInUser");
+    this.items[1].notifications = this.$store.state.userTodoNotifications
+  },
 };
 </script>
 
 <style>
 .profile-clickable {
-  margin-left: auto
+  margin-left: auto;
+}
+
+#notifications {
+  border: 2px solid chocolate;
+  border-radius: 50%;
+  background-color: white;
+  flex: .25;
+  text-align: center;
 }
 </style>
