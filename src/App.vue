@@ -4,10 +4,11 @@
   </div>
 
   <v-container v-else-if="this.$store.state.isUserLoggedIn == false">
-    <Login v-if="this.login === true" />
-    <!-- <Register v-if="this.Login === false"/> -->
-    <Register v-if="this.login === false" />
-    <v-btn @click="toggleRegLog"> Register </v-btn>
+    <v-container>
+    <Login @emit="toggleRegLog" v-if="this.login === true" />
+    <Register @emit="toggleRegLog" v-if="this.login === false" />
+    </v-container>
+   
   </v-container>
 
   <v-app v-else id="one-roof-app">
