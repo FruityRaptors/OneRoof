@@ -120,7 +120,6 @@ export default {
   },
   mounted() {
     this.$store.dispatch("checkIfLoggedInUser");
-/*     this.$store.dispatch("getUser", this.$store.state.user.house_key) */
     this.items[1].notifications = this.$store.state.userTodoNotifications;
   },
   computed: {
