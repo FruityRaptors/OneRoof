@@ -28,6 +28,26 @@ export class userResolvers {
         return email
     }
 
+    //update the username of a user
+    @Mutation(() => String)
+    async updateUsername(
+        @Arg('email') email: string, 
+        @Arg('newusername') newusername: string
+    ){
+        const usernameToBeUpdated = await Users.findOne({ email });
+        if (!usernameToBeUpdated) {
+            return "Username not found!";
+        }
+
+        if(usernameToBeUpdated) {
+        usernameToBeUpdated.username = newusername;
+            await Users.save(usernameToBeUpdated);
+            console.log("Username has been updated!")
+            return `username has been updated to ${usernameToBeUpdated.username}`; 
+        }
+    }
+
+
     //To Add Rooms to User
     @Mutation(() => String)
     async addToRoom(
