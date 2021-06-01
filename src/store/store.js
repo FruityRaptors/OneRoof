@@ -19,6 +19,7 @@ export default new Vuex.Store({
     },
     //Current logged in User information
     user: {},
+    userTodoNotifications: 3,
     isUserLoggedIn: false,
     todos: [],
     // areTodosLoaded: false, // add a way to change it to false

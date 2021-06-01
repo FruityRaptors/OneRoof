@@ -48,7 +48,7 @@ export default {
   name: "Home",
   data() {
     return {
-      newTodoMessage: 'HERE I CAM',
+      newTodoMessage: '',
       todos: [],
     };
   },
