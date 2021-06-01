@@ -13,6 +13,7 @@ export default {
   data() {
     return {
       username: "",
+      email: "",
     };
   },
   components: {
@@ -21,6 +22,7 @@ export default {
 
   mounted() {
     this.username = this.$store.state.user.username;
+    this.email = this.$store.state.user.email;
   },
 
   methods: {
@@ -29,6 +31,7 @@ export default {
     },
     changeUsername(username) {
       this.username = username;
+      this.$store.dispatch("changeUsername", { email: this.email, newUsername: username})
     },
   },
 };
