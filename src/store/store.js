@@ -13,7 +13,7 @@ export default new Vuex.Store({
   state: {
     //Current logged in User information
     user: {},
-    userTodoNotifications: 3,
+    userTodoNotifications: 1,
     isUserLoggedIn: false,
     todos: [],
     usersInSameHouse: [],
@@ -252,7 +252,7 @@ export default new Vuex.Store({
               if (todo.victimid === this.state.user.username) {
                 this.state.userTodoNotifications++
                 console.log(this.state.userTodoNotifications)
-              }
+              } 
               
             }
         }) 
