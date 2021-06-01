@@ -22,7 +22,7 @@ export class userResolvers {
         return Users.find({ where: { house_keys } })
     }
 
-    //To Creat new User with empty room
+    //To Create new User with empty room
     @Mutation(() => String)
     async createUser(
         @Arg('email') email: string,

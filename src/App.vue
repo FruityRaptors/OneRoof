@@ -23,15 +23,17 @@
       <!-- Navigation bar start -->
       <v-list dense nav>
         <v-list-item v-for="item in items" :key="item.title" :to="item.to" link>
-           <v-badge
-        :content="item.notifications"
-        :value="item.notifications"
-        color="green"
-        overlap
-      >
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
+          <v-badge
+            :content="item.notifications"
+            :value="item.notifications"
+            color="red"
+            offset-x="40"
+            offset-y="40"
+            overlap
+          >
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
           </v-badge>
           <v-list-item-content>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
@@ -44,13 +46,15 @@
 
     <!-- App top bar start -->
     <v-app-bar app>
-      
       <v-badge
         :content="this.allNotifications"
         :value="this.allNotifications"
-        color="green"
+        color="red"
+        offset-x="20"
+        offset-y="50"
         overlap
-      ><v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon></v-badge>
+        ><v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon
+      ></v-badge>
       <v-toolbar-title>OneRoof</v-toolbar-title>
       <section
         v-if="this.$store.state.isUserLoggedIn !== true"
@@ -116,9 +120,9 @@ export default {
   },
   mounted() {
     this.$store.dispatch("checkIfLoggedInUser");
-    this.items[1].notifications = this.$store.state.userTodoNotifications
+    this.items[1].notifications = this.$store.state.todos.length;
     for (let item of this.items) {
-      this.allNotifications += item.notifications
+      this.allNotifications += item.notifications;
     }
   },
 };
