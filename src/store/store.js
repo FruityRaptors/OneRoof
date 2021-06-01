@@ -7,6 +7,7 @@ import axios from 'axios'
 import keygen from 'keygenerator'
 
 Vue.use(Vuex)
+Vue.config.devtools = true
 
 export default new Vuex.Store({
   state: {
