@@ -120,10 +120,23 @@ export default {
   },
   mounted() {
     this.$store.dispatch("checkIfLoggedInUser");
+/*     this.$store.dispatch("getUser", this.$store.state.user.house_key) */
     this.items[1].notifications = this.$store.state.userTodoNotifications;
-    for (let item of this.items) {
-      this.allNotifications += item.notifications;
-    }
+  },
+  computed: {
+    countNotifications() {
+      return this.$store.state.userTodoNotifications;
+    },
+  },
+  watch: {
+    countNotifications(newCount) {
+      this.items[1].notifications = newCount;
+      console.log(this.items[1].notifications);
+      this.allNotifications = 0
+      for (let item of this.items) {
+        this.allNotifications += item.notifications;
+      }
+    },
   },
 };
 </script>
