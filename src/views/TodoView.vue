@@ -69,8 +69,9 @@
         <v-list-item
           v-for="user in users"
           :key="user.id"
+          :value="todo.id"
         >
-          <v-list-item-title @click="setAssignee(user)">
+          <v-list-item-title @click="setAssignee(user, todo.id)">
           {{ user.username }}
           </v-list-item-title>
 
@@ -186,9 +187,11 @@ export default {
       })
        
     },
-    setAssignee(user){
+    setAssignee(user, id){
       console.log(user)
-      // victimid = this.selectedVictim.title
+      console.log(user.username)
+      console.log(id)
+      //todo.victimid = user.username
     }
   },
 };
