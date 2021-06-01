@@ -21,13 +21,20 @@ export class userResolvers {
     @Query(() => [User])
     async getUsersByHousekey(@Arg("house_keys") house_keys: string) {
        let allUsers = await this.getAllUsers()
-       return allUsers.filter((user) => {
+        
+       let result = allUsers.filter((user) => {
+
            let house_keysArr = JSON.parse(user.house_keys)
            
-           if (house_keysArr[0] === house_keys){
-               return user
+           if(!house_keysArr[0]){
+               return
            }
+           if (house_keysArr[0] === house_keys){
+                return user
+            }
         })
+
+        return result
     }
 
     //To Create new User with empty room
@@ -63,7 +70,7 @@ export class userResolvers {
     //To Add Rooms to User
     @Mutation(() => String)
     async addToRoom(
-        @Arg('email') email: number,
+        @Arg('email') email: string,
         @Arg('house_key') house_key: string
     ){
         const userToBeUpdated = await Users.findOne({ where: { email }})
