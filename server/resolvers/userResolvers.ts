@@ -16,9 +16,13 @@ export class userResolvers {
     getUserByEmail(@Arg("email") email: string) {
         return Users.findOne({ where: { email } })
     }
+    //Get all users in a with a house
+    @Query(() => [User])
+    getUsersByHousekey(@Arg("house_keys") house_keys: string) {
+        return Users.find({ where: { house_keys } })
+    }
 
-
-    //To Creat new User with empty room
+    //To Create new User with empty room
     @Mutation(() => String)
     async createUser(
         @Arg('email') email: string,
@@ -27,6 +31,24 @@ export class userResolvers {
         ){
         await Users.insert({email, username, isAdmin})
         return email
+    }
+
+    //update the username of a user
+    @Mutation(() => String)
+    async updateUsername(
+        @Arg('email') email: string, 
+        @Arg('newUsername') newUsername: string
+    ){
+        const usernameToBeUpdated = await Users.findOne({ email });
+        if (!usernameToBeUpdated) {
+            return "Username not found!";
+        }
+
+        if(usernameToBeUpdated) {
+        usernameToBeUpdated.username = newUsername;
+            await Users.save(usernameToBeUpdated);
+            return `username has been updated to ${usernameToBeUpdated.username}`; 
+        }
     }
 
 
@@ -53,7 +75,6 @@ export class userResolvers {
              await Users.save(userToBeUpdated)
              return "Added room to user!"
         }
-        
     }
 }
 

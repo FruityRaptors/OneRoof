@@ -1,12 +1,21 @@
 <template>
-  <div>
-    <form @submit.prevent="login">
-      <h2>Login</h2>
-      <input type="email" placeholder="Email address..." v-model="email" />
-      <input type="password" placeholder="password..." v-model="password" />
-      <button type="submit">Login</button>
-    </form>
-  </div>
+<v-card max-width="80%">
+  
+      <v-container>
+      <v-card-title class="text-center">
+        Login
+      </v-card-title>
+      </v-container>
+
+      <v-text-field  label="Username" v-model="email"></v-text-field>
+      <v-text-field label="Password" v-model="password"></v-text-field>
+
+      <v-btn class="text-center" @click="login">
+        Login
+      </v-btn>
+
+</v-card>
+
 </template>
 
 <script>
@@ -26,18 +35,6 @@ export default {
       let email = this.email;
       let password = this.password;
       this.$store.dispatch("loginUser", { email, password })
-     /*  firebase
-        .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then(() => {
-          this.$store.state.user.email = this.email;
-          this.$store.state.isUserLoggedIn = true;
-          alert("Successfully logged in");
-          this.$router.push("/yourhome");
-        })
-        .catch((error) => {
-          alert(error.message);
-        }); */
     },
   },
 };

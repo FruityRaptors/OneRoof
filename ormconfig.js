@@ -1,12 +1,14 @@
 module.exports = {
    "type": "postgres",
-   "host": "localhost",
-   "port": process.env.DB_PORT,
-   "username": 'postgres',
-   "password": 'postgres',
+   "host": process.env.CLOUD_SQL_CONNECTION_NAME || "127.0.0.1",
+   "extra": {
+      "socketPath": process.env.CLOUD_SQL_CONNECTION_NAME
+ },
+   "username": process.env.DB_USER,
+   "password": process.env.DB_PASS,
    "database": process.env.DB_NAME,
    "synchronize": true,
-   "logging": false,
+   "logging": true,
    "entities": [
       "server/entity/**/*.ts"
    ],
@@ -22,3 +24,4 @@ module.exports = {
       "subscribersDir": "server/subscriber"
    }
 }
+

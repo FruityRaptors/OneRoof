@@ -3,9 +3,11 @@ import App from './App.vue'
 import store from './store/store'
 import router from './router'
 import './registerServiceWorker'
-import firebase from "firebase";
+import firebase from "firebase/app";
 import vuetify from './plugins/vuetify'
 
+
+// This is ok, we can expose this on the client side
 const firebaseConfig = {
   apiKey: "AIzaSyCib4HhPZkKF0d5KV7SLypMe9Jx8ZUiVU8",
   authDomain: "oneroof-fd1d5.firebaseapp.com",
@@ -20,9 +22,15 @@ firebase.initializeApp(firebaseConfig);
 
 Vue.config.productionTip = false
 
-new Vue({
-  store,
-  router,
-  vuetify,
-  render: h => h(App)
-}).$mount('#app')
+let app;
+firebase
+  .auth().onAuthStateChanged(() => {
+    if (!app) {
+      app = new Vue({
+        store,
+        router,
+        vuetify,
+        render: h => h(App)
+      }).$mount('#app')
+    }
+  })

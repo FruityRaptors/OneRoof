@@ -9,20 +9,30 @@
          <v-card-text class="font-weight-bold">Enter House key</v-card-text>
    
 <!-- Join a home field starts -->
-        <v-text-field
+         <v-text-field
             label="House Key..."
             class="ml-5 mr-5"
             filled
             dense
             rounded
             v-model="roomkey"
-          ></v-text-field>  
+        ></v-text-field>  
+
+    <v-btn
+      rounded
+      color="brown"
+      dark
+      class="mb-5"
+      @click="joinHouse"
+      >
+      Join
+    </v-btn>
 <!-- Join a home field ends -->
 
      <v-card-subtitle class="font-weight-bold">or..</v-card-subtitle>
 
 <!-- Name your home field starts-->
-     <v-text-field
+         <v-text-field
             label="Name your Home"
             class="ml-5 mr-5"
             filled
@@ -30,18 +40,20 @@
             rounded
             v-model="homename"
           ></v-text-field>  
-<!-- Name your home field ends -->
-    
 
-     <v-btn
+
+    <v-btn
       rounded
       color="brown"
       dark
       class="mb-5"
-      @click="joinHouse"
+      @click="createHouse"
       >
       Make a Home
     </v-btn>
+<!-- Name your home field ends -->
+    
+
 
  </v-card>
 <!-- Main card ends -->
@@ -51,18 +63,26 @@
 
 <script>
 export default {
-    name: "joinHouse",
+
+    name: "JoinHouse",
+
 data(){
     return {
      roomkey: undefined,
      homename: undefined
     }
-},
-methods: {
-    joinHouse(){
-        this.$store.dispatch("createChatRoom", {email: this.$store.state.user.email, roomkey: this.homename})
-    }
-}
+}, // Data End
 
-}
+methods: {
+
+    createHouse(){
+        this.$store.dispatch("createHouse", {email: this.$store.state.user.email, homename: this.homename})
+    },
+
+    joinHouse(){
+        this.$store.dispatch("joinHouse", {email: this.$store.state.user.email, roomkey: this.roomkey})
+    }
+} // Method End
+
+} //Export end
 </script>
