@@ -16,6 +16,11 @@ export class userResolvers {
     getUserByEmail(@Arg("email") email: string) {
         return Users.findOne({ where: { email } })
     }
+    //Get all users in a with a house
+    @Query(() => [User])
+    getUsersByHousekey(@Arg("house_keys") house_keys: string) {
+        return Users.find({ where: { house_keys } })
+    }
 
     //To Creat new User with empty room
     @Mutation(() => String)
