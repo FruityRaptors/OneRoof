@@ -2,38 +2,40 @@ import "dotenv/config";
 import "reflect-metadata";
 import { ApolloServer } from 'apollo-server-express'
 import { connectDB } from "./database";
-/* import {Request, Response} from "express"; */
-import  express  from "express";
-/* import * as bodyParser from "body-parser";
-import {Todo} from "./entity/Todo";
-import {Users} from "./entity/Users" */
+import express from "express";
 import { buildSchema } from 'type-graphql'
 import { userResolvers } from "./resolvers/userResolvers"
 import { todoResolver } from "./resolvers/todoResolver";
+import { houseResolver } from "./resolvers/houseResolver"
 
 
-    (async () => {
-        const app = express();
-      
-    console.log('connecting type orm...')
-        await connectDB()
-      
-        const apolloServer = new ApolloServer({
-          schema: await buildSchema({
-            resolvers: [userResolvers, todoResolver],
-            validate: true
-          }),
-          context: ({ req, res }) => ({ req, res })
-        });
-      
-        apolloServer.applyMiddleware({ app, cors: false });
-        const port = process.env.PORT || 4000;
+(async () => {
+  console.log("spinning up express")
+  const app = express();
+  console.log("connecting to SQL database")
+  try {
+    await connectDB()
+  } catch (err) {
+    console.log(err)
+  }
 
-    console.log('launching server...')
-        app.listen(port, () => {
-          console.log(`server started at http://localhost:${port}/`);
-        });
-    })();
+  console.log('Starting Apollo Server')
+  const apolloServer = new ApolloServer({
+    schema: await buildSchema({
+      resolvers: [userResolvers, todoResolver, houseResolver],
+      validate: true
+    }),
+    context: ({ req, res }) => ({ req, res })
+  });
+
+  apolloServer.applyMiddleware({ app, cors: false });
+  const port = process.env.PORT || 4000;
+
+  console.log('launching server...')
+  app.listen(port, () => {
+    console.log(`server started at http://localhost:${port}/`);
+  });
+})();
 
 
 
@@ -69,7 +71,7 @@ import { todoResolver } from "./resolvers/todoResolver";
 //     user.house_key = "super secured house key"
 //     user.email = "sephiroth69xx@gmail.com"
 //     user.isAdmin = false
-  
+
 //     return connection.manager
 //     .save(user)})
 //     .then(user => {

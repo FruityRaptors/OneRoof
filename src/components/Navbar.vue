@@ -8,7 +8,6 @@
     <div v-else>
       <p>Welcome {{this.$store.state.user.email}}</p>
       <router-link to="/yourhome">Your Home</router-link> |
-      <button @click="logout">Logout</button>
     </div>
   <todo-list />
   </div>
@@ -42,9 +41,6 @@ export default {
     console.log(this.$store.state.users.house_key)
   },
   methods: {
-    logout() {
-      this.$store.dispatch("logoutUser");
-    },
     populateUsers() {
       this.$store.dispatch("getUsers")
     }
