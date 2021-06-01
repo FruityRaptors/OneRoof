@@ -33,8 +33,13 @@ export default new Vuex.Store({
       state.loggedInUser = {}
     },
 
-    toggleLoginBool(state) {
-      state.isUserLoggedIn = !state.isUserLoggedIn
+    toggleLoginBool(state, payload) {
+      if (payload){
+        state.isUserLoggedIn = true
+      } else {
+        state.isUserLoggedIn = !state.isUserLoggedIn
+      }
+      
     },
 
     addTodosToList(state, todos) {
@@ -79,7 +84,7 @@ export default new Vuex.Store({
             }`
           }
         }).then((response) => {
-          context.commit("toggleLoginBool")
+          context.commit("toggleLoginBool", "true")
           context.commit("setUser", response.data.data.getUserByEmail)
           //If fetched user belonged to a house, set user normally
           if (response.data.data.getUserByEmail.house_keys) {
