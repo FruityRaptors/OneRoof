@@ -124,7 +124,7 @@ export default {
     },
   },
   async mounted() {
-    console.log("app mounting")
+    console.time("app mounting")
     this.loading = true;
     let checker = await this.$store.dispatch("checkIfLoggedInUser");
     if(checker) {
@@ -137,6 +137,7 @@ export default {
         this.allNotifications += item.notifications;
       }
     }
+    console.timeEnd("app mounting")
     this.loading = false;
   },
   computed: {
