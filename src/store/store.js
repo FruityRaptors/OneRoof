@@ -26,13 +26,10 @@ export default new Vuex.Store({
 
   mutations: {
     setUser(state, user) {
-      console.log('Mutating user state....')
       state.user = user;
-      console.log(`User state is now ${state.user}} and logged in is ${state.isUserLoggedIn}`)
     },
 
     setUsername(state, username) {
-      console.log('setting new username to', username)
       state.user.username = username
     },
 
@@ -116,6 +113,26 @@ export default new Vuex.Store({
         });
     },
 
+    // Updates user's username
+    changeUsername(context, user) {
+      let email = user.email
+      let newUsername = user.newUsername
+      console.log(`changing user: ${email}'s username to ${newUsername}`)
+        axios({
+          method: "POST",
+          url: "/graphql",
+          data: {
+            query: `
+          mutation{
+          updateUsername(email:"${email}", newUsername: "${newUsername}", )
+          }`
+          }
+        }).then(() => {
+          context.dispatch("getUser", email)
+          context.commit("setUsername", newUsername)
+        });
+    },
+    
     ///////
     //User related actions ends
     ///////

@@ -32,7 +32,7 @@ export class userResolvers {
     @Mutation(() => String)
     async updateUsername(
         @Arg('email') email: string, 
-        @Arg('newusername') newusername: string
+        @Arg('newUsername') newUsername: string
     ){
         const usernameToBeUpdated = await Users.findOne({ email });
         if (!usernameToBeUpdated) {
@@ -40,9 +40,8 @@ export class userResolvers {
         }
 
         if(usernameToBeUpdated) {
-        usernameToBeUpdated.username = newusername;
+        usernameToBeUpdated.username = newUsername;
             await Users.save(usernameToBeUpdated);
-            console.log("Username has been updated!")
             return `username has been updated to ${usernameToBeUpdated.username}`; 
         }
     }
