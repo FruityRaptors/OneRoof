@@ -46,8 +46,7 @@ export default new Vuex.Store({
     addTodosToList(state, todos) {
       console.log("SETTING TODOS", todos)
       state.todos = todos
-      state.areTodosLoaded = true;
-      console.log("TODOS SET", state.todos)
+      console.log("TODOS SET")
     }
   },
 
@@ -207,8 +206,8 @@ export default new Vuex.Store({
 //Todolist related actions starts
 ///////
 // gets todos from database
- async getTodos(context) {
-  console.log(`Getting Todos`)
+ async getTodos(context, house_key) {
+  console.log(`Getting Todos By House...`)
       try {
        await axios({
           method: "POST",
@@ -216,21 +215,21 @@ export default new Vuex.Store({
           data: {
             query: `
             {
-              getAllTodos{
+              getTodosByHouse(house_key:"${house_key}"){
                 id
                 creatorid
                 victimid
                 todo
                 date
                 complete
+                house_key
               }
             }`
           }
         })
           .then((response) => {
-            console.log("ABOUT TO COMMIT")
-            context.commit("addTodosToList", response.data.data.getAllTodos)
-            console.log("AFTER COMMIT")
+            console.log("Received todos from server...")
+            context.commit("addTodosToList", response.data.data.getTodosByHouse)
         }) 
       } catch(error) {
         console.log("This is your error", error)
@@ -239,7 +238,7 @@ export default new Vuex.Store({
 
 // deletes specified todo from database
 deleteTodo(context, id) {
-  console.log(`Deleting Todo`)
+  console.log(`Deleting Todo with ${id}`)
       try {
         axios({
           method: "POST",
@@ -251,8 +250,8 @@ deleteTodo(context, id) {
             }`
           }
         })
-          .then((response) => {
-            console.log(response.data.data.getAllTodos)
+          .then(() => {
+            console.log('Todo deleted')
           })
       } catch (error) {
         console.log("This is your error", error)
@@ -274,7 +273,8 @@ async addTodo(context, newTodo) {
               date: "${newTodo.date}",
               victimid: "${newTodo.victimid}",
               creatorid: "${newTodo.creatorid}",
-              complete: ${newTodo.complete}
+              complete: ${newTodo.complete},
+              house_key: "${newTodo.house_key}",
             )
           }`
         }

@@ -9,6 +9,12 @@ export class todoResolver {
         return Todos.find()
     }
 
+    @Query(() => [Todos])
+    getTodosByHouse(
+        @Arg('house_key') house_key: string,
+    ){
+        return Todos.find( { where: { house_key } } )
+    }
 
     //Create new Todo. Need to add category(?)
     @Mutation(() => String)
@@ -18,9 +24,10 @@ export class todoResolver {
         @Arg('victimid') victimid: string,     //From Assignee dropdown(?)
         @Arg('creatorid') creatorid: string,   //Automatic from user who created todo?
         @Arg('complete') complete: boolean,    //For strikethrough/highglights
+        @Arg('house_key') house_key: string,   //
         ){
 
-        await Todos.insert({ todo, date, victimid, creatorid, complete })
+        await Todos.insert({ todo, house_key, date, victimid, creatorid, complete })
         return "New Todo Added!"
       }
 
@@ -32,6 +39,7 @@ export class todoResolver {
         await  Todos.delete( id )
         return "Todo deleted!"
     }
+
 }
 
 
