@@ -75,6 +75,7 @@ export default new Vuex.Store({
           }
         }).then((response) => {
           context.commit("toggleLoginBool")
+          context.commit("setUser", response.data.data.getUserByEmail)
           //If fetched user belonged to a house, set user normally
           if (response.data.data.getUserByEmail.house_keys) {
             let housekey = JSON.parse(response.data.data.getUserByEmail.house_keys)
@@ -243,7 +244,17 @@ export default new Vuex.Store({
         })
           .then((response) => {
             console.log("Received todos from server...")
-            context.commit("addTodosToList", response.data.data.getTodosByHouse)
+            let todosByHouse = response.data.data.getTodosByHouse
+            context.commit("addTodosToList", todosByHouse)
+            this.state.userTodoNotifications = 0
+            for (let todo of todosByHouse) {
+              console.log(todo.victimid)
+              if (todo.victimid === this.state.user.username) {
+                this.state.userTodoNotifications++
+                console.log(this.state.userTodoNotifications)
+              }
+              
+            }
         }) 
       } catch(error) {
         console.log("This is your error", error)
@@ -292,11 +303,9 @@ async addTodo(context, newTodo) {
             )
           }`
         }
-      }).then((response => {
-        console.log("GOT TO THEN")
-        console.log(response.data.data.getAllTodos)
-        context.commit("addTodosToList", response.data.data.getAllTodos)
-      }))
+      }).then(() => {
+        context.dispatch("getTodos", /* response.data.data.getAllTodos */)
+      })
     } catch(error) {
       console.log("GOT HERE")
       console.log("This is your error, error")
@@ -318,7 +327,7 @@ populateVictimList(context, house_key) {
       `
     }
   }).then((response) => {
-    console.log(response.data.data)
+    console.log("HEY YOPOOOOOOOOOO" ,response.data.data.getUsersByHousekey)
     context.commit('populateUsersInSameHouse', response.data.data.getUsersByHousekey)
   })
 },
