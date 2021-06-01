@@ -5,8 +5,8 @@ import { connectDB } from "./database";
 import express from "express";
 import { buildSchema } from 'type-graphql'
 import { userResolvers } from "./resolvers/userResolvers"
-import { todoResolver } from "./resolvers/todoResolver";
-import { houseResolver } from "./resolvers/houseResolver"
+import { todoResolvers } from "./resolvers/todoResolvers";
+import { houseResolvers } from "./resolvers/houseResolvers"
 
 
 (async () => {
@@ -22,7 +22,7 @@ import { houseResolver } from "./resolvers/houseResolver"
   console.log('Starting Apollo Server')
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [userResolvers, todoResolver, houseResolver],
+      resolvers: [userResolvers, todoResolvers, houseResolvers],
       validate: true
     }),
     context: ({ req, res }) => ({ req, res })

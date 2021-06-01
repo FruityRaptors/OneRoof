@@ -1,10 +1,9 @@
-import e from 'express'
 import { Query, Resolver, Mutation, Arg, } from 'type-graphql'
 import { Todos } from '../entity/Todo'
 // import { Todo } from '../schemas/todoSchema'
 
 @Resolver()
-export class todoResolver {
+export class todoResolvers {
     @Query(() => [Todos])   
     getAllTodos(){
         return Todos.find()
