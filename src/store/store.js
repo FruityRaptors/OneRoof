@@ -77,8 +77,6 @@ export default new Vuex.Store({
           }
         }).then((response) => {
           context.commit("toggleLoginBool")
-          console.log(response.data.data.getUserByEmail)
-
           //If fetched user belonged to a house, set user normally
           if (response.data.data.getUserByEmail.house_keys) {
             let housekey = JSON.parse(response.data.data.getUserByEmail.house_keys)
