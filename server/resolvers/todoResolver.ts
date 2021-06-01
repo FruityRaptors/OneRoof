@@ -1,3 +1,4 @@
+import e from 'express'
 import { Query, Resolver, Mutation, Arg, } from 'type-graphql'
 import { Todos } from '../entity/Todo'
 // import { Todo } from '../schemas/todoSchema'
@@ -39,7 +40,41 @@ export class todoResolver {
         await  Todos.delete( id )
         return "Todo deleted!"
     }
+    //Update a todo by it's ID
+    @Mutation(() => String)
+    async updateTodo(
+        @Arg('id') id: number,
+        @Arg('victimid') victimid: string,
+    ){
+        console.log("HEre NOW")
+        let todoToBeUpdated = await Todos.findOne( { where: { id } })
+        if(!todoToBeUpdated){
+            console.log('Error!')
+            return
+        }
+        console.log('HELLOOOOOOOOOO', todoToBeUpdated.victimid)
+
+        todoToBeUpdated.victimid = victimid
+
+        Todos.save(todoToBeUpdated)
+
+        return "Saved!"
+        // if(JSON.parse(todoToBeUpdated.victimid)) {
+        //     let victimIdArr = JSON.parse(todoToBeUpdated.victimid)
+        //     victimIdArr.push(victimid)
+        //     todoToBeUpdated.victimid = victimIdArr
+        //    Todos.save(todoToBeUpdated)
+        //    return "Saved!"
+        // } else {
+        //     todoToBeUpdated.victimid = JSON.stringify([victimid])
+        //     Todos.save(todoToBeUpdated)
+        //     return "Saved!"
+        // }
+
+    }
 
 }
+    
+
 
 
