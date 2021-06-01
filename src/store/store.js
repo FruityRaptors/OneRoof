@@ -7,32 +7,25 @@ import axios from 'axios'
 import keygen from 'keygenerator'
 
 Vue.use(Vuex)
+Vue.config.devtools = true
 
 export default new Vuex.Store({
   state: {
-    testUser: {
-      id: 1,
-      username: "Jay",
-      house_key: "testhousekey",
-      email: "testerEmail",
-      isAdmin: false
-    },
     //Current logged in User information
     user: {},
+    userTodoNotifications: 3,
     isUserLoggedIn: false,
     todos: [],
+    usersInSameHouse: [],
     // areTodosLoaded: false, // add a way to change it to false
   },
 
   mutations: {
     setUser(state, user) {
-      console.log('Mutating user state....')
       state.user = user;
-      console.log(`User state is now ${state.user}} and logged in is ${state.isUserLoggedIn}`)
     },
 
     setUsername(state, username) {
-      console.log('setting new username to', username)
       state.user.username = username
     },
 
@@ -45,10 +38,19 @@ export default new Vuex.Store({
     },
 
     addTodosToList(state, todos) {
-      console.log("SETTING TODOS", todos)
       state.todos = todos
-      state.areTodosLoaded = true;
-      console.log("TODOS SET", state.todos)
+    },
+
+    populateUsersInSameHouse(state, users){
+      state.usersInSameHouse = users
+    },
+
+    setTodoNotifications(state, notifications) {
+      state.userTodoNotifications = notifications
+    },
+
+    resetTodoNotifications(state) {
+      state.userTodoNotifications = 0
     }
   },
 
@@ -59,10 +61,10 @@ export default new Vuex.Store({
     ///////
 
     //Fetches user and set user to front end state
-    getUser(context, email) {
+    async getUser(context, email) {
       console.log(`Getting User: ${email} from the database...`)
 
-        axios({
+        await axios({
           method: "POST",
           url: "/graphql",
           data: {
@@ -78,23 +80,19 @@ export default new Vuex.Store({
           }
         }).then((response) => {
           context.commit("toggleLoginBool")
-
+          context.commit("setUser", response.data.data.getUserByEmail)
           //If fetched user belonged to a house, set user normally
           if (response.data.data.getUserByEmail.house_keys) {
             let housekey = JSON.parse(response.data.data.getUserByEmail.house_keys)
             response.data.data.getUserByEmail.house_keys = housekey
-            context.commit("setUser", response.data.data.getUserByEmail)
             console.log(`User already belonged to chat room(s)... going to home page`)  
             router.push('/yourhome')
-            return
           } else {
-          context.commit("setUser", response.data.data.getUserByEmail)
            console.log(`User doesn't have a home... going to join a home page`)
             //Should route to Join a house page, THE FOLLOWING LINE SHOULD BE DELETED!
            router.push('/joinhouse')
           }
         });
-      
     },
 
     //Adds user to the database after they have registered
@@ -116,6 +114,26 @@ export default new Vuex.Store({
         });
     },
 
+    // Updates user's username
+    changeUsername(context, user) {
+      let email = user.email
+      let newUsername = user.newUsername
+      console.log(`changing user: ${email}'s username to ${newUsername}`)
+        axios({
+          method: "POST",
+          url: "/graphql",
+          data: {
+            query: `
+          mutation{
+          updateUsername(email:"${email}", newUsername: "${newUsername}", )
+          }`
+          }
+        }).then(() => {
+          context.dispatch("getUser", email)
+          context.commit("setUsername", newUsername)
+        });
+    },
+    
     ///////
     //User related actions ends
     ///////
@@ -191,7 +209,6 @@ export default new Vuex.Store({
           alert('House Key error!')
         }
       }).then(() => {
-        console.log('success!')
         context.dispatch("getUser", payload.email)
       })
     
@@ -208,8 +225,8 @@ export default new Vuex.Store({
 //Todolist related actions starts
 ///////
 // gets todos from database
- async getTodos(context) {
-  console.log(`Getting Todos`)
+ async getTodos(context, house_key) {
+  console.log(`Getting Todos By House...`)
       try {
        await axios({
           method: "POST",
@@ -217,30 +234,40 @@ export default new Vuex.Store({
           data: {
             query: `
             {
-              getAllTodos{
+              getTodosByHouse(house_key:"${house_key}"){
                 id
                 creatorid
                 victimid
                 todo
                 date
                 complete
+                house_key
               }
             }`
           }
         })
           .then((response) => {
-            console.log("ABOUT TO COMMIT")
-            context.commit("addTodosToList", response.data.data.getAllTodos)
-            console.log("AFTER COMMIT")
+            console.log("Received todos from server...")
+            let todosByHouse = response.data.data.getTodosByHouse
+            context.commit("addTodosToList", todosByHouse)
+            context.commit("resetTodoNotifications")
+            let notifications = 0
+            for (let todo of todosByHouse) {
+              if (todo.victimid === this.state.user.username) {
+                notifications++
+              }
+            }
+            context.commit("setTodoNotifications", notifications)
         }) 
       } catch(error) {
-        console.log("This is your error", error)
+        console.log("No user is logged in")
+        return
       }
     },
 
 // deletes specified todo from database
 deleteTodo(context, id) {
-  console.log(`Deleting Todo`)
+  console.log(`Deleting Todo with ${id}`)
       try {
         axios({
           method: "POST",
@@ -252,8 +279,8 @@ deleteTodo(context, id) {
             }`
           }
         })
-          .then((response) => {
-            console.log(response.data.data.getAllTodos)
+          .then(() => {
+            console.log('Todo deleted')
           })
       } catch (error) {
         console.log("This is your error", error)
@@ -275,22 +302,57 @@ async addTodo(context, newTodo) {
               date: "${newTodo.date}",
               victimid: "${newTodo.victimid}",
               creatorid: "${newTodo.creatorid}",
-              complete: ${newTodo.complete}
+              complete: ${newTodo.complete},
+              house_key: "${newTodo.house_key}",
             )
           }`
         }
-      }).then((response => {
-        console.log("GOT TO THEN")
-        console.log(response.data.data.getAllTodos)
-        context.commit("addTodosToList", response.data.data.getAllTodos)
-      }))
+      }).then(() => {
+        context.dispatch("getTodos", /* response.data.data.getAllTodos */)
+      })
     } catch(error) {
-      console.log("GOT HERE")
-      console.log("This is your error, error")
+      console.log("This is your error", error)
     }
 },
 
+populateVictimList(context, house_key) {
+  console.log(`Chasing victims in ${house_key}`)
+  axios({
+    method: "POST",
+    url: "/graphql",
+    data: {
+      query: `
+      {
+        getUsersByHousekey(house_keys:"${house_key}"){
+          username
+        }
+      }
+      `
+    }
+  }).then((response) => {
+    context.commit('populateUsersInSameHouse', response.data.data.getUsersByHousekey)
+  })
+},
 
+  //update victim on Todo 
+  updateTodoVictim(context, selectedTodo) {
+    console.log('Attemping to update VictimID', selectedTodo)
+    axios({
+      method: "POST",
+      url: "/graphql",
+      data: {
+        query: `
+        mutation{
+          updateTodo(
+            id: ${selectedTodo.id},
+            victimid: "${selectedTodo.victimid}"
+          )
+        }`
+      }
+    }).then(() => {
+      context.dispatch('getTodos', selectedTodo.house_key)
+    })
+},
 
 
     ///////
@@ -351,10 +413,14 @@ async addTodo(context, newTodo) {
         });
     },
 
-    checkIfLoggedInUser(context) {
-      const user = firebase.auth().currentUser
+    async checkIfLoggedInUser(context) {
+      const user = await firebase.auth().currentUser
       if(user) {
-        context.dispatch("getUser", user.email)
+        await context.dispatch("getUser", user.email)
+        return true
+      } else {
+        router.push('/login')
+        return false
       }
     }
 

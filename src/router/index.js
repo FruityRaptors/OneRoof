@@ -49,7 +49,6 @@ const routes = [
     meta: {
       authRequired: true,
     }
-    
   },
   {
     path: '/joinhouse',

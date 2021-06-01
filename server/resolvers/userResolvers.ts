@@ -17,7 +17,28 @@ export class userResolvers {
         return Users.findOne({ where: { email } })
     }
 
-    //To Creat new User with empty room
+    //Get all users in a with a house
+    @Query(() => [User])
+    async getUsersByHousekey(@Arg("house_keys") house_keys: string) {
+       let allUsers = await this.getAllUsers()
+        
+       let result = allUsers.filter((user) => {
+
+           let house_keysArr = JSON.parse(user.house_keys)
+           
+           if(!house_keysArr[0]){
+               console.log("OH no, it's not an array!")
+               return
+           }
+           if (house_keysArr[0] === house_keys){
+                return user
+            }
+        })
+
+        return result
+    }
+
+    //To Create new User with empty room
     @Mutation(() => String)
     async createUser(
         @Arg('email') email: string,
@@ -32,7 +53,7 @@ export class userResolvers {
     @Mutation(() => String)
     async updateUsername(
         @Arg('email') email: string, 
-        @Arg('newusername') newusername: string
+        @Arg('newUsername') newUsername: string
     ){
         const usernameToBeUpdated = await Users.findOne({ email });
         if (!usernameToBeUpdated) {
@@ -40,9 +61,8 @@ export class userResolvers {
         }
 
         if(usernameToBeUpdated) {
-        usernameToBeUpdated.username = newusername;
+        usernameToBeUpdated.username = newUsername;
             await Users.save(usernameToBeUpdated);
-            console.log("Username has been updated!")
             return `username has been updated to ${usernameToBeUpdated.username}`; 
         }
     }

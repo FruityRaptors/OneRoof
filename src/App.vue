@@ -1,14 +1,16 @@
 <template>
-<v-container v-if="this.$store.state.isUserLoggedIn == false">
-  <Login v-if="this.login === true"/>
-  <!-- <Register v-if="this.Login === false"/> -->
-  <Register v-if="this.login === false"/>
-  <v-btn @click="toggleRegLog">
-    Register
-  </v-btn>
-</v-container>
+  <div class="text-center" v-if="this.loading == true">
+    <v-progress-circular indeterminate color="primary"></v-progress-circular>
+  </div>
 
-<v-app v-else id="one-roof-app">
+  <v-container v-else-if="this.$store.state.isUserLoggedIn == false">
+    <Login v-if="this.login === true" />
+    <!-- <Register v-if="this.Login === false"/> -->
+    <Register v-if="this.login === false" />
+    <v-btn @click="toggleRegLog"> Register </v-btn>
+  </v-container>
+
+  <v-app v-else id="one-roof-app">
     <!-- Nav drawer starts -->
     <v-navigation-drawer v-model="drawer" color="brown" app>
       <!-- Navbar title start -->
@@ -25,9 +27,18 @@
       <!-- Navigation bar start -->
       <v-list dense nav>
         <v-list-item v-for="item in items" :key="item.title" :to="item.to" link>
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
+          <v-badge
+            :content="item.notifications"
+            :value="item.notifications"
+            color="red"
+            offset-x="40"
+            offset-y="40"
+            overlap
+          >
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+          </v-badge>
           <v-list-item-content>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
@@ -39,7 +50,15 @@
 
     <!-- App top bar start -->
     <v-app-bar app>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-badge
+        :content="this.allNotifications"
+        :value="this.allNotifications"
+        color="red"
+        offset-x="20"
+        offset-y="50"
+        overlap
+        ><v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon
+      ></v-badge>
       <v-toolbar-title>OneRoof</v-toolbar-title>
       <section
         v-if="this.$store.state.isUserLoggedIn !== true"
@@ -69,38 +88,78 @@
 
 <script>
 import Avatar from "vue-avatar";
-import Login from './views/Login.vue';
-import Register from './views/Register'
+import Login from "./views/Login.vue";
+import Register from "./views/Register";
 
 export default {
   data: () => ({
-    loginRerouteFlag: false,
     drawer: null,
     items: [
-      { title: "Chat", icon: "mdi-view-dashboard", to: "/yourhome" }, //Use to: to link views
-      { title: "To-do", icon: "mdi-format-list-checks", to: "/todo" },
+      {
+        title: "Chat",
+        icon: "mdi-view-dashboard",
+        to: "/yourhome",
+        notifications: 0,
+      }, //Use to: to link views
+      {
+        title: "To-do",
+        icon: "mdi-format-list-checks",
+        to: "/todo",
+        notifications: 0,
+      },
     ],
+    allNotifications: 0,
     login: true,
+    loading: true,
   }),
   name: "App",
   components: {
     Avatar,
     Login,
-    Register
+    Register,
   },
   methods: {
-    toggleRegLog(){
-      this.login = !this.login
-    }
+    toggleRegLog() {
+      this.login = !this.login;
+    },
   },
-  mounted() {
-    this.$store.dispatch("checkIfLoggedInUser")
-  }
+  async mounted() {
+    console.time("app mounting")
+    this.loading = true;
+    let checker = await this.$store.dispatch("checkIfLoggedInUser");
+    if(checker) {
+      console.log(this.$store.state.user)
+      await this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0])
+      await this.$store.dispatch("populateVictimList", this.$store.state.user.house_keys[0]);
+      this.allNotifications = 0;
+      this.items[1].notifications = this.$store.state.userTodoNotifications;
+      for (let item of this.items) {
+        this.allNotifications += item.notifications;
+      }
+    }
+    console.timeEnd("app mounting")
+    this.loading = false;
+  },
+  computed: {
+    countNotifications() {
+      return this.$store.state.userTodoNotifications;
+    },
+  },
+  watch: {
+    countNotifications(newCount) {
+      this.items[1].notifications = newCount;
+      console.log(this.items[1].notifications);
+      this.allNotifications = 0;
+      for (let item of this.items) {
+        this.allNotifications += item.notifications;
+      }
+    },
+  },
 };
 </script>
 
 <style>
 .profile-clickable {
-  margin-left: auto
+  margin-left: auto;
 }
 </style>
