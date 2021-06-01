@@ -1,8 +1,8 @@
-const dbSocketPath = process.env.DB_SOCKET_PATH || '/cloudsql';
+const dbSocketPath = process.env.DB_SOCKET_PATH || "/cloudsql";
 
 module.exports = {
    "type": "postgres",
-   "host": `${dbSocketPath}/${process.env.CLOUD_SQL_CONNECTION_NAME}` || "127.0.0.1",
+   "host": `${dbSocketPath}/${process.env.CLOUD_SQL_CONNECTION_NAME}` || "172.17.0.6",
    "extra": {
       "socketPath": `${dbSocketPath}/${process.env.CLOUD_SQL_CONNECTION_NAME}`
  },
