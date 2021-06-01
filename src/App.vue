@@ -120,7 +120,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("checkIfLoggedInUser");
-    this.items[1].notifications = this.$store.state.todos.length;
+    this.items[1].notifications = this.$store.state.userTodoNotifications;
     for (let item of this.items) {
       this.allNotifications += item.notifications;
     }
