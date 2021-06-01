@@ -74,24 +74,21 @@ export default new Vuex.Store({
             }`
           }
         }).then((response) => {
-          context.commit("toggleLoginBool")
+         context.commit("toggleLoginBool")
+         context.commit("setUser", response.data.data.getUserByEmail)
 
           //If fetched user belonged to a house, set user normally
           if (response.data.data.getUserByEmail.house_keys) {
             let housekey = JSON.parse(response.data.data.getUserByEmail.house_keys)
             response.data.data.getUserByEmail.house_keys = housekey
-            context.commit("setUser", response.data.data.getUserByEmail)
             console.log(`User already belonged to chat room(s)... going to home page`)  
             router.push('/yourhome')
-            return
           } else {
-          context.commit("setUser", response.data.data.getUserByEmail)
            console.log(`User doesn't have a home... going to join a home page`)
             //Should route to Join a house page, THE FOLLOWING LINE SHOULD BE DELETED!
            router.push('/joinhouse')
           }
         });
-      
     },
 
     //Adds user to the database after they have registered
