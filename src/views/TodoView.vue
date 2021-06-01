@@ -69,9 +69,9 @@
         <v-list-item
           v-for="user in users"
           :key="user.id"
-          :value="todo.id"
+          :value="todo"
         >
-          <v-list-item-title @click="setAssignee(user, todo.id)">
+          <v-list-item-title @click="setAssignee(user, todo)">
           {{ user.username }}
           </v-list-item-title>
 
@@ -123,18 +123,14 @@ export default {
       },
       currentId: '',
       selectedVictim: '',
-      users: [
-        {id: 1, username: "bob", house_keys: "testkey"},
-        {id: 2, username: "bobilly", house_keys: "testkey"},
-        {id: 3, username: "ben", house_keys: "testkey"},
-        {id: 4, username: "bboi", house_keys: "testkey"},
-        {id: 5, username: "beef", house_keys: "testkey"}
-        ]
+      users: this.$store.state.usersInSameHouse
     };
   },
  async mounted() {
    //here we need the house key
    await this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0]);
+   await this.$store.dispatch("populateVictimList", this.$store.state.user.house_keys[0]);
+
    this.todos = this.$store.state.todos;  
   },
   methods: {
@@ -143,7 +139,7 @@ export default {
             // id: Date.now(), and maybe + random number? To ensure it would not match other IDs?
             todo: this.newTodoMessage,
             date: Date.now(),
-            victimid: "everyone",
+            victimid: "Everyone",
             creatorid: this.$store.state.user.username,
             complete: false,
             house_key: this.$store.state.user.house_keys[0]  //getting from user state
@@ -187,11 +183,14 @@ export default {
       })
        
     },
-    setAssignee(user, id){
-      console.log(user)
-      console.log(user.username)
-      console.log(id)
-      //todo.victimid = user.username
+    async setAssignee(user, todo){
+      let todoToUpdate = {
+        id: todo.id,
+        victimid: user.username,
+        house_key: todo.house_key
+      }
+      await this.$store.dispatch("updateTodoVictim", todoToUpdate)
+      this.todos = this.$store.state.todos; 
     }
   },
 };

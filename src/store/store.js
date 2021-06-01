@@ -10,18 +10,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    testUser: {
-      id: 1,
-      username: "Jay",
-      house_key: "testhousekey",
-      email: "testerEmail",
-      isAdmin: false
-    },
     //Current logged in User information
     user: {},
     userTodoNotifications: 3,
     isUserLoggedIn: false,
     todos: [],
+    usersInSameHouse: [],
     // areTodosLoaded: false, // add a way to change it to false
   },
 
@@ -46,6 +40,11 @@ export default new Vuex.Store({
       console.log("SETTING TODOS", todos)
       state.todos = todos
       console.log("TODOS SET")
+    },
+
+    populateUsersInSameHouse(state, users){
+      console.log(`populating users with ${users}`)
+      state.usersInSameHouse = users
     }
   },
 
@@ -305,7 +304,45 @@ async addTodo(context, newTodo) {
     }
 },
 
+populateVictimList(context, house_key) {
+  console.log(`Chasing victims in ${house_key}`)
+  axios({
+    method: "POST",
+    url: "/graphql",
+    data: {
+      query: `
+      {
+        getUsersByHousekey(house_keys:"${house_key}"){
+          username
+        }
+      }
+      `
+    }
+  }).then((response) => {
+    console.log(response.data.data)
+    context.commit('populateUsersInSameHouse', response.data.data.getUsersByHousekey)
+  })
+},
 
+  //update victim on Todo 
+  updateTodoVictim(context, selectedTodo) {
+    console.log('Attemping to update VictimID', selectedTodo)
+    axios({
+      method: "POST",
+      url: "/graphql",
+      data: {
+        query: `
+        mutation{
+          updateTodo(
+            id: ${selectedTodo.id},
+            victimid: "${selectedTodo.victimid}"
+          )
+        }`
+      }
+    }).then(() => {
+      context.dispatch('getTodos', selectedTodo.house_key)
+    })
+},
 
 
     ///////
