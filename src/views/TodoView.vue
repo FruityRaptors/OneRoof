@@ -128,7 +128,7 @@ export default {
   },
  async mounted() {
    //here we need the house key
-   await this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0]);
+   /* await this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0]); */
    await this.$store.dispatch("populateVictimList", this.$store.state.user.house_keys[0]);
 
    this.todos = this.$store.state.todos;  

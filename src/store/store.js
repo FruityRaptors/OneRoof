@@ -61,10 +61,10 @@ export default new Vuex.Store({
     ///////
 
     //Fetches user and set user to front end state
-    getUser(context, email) {
+    async getUser(context, email) {
       console.log(`Getting User: ${email} from the database...`)
 
-        axios({
+        await axios({
           method: "POST",
           url: "/graphql",
           data: {
@@ -260,7 +260,8 @@ export default new Vuex.Store({
             context.commit("setTodoNotifications", notifications)
         }) 
       } catch(error) {
-        console.log("This is your error", error)
+        console.log("No user is logged in")
+        return
       }
     },
 
@@ -412,10 +413,14 @@ populateVictimList(context, house_key) {
         });
     },
 
-    checkIfLoggedInUser(context) {
-      const user = firebase.auth().currentUser
+    async checkIfLoggedInUser(context) {
+      const user = await firebase.auth().currentUser
       if(user) {
-        context.dispatch("getUser", user.email)
+        await context.dispatch("getUser", user.email)
+        return true
+      } else {
+        router.push('/login')
+        return false
       }
     }
 
