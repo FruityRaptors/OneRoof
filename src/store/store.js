@@ -38,14 +38,19 @@ export default new Vuex.Store({
     },
 
     addTodosToList(state, todos) {
-      console.log("SETTING TODOS", todos)
       state.todos = todos
-      console.log("TODOS SET")
     },
 
     populateUsersInSameHouse(state, users){
-      console.log(`populating users with ${users}`)
       state.usersInSameHouse = users
+    },
+
+    setTodoNotifications(state, notifications) {
+      state.userTodoNotifications = notifications
+    },
+
+    resetTodoNotifications(state) {
+      state.userTodoNotifications = 0
     }
   },
 
@@ -56,10 +61,10 @@ export default new Vuex.Store({
     ///////
 
     //Fetches user and set user to front end state
-    getUser(context, email) {
+    async getUser(context, email) {
       console.log(`Getting User: ${email} from the database...`)
 
-        axios({
+        await axios({
           method: "POST",
           url: "/graphql",
           data: {
@@ -204,7 +209,6 @@ export default new Vuex.Store({
           alert('House Key error!')
         }
       }).then(() => {
-        console.log('success!')
         context.dispatch("getUser", payload.email)
       })
     
@@ -246,18 +250,18 @@ export default new Vuex.Store({
             console.log("Received todos from server...")
             let todosByHouse = response.data.data.getTodosByHouse
             context.commit("addTodosToList", todosByHouse)
-            this.state.userTodoNotifications = 0
+            context.commit("resetTodoNotifications")
+            let notifications = 0
             for (let todo of todosByHouse) {
-              console.log(todo.victimid)
               if (todo.victimid === this.state.user.username) {
-                this.state.userTodoNotifications++
-                console.log(this.state.userTodoNotifications)
-              } 
-              
+                notifications++
+              }
             }
+            context.commit("setTodoNotifications", notifications)
         }) 
       } catch(error) {
-        console.log("This is your error", error)
+        console.log("No user is logged in")
+        return
       }
     },
 
@@ -307,8 +311,7 @@ async addTodo(context, newTodo) {
         context.dispatch("getTodos", /* response.data.data.getAllTodos */)
       })
     } catch(error) {
-      console.log("GOT HERE")
-      console.log("This is your error, error")
+      console.log("This is your error", error)
     }
 },
 
@@ -327,7 +330,6 @@ populateVictimList(context, house_key) {
       `
     }
   }).then((response) => {
-    console.log("HEY YOPOOOOOOOOOO" ,response.data.data.getUsersByHousekey)
     context.commit('populateUsersInSameHouse', response.data.data.getUsersByHousekey)
   })
 },
@@ -411,10 +413,14 @@ populateVictimList(context, house_key) {
         });
     },
 
-    checkIfLoggedInUser(context) {
-      const user = firebase.auth().currentUser
+    async checkIfLoggedInUser(context) {
+      const user = await firebase.auth().currentUser
       if(user) {
-        context.dispatch("getUser", user.email)
+        await context.dispatch("getUser", user.email)
+        return true
+      } else {
+        router.push('/login')
+        return false
       }
     }
 

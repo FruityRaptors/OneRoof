@@ -1,10 +1,9 @@
-import e from 'express'
 import { Query, Resolver, Mutation, Arg, } from 'type-graphql'
 import { Todos } from '../entity/Todo'
 // import { Todo } from '../schemas/todoSchema'
 
 @Resolver()
-export class todoResolver {
+export class todoResolvers {
     @Query(() => [Todos])   
     getAllTodos(){
         return Todos.find()
@@ -46,13 +45,11 @@ export class todoResolver {
         @Arg('id') id: number,
         @Arg('victimid') victimid: string,
     ){
-        console.log("HEre NOW")
         let todoToBeUpdated = await Todos.findOne( { where: { id } })
         if(!todoToBeUpdated){
             console.log('Error!')
             return
         }
-        console.log('HELLOOOOOOOOOO', todoToBeUpdated.victimid)
 
         todoToBeUpdated.victimid = victimid
 
