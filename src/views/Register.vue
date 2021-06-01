@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     register() {
-      let email = this.email;
+      let email = this.email.toLowerCase();
       let password = this.password;
       let username = this.username;
       this.$store.dispatch("registerUser", {email: email, password: password, username: username});
