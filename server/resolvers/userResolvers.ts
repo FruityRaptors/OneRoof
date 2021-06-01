@@ -27,6 +27,7 @@ export class userResolvers {
            let house_keysArr = JSON.parse(user.house_keys)
            
            if(!house_keysArr[0]){
+               console.log("OH no, it's not an array!")
                return
            }
            if (house_keysArr[0] === house_keys){

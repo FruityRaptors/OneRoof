@@ -46,6 +46,14 @@ export default new Vuex.Store({
     populateUsersInSameHouse(state, users){
       console.log(`populating users with ${users}`)
       state.usersInSameHouse = users
+    },
+    
+    setTodoNotifications(state, notifications) {
+      state.userTodoNotifications = notifications
+    },
+
+    resetTodoNotifications(state) {
+      state.userTodoNotifications = 0
     }
   },
 
@@ -246,15 +254,14 @@ export default new Vuex.Store({
             console.log("Received todos from server...")
             let todosByHouse = response.data.data.getTodosByHouse
             context.commit("addTodosToList", todosByHouse)
-            this.state.userTodoNotifications = 0
+            context.commit("resetTodoNotifications")
+            let notifications = 0
             for (let todo of todosByHouse) {
-              console.log(todo.victimid)
               if (todo.victimid === this.state.user.username) {
-                this.state.userTodoNotifications++
-                console.log(this.state.userTodoNotifications)
+                notifications++
               }
-              
             }
+            context.commit("setTodoNotifications", notifications)
         }) 
       } catch(error) {
         console.log("This is your error", error)

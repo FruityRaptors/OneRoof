@@ -4,7 +4,7 @@ import { Houses } from '../entity/Houses'
 
 
 @Resolver()
-export class houseResolver {
+export class houseResolvers {
     @Query(() => House)
     getHouseName(@Arg("house_key") house_key: string){
         return Houses.findOne({ where: { house_key } })
