@@ -32,7 +32,6 @@
  <script>
  export default {
     name: 'Test',
-    props: ['todo'],
     data(){
       return {
        
@@ -40,7 +39,6 @@
     },
     methods: {
         onClickDeleteButton() {
-          console.log(this.$props.todo)
             this.$emit('closeModal');
             this.$emit('clicked');
         }

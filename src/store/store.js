@@ -266,10 +266,10 @@ export default new Vuex.Store({
     },
 
 // deletes specified todo from database
-deleteTodo(context, id) {
+async deleteTodo(context, id) {
   console.log(`Deleting Todo with ${id}`)
       try {
-        axios({
+        await axios({
           method: "POST",
           url: "/graphql",
           data: {
@@ -281,6 +281,7 @@ deleteTodo(context, id) {
         })
           .then(() => {
             console.log('Todo deleted')
+            context.dispatch('getTodos', this.state.user.house_keys[0])
           })
       } catch (error) {
         console.log("This is your error", error)
@@ -335,9 +336,9 @@ populateVictimList(context, house_key) {
 },
 
   //update victim on Todo 
-  updateTodoVictim(context, selectedTodo) {
+  async updateTodoVictim(context, selectedTodo) {
     console.log('Attemping to update VictimID', selectedTodo)
-    axios({
+    await axios({
       method: "POST",
       url: "/graphql",
       data: {
