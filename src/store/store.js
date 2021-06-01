@@ -7,6 +7,7 @@ import axios from 'axios'
 import keygen from 'keygenerator'
 
 Vue.use(Vuex)
+Vue.config.devtools = true
 
 export default new Vuex.Store({
   state: {
@@ -73,8 +74,8 @@ export default new Vuex.Store({
             }`
           }
         }).then((response) => {
-         context.commit("toggleLoginBool")
-         context.commit("setUser", response.data.data.getUserByEmail)
+          context.commit("toggleLoginBool")
+          console.log(response.data.data.getUserByEmail)
 
           //If fetched user belonged to a house, set user normally
           if (response.data.data.getUserByEmail.house_keys) {

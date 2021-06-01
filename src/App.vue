@@ -23,14 +23,20 @@
       <!-- Navigation bar start -->
       <v-list dense nav>
         <v-list-item v-for="item in items" :key="item.title" :to="item.to" link>
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
+          <v-badge
+            :content="item.notifications"
+            :value="item.notifications"
+            color="red"
+            offset-x="40"
+            offset-y="40"
+            overlap
+          >
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+          </v-badge>
           <v-list-item-content>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-          <v-list-item-content v-if="item.notifications" id="notifications">
-            <v-list-item-title>{{ item.notifications }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -40,7 +46,15 @@
 
     <!-- App top bar start -->
     <v-app-bar app>
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-badge
+        :content="this.allNotifications"
+        :value="this.allNotifications"
+        color="red"
+        offset-x="20"
+        offset-y="50"
+        overlap
+        ><v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon
+      ></v-badge>
       <v-toolbar-title>OneRoof</v-toolbar-title>
       <section
         v-if="this.$store.state.isUserLoggedIn !== true"
@@ -90,6 +104,7 @@ export default {
         notifications: 0,
       },
     ],
+    allNotifications: 0,
     login: true,
   }),
   name: "App",
@@ -105,7 +120,10 @@ export default {
   },
   mounted() {
     this.$store.dispatch("checkIfLoggedInUser");
-    this.items[1].notifications = this.$store.state.userTodoNotifications
+    this.items[1].notifications = this.$store.state.todos.length;
+    for (let item of this.items) {
+      this.allNotifications += item.notifications;
+    }
   },
 };
 </script>
@@ -113,13 +131,5 @@ export default {
 <style>
 .profile-clickable {
   margin-left: auto;
-}
-
-#notifications {
-  border: 2px solid chocolate;
-  border-radius: 50%;
-  background-color: white;
-  flex: .25;
-  text-align: center;
 }
 </style>

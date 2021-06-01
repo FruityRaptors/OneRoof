@@ -30,7 +30,7 @@ export class userResolvers {
         })
     }
 
-    //To Creat new User with empty room
+    //To Create new User with empty room
     @Mutation(() => String)
     async createUser(
         @Arg('email') email: string,
