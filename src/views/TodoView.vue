@@ -1,6 +1,7 @@
 <template>
   <div> 
     <div class="todo-page" id="todo-page-container">
+
 <!-- Add todo input field-->
          <v-text-field
             v-model="newTodoMessage"
@@ -15,36 +16,80 @@
             hide-details
           >
           </v-text-field>
-<!-- todo list -->
+<!-- Add todo input field ends-->
+
+
+<!-- todo list platform -->
       <v-list v-if="todos.length" class="pt-0" two-line flat>
+
+<!-- Each Todo in Todo list -->
         <div id="todo-container" v-for="todo in todos" :key="todo.id">
           <v-list-item @click="completeTodo(todo.id)" :class="{ 'green lighten-4' : todo.complete }">
-            <template v-slot:default>
+          
+<!-- Todo tick box     -->
               <v-list-item-action>
                 <v-checkbox :input-value="todo.complete" color="green"> </v-checkbox>
               </v-list-item-action>
+<!-- Todo tick box ends -->
 
+
+<!-- Todo list text -->
               <v-list-item-content>
                 <v-list-item-title :class="{ 'text-decoration-line-through' : todo.complete}">
                     {{ todo.todo }}
                 </v-list-item-title>
-                <v-list-item-subtitle>{{ todo.victimid }}</v-list-item-subtitle>
+
+                <v-list-item-subtitle>
+                {{ todo.victimid }}
+                </v-list-item-subtitle>
               </v-list-item-content>
-              <v-list-item-action>
-<!-- First Button. Currently does nothing -->
-          <v-btn icon>
-            <v-icon>mdi-delete</v-icon>
-          </v-btn>
+<!-- Todo list text ends -->
+              
+
 <!-- Delete Button -->
-          <v-btn icon @click.stop="setState(todo)" > 
-            <v-icon color="brown lighten-3">mdi-delete-sweep-outline</v-icon>
-          </v-btn>
-        </v-list-item-action>
-            </template>  
-          </v-list-item>
-          <v-divider></v-divider>
-        </div>
+        <v-list-item-action class="">
+          
+            <v-icon 
+            icon @click.stop="setState(todo)" 
+            color="brown lighten-3">
+            mdi-delete</v-icon>
+          
+<!-- Delete Button ends-->
+<!-- Assignee Dropdown Starts -->
+    <v-menu offset-y>
+      <template v-slot:activator="{ on, attrs }">
+          <v-icon 
+          class="pt-2"
+          color="brown lighten-3"
+          v-bind="attrs"
+          v-on="on"
+          >mdi-account-plus</v-icon>
+      </template>
+      <v-list>
+        <v-list-item
+          v-for="user in users"
+          :key="user.id"
+        >
+          <v-list-item-title @click="setAssignee(user)">
+          {{ user.username }}
+          </v-list-item-title>
+
+        </v-list-item>
       </v-list>
+    </v-menu>
+    
+        </v-list-item-action>
+<!-- Assignee Dropdown Ends -->
+
+
+          </v-list-item>
+        </div>
+<!-- Each Todo in Todo list ends-->
+
+      </v-list>
+<!-- todo list platform ends-->
+
+
 <!-- No Todos if todo list is empty -->
       <div v-else>
         <div id="no-todo-bg">
@@ -70,30 +115,42 @@ export default {
   data() {
     return {
       newTodoMessage: 'HERE I AM',
-      todos: [],
+      stateTodo: this.$store.state.todos,
+      todos: '',
       modals: {
         deleteTodo: false,
       },
-      currentId: ''
+      currentId: '',
+      selectedVictim: '',
+      users: [
+        {id: 1, username: "bob", house_keys: "testkey"},
+        {id: 2, username: "bobilly", house_keys: "testkey"},
+        {id: 3, username: "ben", house_keys: "testkey"},
+        {id: 4, username: "bboi", house_keys: "testkey"},
+        {id: 5, username: "beef", house_keys: "testkey"}
+        ]
     };
   },
  async mounted() {
-   console.log("before await")
-   await this.$store.dispatch("getTodos");
+   //here we need the house key
+   await this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0]);
    this.todos = this.$store.state.todos;  
   },
   methods: {
     async addTodo() {
         let newTodo = {
+            // id: Date.now(), and maybe + random number? To ensure it would not match other IDs?
             todo: this.newTodoMessage,
             date: Date.now(),
             victimid: "everyone",
             creatorid: this.$store.state.user.username,
             complete: false,
+            house_key: this.$store.state.user.house_keys[0]  //getting from user state
         }
         await this.$store.dispatch("addTodo", newTodo)
+        this.todos.push(newTodo)
         this.newTodoMessage = 
-        await this.$store.dispatch("getTodos");
+        await this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0]);
         this.todos = this.$store.state.todos;  
     },
     completeTodo(id) {
@@ -112,10 +169,26 @@ export default {
       this.modals.deleteTodo = true
       this.currentId = todo.id
     },
-    async deleteFromModal(){
-      await this.$store.dispatch('deleteTodo', this.currentId)
-      await this.$store.dispatch("getTodos")
-      this.todos = this.$store.state.todos
+    deleteFromModal(){
+
+      this.$store.dispatch('deleteTodo', this.currentId).then(() => {
+      console.log("getting updated to do list...")
+      this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0])
+
+      }).then(()=> {
+        
+        this.todos = this.$store.state.todos
+  
+      }).then(() => {
+
+         this.todos = this.todos.filter((todo) => todo.id !== this.currentId)
+
+      })
+       
+    },
+    setAssignee(user){
+      console.log(user)
+      // victimid = this.selectedVictim.title
     }
   },
 };
