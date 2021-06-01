@@ -45,13 +45,11 @@ export class todoResolvers {
         @Arg('id') id: number,
         @Arg('victimid') victimid: string,
     ){
-        console.log("HEre NOW")
         let todoToBeUpdated = await Todos.findOne( { where: { id } })
         if(!todoToBeUpdated){
             console.log('Error!')
             return
         }
-        console.log('HELLOOOOOOOOOO', todoToBeUpdated.victimid)
 
         todoToBeUpdated.victimid = victimid
 

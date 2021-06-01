@@ -38,16 +38,13 @@ export default new Vuex.Store({
     },
 
     addTodosToList(state, todos) {
-      console.log("SETTING TODOS", todos)
       state.todos = todos
-      console.log("TODOS SET")
     },
 
     populateUsersInSameHouse(state, users){
-      console.log(`populating users with ${users}`)
       state.usersInSameHouse = users
     },
-    
+
     setTodoNotifications(state, notifications) {
       state.userTodoNotifications = notifications
     },
@@ -212,7 +209,6 @@ export default new Vuex.Store({
           alert('House Key error!')
         }
       }).then(() => {
-        console.log('success!')
         context.dispatch("getUser", payload.email)
       })
     
@@ -314,8 +310,7 @@ async addTodo(context, newTodo) {
         context.dispatch("getTodos", /* response.data.data.getAllTodos */)
       })
     } catch(error) {
-      console.log("GOT HERE")
-      console.log("This is your error, error")
+      console.log("This is your error", error)
     }
 },
 
@@ -334,7 +329,6 @@ populateVictimList(context, house_key) {
       `
     }
   }).then((response) => {
-    console.log("HEY YOPOOOOOOOOOO" ,response.data.data.getUsersByHousekey)
     context.commit('populateUsersInSameHouse', response.data.data.getUsersByHousekey)
   })
 },
