@@ -17,6 +17,7 @@ export default new Vuex.Store({
     isUserLoggedIn: false,
     todos: [],
     usersInSameHouse: [],
+    houseName: ''
     // areTodosLoaded: false, // add a way to change it to false
   },
 
@@ -39,7 +40,6 @@ export default new Vuex.Store({
       } else {
         state.isUserLoggedIn = !state.isUserLoggedIn
       }
-      
     },
 
     addTodosToList(state, todos) {
@@ -56,6 +56,10 @@ export default new Vuex.Store({
 
     resetTodoNotifications(state) {
       state.userTodoNotifications = 0
+    },
+
+    setHouseName(state, name){
+      state.houseName = name
     }
   },
 
@@ -216,12 +220,29 @@ export default new Vuex.Store({
       }).then(() => {
         context.dispatch("getUser", payload.email)
       })
-    
     },
 
-    ///////
-    //House related actions ends
-    ///////
+   async getHouseName(context, payload){
+      await axios({
+        method: "POST",
+        url: "/graphql",
+        data: {
+          query: `
+          {
+            getHouseName(house_key:"${payload}"){
+              house_name
+            }
+          }
+          `
+        }
+      }).then((response) => {
+        context.commit('setHouseName', response.data.data.getHouseName.house_name)
+      })
+    },
+
+///////
+//House related actions ends
+///////
 
 
 
