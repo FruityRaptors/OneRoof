@@ -13,12 +13,12 @@
 
   <v-app v-else id="one-roof-app">
     <!-- Nav drawer starts -->
-    <v-navigation-drawer v-model="drawer" color="brown lighten-4" app>
+    <v-navigation-drawer v-model="drawer" color="orange lighten-4" width="185" app>
       <!-- Navbar title start -->
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="pt-3 white--text font-weight-thin"> OneRoof </v-list-item-title>
-          <v-list-item-subtitle> Yamada Home </v-list-item-subtitle>
+          <v-list-item-title class="pt-3 font-weight-bold"> OneRoof </v-list-item-title>
+        <v-list-item-subtitle> {{this.$store.state.houseName}} </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
       <!-- Nav bar title ends -->
@@ -31,13 +31,15 @@
           <v-badge
             :content="item.notifications"
             :value="item.notifications"
-            color="red"
+            color="orange darken-4"
             offset-x="40"
             offset-y="40"
             overlap
           >
             <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
+              <v-icon
+              color="brown lighten-1"
+              >{{ item.icon }}</v-icon>
             </v-list-item-icon>
           </v-badge>
           <v-list-item-content>
@@ -52,7 +54,7 @@
     <!-- App top bar start -->
     <v-app-bar 
     app
-    color="brown lighten-4"
+    color="orange lighten-4"
     >
 
     <v-container
@@ -63,7 +65,7 @@
         :content="this.allNotifications"
         :value="this.allNotifications"
         color="red"
-        offset-x="20"
+        offset-x="28"
         offset-y="50"
         overlap
         ><v-app-bar-nav-icon
@@ -93,7 +95,8 @@
    
       <router-link style="text-decoration: none" to="/profile">
           <v-icon
-          class="pt-4"
+          class="pt-5"
+          color="brown lighten-1"
           >
           mdi-account-circle-outline
           </v-icon>
@@ -104,7 +107,7 @@
     <!-- App top bar ends -->
 
     <!-- Main app component -->
-    <v-main class="brown lighten-4">
+    <v-main class="orange lighten-5">
       <!-- Placeholder to test components -->
       <!-- Placeholder to test components -->
       <router-view></router-view>
@@ -121,6 +124,7 @@ import Register from "./views/Register";
 export default {
   data: () => ({
     drawer: null,
+    houseName: "",
     items: [
       {
         title: "Chat",
@@ -156,6 +160,8 @@ export default {
     if(checker) {
       await this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0])
       await this.$store.dispatch("populateVictimList", this.$store.state.user.house_keys[0]);
+      await this.$store.dispatch("getHouseName", this.$store.state.user.house_keys[0]);
+      // this.houseName = this.$store.user.houseName;
       //await get all messages for general chat
       this.allNotifications = 0;
       this.items[1].notifications = this.$store.state.userTodoNotifications;

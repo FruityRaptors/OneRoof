@@ -1,6 +1,6 @@
 <template>
     <v-card
-    class="mx-auto pa-2 mt-5 brown lighten-5"
+    class="mx-auto pa-2 mt-5 orange lighten-4"
     width="344px" max-width="350"
   >
     <v-list-item three-line>
@@ -11,7 +11,7 @@
         <v-list-item-title class="text-h6 mb-1">
           House Name
         </v-list-item-title>
-        <v-list-item-subtitle class="font-weight-bold">Yamada House</v-list-item-subtitle>
+        <v-list-item-subtitle class="font-weight-bold">{{this.houseName}}</v-list-item-subtitle>
       </v-list-item-content>
 
       
@@ -76,6 +76,7 @@ export default {
     return {
       username: "",
       email: "",
+      houseName: "",
     };
   },
   components: {
@@ -87,6 +88,7 @@ export default {
   mounted() {
     this.username = this.$store.state.user.username;
     this.email = this.$store.state.user.email;
+    this.houseName = this.$store.state.houseName;
   },
 
   methods: {
