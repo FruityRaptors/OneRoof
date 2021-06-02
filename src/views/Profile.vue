@@ -5,37 +5,50 @@
   >
     <v-list-item three-line>
       <v-list-item-content>
-        <div class="text-overline mb-4">
+        <div class="text-overline mb-4 text-decoration-underline">
           {{ this.username }}'s Profile 
         </div>
         <v-list-item-title class="text-h6 mb-1">
-          House Name?
+          House Name
         </v-list-item-title>
-        <v-list-item-subtitle>Bio? I like Oneroof :)</v-list-item-subtitle>
+        <v-list-item-subtitle class="font-weight-bold">Yamada House</v-list-item-subtitle>
       </v-list-item-content>
 
       
 
       <v-list-item-avatar
-        tile
-        size="80">
+        rounded="circle"
+        size="83">
         <Avatar :username="this.$store.state.user.username" :size="80"></Avatar>
       </v-list-item-avatar>
     </v-list-item>
 
     <v-list-item three-line>
       <v-list-item-content>
-        <div class="text-overline mb-4">
-          Another section?
+        <div class="text-overline mb-2 text-decoration-underline">
+          Personal Info
         </div>
-        <v-list-item-title class="text-h6 mb-1">
-          User Stat
+        <v-list-item-title class="text-h6 mb-2">
+          Username
         </v-list-item-title>
-        <v-list-item-subtitle>Bio? I like Oneroof :)</v-list-item-subtitle>
+        <v-list-item-subtitle class="font-weight-bold">{{this.username}}</v-list-item-subtitle>
+      </v-list-item-content>
+    </v-list-item>
+
+    <v-list-item two-line>
+      <v-list-item-content>
+        <v-list-item-title class="text-h6 mb-2">
+          Email
+        </v-list-item-title>
+        <v-list-item-subtitle class="font-weight-bold">{{this.email}}</v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
     
-
+    <v-list-item class="mt-2 mb-2">
+      <UpdateUser @setProfilePageUsername="changeUsername" />
+    </v-list-item>
+  
+    <v-list-item class="d-flex justify-center mb-2 mt-1">
     <v-card-actions>
       <v-btn
         outlined
@@ -45,8 +58,8 @@
       >
         Logout
       </v-btn>
-    <UpdateUser @setProfilePageUsername="changeUsername" />
     </v-card-actions>
+    </v-list-item>
   </v-card>
     
     <!-- <button @click="logout">Logout</button> -->
