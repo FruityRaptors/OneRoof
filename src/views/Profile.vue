@@ -1,6 +1,6 @@
 <template>
     <v-card
-    class="mx-auto pa-2 mt-5 brown lighten-5"
+    class="mx-auto pa-2 mt-5 orange lighten-4"
     width="344px" max-width="350"
   >
     <v-list-item three-line>

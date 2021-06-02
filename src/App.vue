@@ -13,11 +13,11 @@
 
   <v-app v-else id="one-roof-app">
     <!-- Nav drawer starts -->
-    <v-navigation-drawer v-model="drawer" color="brown lighten-4" app>
+    <v-navigation-drawer v-model="drawer" color="orange lighten-4" width="185" app>
       <!-- Navbar title start -->
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="pt-3 white--text font-weight-thin"> OneRoof </v-list-item-title>
+          <v-list-item-title class="pt-3 font-weight-bold"> OneRoof </v-list-item-title>
           <v-list-item-subtitle> Yamada Home </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -31,13 +31,15 @@
           <v-badge
             :content="item.notifications"
             :value="item.notifications"
-            color="red"
+            color="orange darken-4"
             offset-x="40"
             offset-y="40"
             overlap
           >
             <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
+              <v-icon
+              color="brown lighten-1"
+              >{{ item.icon }}</v-icon>
             </v-list-item-icon>
           </v-badge>
           <v-list-item-content>
@@ -52,8 +54,7 @@
     <!-- App top bar start -->
     <v-app-bar 
     app
-    color="brown lighten-4"
-    class="pa-0"
+    color="orange lighten-4"
     >
 
     <v-container
@@ -64,12 +65,12 @@
         :content="this.allNotifications"
         :value="this.allNotifications"
         color="red"
-        offset-x="20"
+        offset-x="28"
         offset-y="50"
         overlap
         ><v-app-bar-nav-icon
          @click="drawer = !drawer"
-         class="mr-0"
+         class="mr-0 pt-4 pr-6"
          >
           
          </v-app-bar-nav-icon
@@ -82,11 +83,11 @@
       </v-toolbar-title> -->
 
       <v-img
-        src="@/assets/placeholder_logo.png"
-        height="30"
-        width="10"
+        src="@/assets/OneRoof.png"
+        height="50"
+        width="20"
         contain
-        class="mt-3 mr-3"
+        class="mt-2 mr-3 pa-0"
       >
 
       </v-img>
@@ -94,7 +95,8 @@
    
       <router-link style="text-decoration: none" to="/profile">
           <v-icon
-          class="pt-3"
+          class="pt-5"
+          color="brown lighten-1"
           >
           mdi-account-circle-outline
           </v-icon>
@@ -105,7 +107,7 @@
     <!-- App top bar ends -->
 
     <!-- Main app component -->
-    <v-main class="brown lighten-4">
+    <v-main class="orange lighten-5">
       <!-- Placeholder to test components -->
       <!-- Placeholder to test components -->
       <router-view></router-view>
