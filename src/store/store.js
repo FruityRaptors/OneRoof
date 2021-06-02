@@ -68,7 +68,7 @@ export default new Vuex.Store({
     //Fetches user and set user to front end state
     async getUser(context, email) {
       console.log(`Getting User: ${email} from the database...`)
-
+      console.log("HERE IS THE PORT", process.env.PORT)
         await axios({
           method: "POST",
           url: "/graphql",
