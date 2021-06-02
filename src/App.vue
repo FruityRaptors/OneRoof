@@ -4,19 +4,20 @@
   </div>
 
   <v-container v-else-if="this.$store.state.isUserLoggedIn == false">
-    <Login v-if="this.login === true" />
-    <!-- <Register v-if="this.Login === false"/> -->
-    <Register v-if="this.login === false" />
-    <v-btn @click="toggleRegLog"> Register </v-btn>
+    <v-container>
+    <Login @emit="toggleRegLog" v-if="this.login === true" />
+    <Register @emit="toggleRegLog" v-if="this.login === false" />
+    </v-container>
+   
   </v-container>
 
   <v-app v-else id="one-roof-app">
     <!-- Nav drawer starts -->
-    <v-navigation-drawer v-model="drawer" color="brown" app>
+    <v-navigation-drawer v-model="drawer" color="brown lighten-4" app>
       <!-- Navbar title start -->
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="title"> OneRoof </v-list-item-title>
+          <v-list-item-title class="pt-3 white--text font-weight-thin"> OneRoof </v-list-item-title>
           <v-list-item-subtitle> Yamada Home </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -49,7 +50,16 @@
     <!-- Nav drawer ends -->
 
     <!-- App top bar start -->
-    <v-app-bar app>
+    <v-app-bar 
+    app
+    color="brown lighten-4"
+    class="pa-0"
+    >
+
+    <v-container
+      class="d-flex justify-space-between pl-0 ml-0"
+      
+      >
       <v-badge
         :content="this.allNotifications"
         :value="this.allNotifications"
@@ -57,21 +67,40 @@
         offset-x="20"
         offset-y="50"
         overlap
-        ><v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon
+        ><v-app-bar-nav-icon
+         @click="drawer = !drawer"
+         class="mr-0"
+         >
+          
+         </v-app-bar-nav-icon
       ></v-badge>
-      <v-toolbar-title>OneRoof</v-toolbar-title>
-      <section
-        v-if="this.$store.state.isUserLoggedIn !== true"
-        class="login-options"
+
+      <!-- <v-toolbar-title
+      class="pt-3 white--text font-weight-thin"
       >
-        <router-link to="/login">Login</router-link> |
-        <router-link to="/register">Reg</router-link>
-      </section>
-      <section v-else class="profile-clickable">
-        <router-link to="/profile"
-          ><Avatar :username="this.$store.state.user.username"></Avatar
-        ></router-link>
-      </section>
+        OneRoof
+      </v-toolbar-title> -->
+
+      <v-img
+        src="@/assets/placeholder_logo.png"
+        height="30"
+        width="10"
+        contain
+        class="mt-3 mr-3"
+      >
+
+      </v-img>
+
+   
+      <router-link to="/profile">
+          <v-icon
+          class="pt-3"
+          >
+          mdi-account-circle-outline
+          </v-icon>
+      </router-link>
+    </v-container>
+
     </v-app-bar>
     <!-- App top bar ends -->
 
@@ -87,7 +116,6 @@
 
 
 <script>
-import Avatar from "vue-avatar";
 import Login from "./views/Login.vue";
 import Register from "./views/Register";
 
@@ -97,7 +125,7 @@ export default {
     items: [
       {
         title: "Chat",
-        icon: "mdi-view-dashboard",
+        icon: "mdi-chat",
         to: "/yourhome",
         notifications: 0,
       }, //Use to: to link views
@@ -114,7 +142,6 @@ export default {
   }),
   name: "App",
   components: {
-    Avatar,
     Login,
     Register,
   },
@@ -128,9 +155,9 @@ export default {
     this.loading = true;
     let checker = await this.$store.dispatch("checkIfLoggedInUser");
     if(checker) {
-      console.log(this.$store.state.user)
       await this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0])
       await this.$store.dispatch("populateVictimList", this.$store.state.user.house_keys[0]);
+      //await get all messages for general chat
       this.allNotifications = 0;
       this.items[1].notifications = this.$store.state.userTodoNotifications;
       for (let item of this.items) {
@@ -158,7 +185,5 @@ export default {
 </script>
 
 <style>
-.profile-clickable {
-  margin-left: auto;
-}
+
 </style>
