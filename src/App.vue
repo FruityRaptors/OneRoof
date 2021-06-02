@@ -53,7 +53,6 @@
     <v-app-bar 
     app
     color="brown lighten-4"
-    class="pa-0"
     >
 
     <v-container
@@ -69,7 +68,7 @@
         overlap
         ><v-app-bar-nav-icon
          @click="drawer = !drawer"
-         class="mr-0"
+         class="mr-0 pt-4 pr-6"
          >
           
          </v-app-bar-nav-icon
@@ -82,11 +81,11 @@
       </v-toolbar-title> -->
 
       <v-img
-        src="@/assets/placeholder_logo.png"
-        height="30"
-        width="10"
+        src="@/assets/OneRoof.png"
+        height="50"
+        width="20"
         contain
-        class="mt-3 mr-3"
+        class="mt-2 mr-3 pa-0"
       >
 
       </v-img>
@@ -94,7 +93,7 @@
    
       <router-link style="text-decoration: none" to="/profile">
           <v-icon
-          class="pt-3"
+          class="pt-4"
           >
           mdi-account-circle-outline
           </v-icon>
