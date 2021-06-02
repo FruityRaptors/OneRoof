@@ -1,14 +1,14 @@
-const dbSocketPath = process.env.DB_SOCKET_PATH || "/cloudsql";
+//const dbSocketPath = process.env.DB_SOCKET_PATH || "/cloudsql";
 
 module.exports = {
    "type": "postgres",
-   "host": `${dbSocketPath}/${process.env.CLOUD_SQL_CONNECTION_NAME}` || "172.17.0.6",
+   "host": "/cloudsql/oneroof-315600:asia-northeast2:oneroof",
    "extra": {
-      "socketPath": `${dbSocketPath}/${process.env.CLOUD_SQL_CONNECTION_NAME}`
+      "socketPath": "/cloudsql/oneroof-315600:asia-northeast2:oneroof"
  },
-   "username": process.env.DB_USER,
-   "password": process.env.DB_PASS,
-   "database": process.env.DB_NAME,
+   "username": "oneroof",
+   "password": "oneroof",
+   "database": "oneroof",
    "synchronize": true,
    "logging": false,
    "entities": [
