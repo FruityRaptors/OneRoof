@@ -4,10 +4,11 @@
   </div>
 
   <v-container v-else-if="this.$store.state.isUserLoggedIn == false">
-    <Login v-if="this.login === true" />
-    <!-- <Register v-if="this.Login === false"/> -->
-    <Register v-if="this.login === false" />
-    <v-btn @click="toggleRegLog"> Register </v-btn>
+    <v-container>
+    <Login @emit="toggleRegLog" v-if="this.login === true" />
+    <Register @emit="toggleRegLog" v-if="this.login === false" />
+    </v-container>
+   
   </v-container>
 
   <v-app v-else id="one-roof-app">
@@ -128,9 +129,9 @@ export default {
     this.loading = true;
     let checker = await this.$store.dispatch("checkIfLoggedInUser");
     if(checker) {
-      console.log(this.$store.state.user)
       await this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0])
       await this.$store.dispatch("populateVictimList", this.$store.state.user.house_keys[0]);
+      //await get all messages for general chat
       this.allNotifications = 0;
       this.items[1].notifications = this.$store.state.userTodoNotifications;
       for (let item of this.items) {

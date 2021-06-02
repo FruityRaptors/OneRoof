@@ -109,14 +109,12 @@ import DeleteModal from './Modals/DeleteModal.vue'
 
 export default {
   name: "Home",
-  props: ['todo'],
   components: {
     DeleteModal
   },
   data() {
     return {
       newTodoMessage: 'HERE I AM',
-      stateTodo: this.$store.state.todos,
       todos: '',
       modals: {
         deleteTodo: false,
@@ -126,11 +124,10 @@ export default {
       users: this.$store.state.usersInSameHouse
     };
   },
- async mounted() {
+  mounted() {
    //here we need the house key
    /* await this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0]); */
-   await this.$store.dispatch("populateVictimList", this.$store.state.user.house_keys[0]);
-
+  //  await this.$store.dispatch("populateVictimList", this.$store.state.user.house_keys[0]);
    this.todos = this.$store.state.todos;  
   },
   methods: {
@@ -190,6 +187,8 @@ export default {
         house_key: todo.house_key
       }
       await this.$store.dispatch("updateTodoVictim", todoToUpdate)
+      await this.$store.dispatch("getTodos", todoToUpdate.house_key)
+      console.log("YOOOOOOO LINE 189!!!")
       this.todos = this.$store.state.todos; 
     }
   },

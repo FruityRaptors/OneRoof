@@ -1,18 +1,35 @@
 <template>
-  <v-card>
-    <v-card-title>
+  <v-app>
+
+  <v-card class="mx-auto pa-5 mt-5 text-center brown lighten-5" width="300px" max-width="350">
+    <v-card-title class="text-center d-flex justify-center">
+      Welcome to Oneroof
+    </v-card-title>
+
+    <v-card-title class="text-center d-flex justify-center">
       Register
     </v-card-title>
 
-    <v-text-field v-model="email" label="Email"></v-text-field>
-    <v-text-field v-model="password" label="Password"></v-text-field>
-    <v-text-field v-model="username" label="Username"></v-text-field>
+    <v-text-field filled v-model="email" label="Email"></v-text-field>
+    <v-text-field filled type="password" v-model="password" label="Password"></v-text-field>
+    <v-text-field filled v-model="username" label="Username"></v-text-field>
 
     <v-btn @click="register">
       Register
     </v-btn>
-    
+
+    <v-container>
+        <v-card-subtitle>
+          Already have an account?
+        </v-card-subtitle>
+    </v-container>
+
+    <v-btn block @click="$emit('emit')"> 
+        Back to Login
+    </v-btn>
   </v-card>
+    
+  </v-app>
 </template>
 
 <script>
