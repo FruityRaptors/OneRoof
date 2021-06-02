@@ -13,7 +13,7 @@
 
   <v-app v-else id="one-roof-app">
     <!-- Nav drawer starts -->
-    <v-navigation-drawer v-model="drawer" color="brown" app>
+    <v-navigation-drawer v-model="drawer" color="brown lighten-3" app>
       <!-- Navbar title start -->
       <v-list-item>
         <v-list-item-content>
@@ -50,7 +50,16 @@
     <!-- Nav drawer ends -->
 
     <!-- App top bar start -->
-    <v-app-bar app>
+    <v-app-bar 
+    app
+    color="brown lighten-2"
+    class="pa-0"
+    >
+
+    <v-container
+      class="d-flex justify-space-between pl-0 ml-0"
+      
+      >
       <v-badge
         :content="this.allNotifications"
         :value="this.allNotifications"
@@ -58,21 +67,30 @@
         offset-x="20"
         offset-y="50"
         overlap
-        ><v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon
+        ><v-app-bar-nav-icon
+         @click="drawer = !drawer"
+         class="mr-0"
+         >
+          
+         </v-app-bar-nav-icon
       ></v-badge>
-      <v-toolbar-title>OneRoof</v-toolbar-title>
-      <section
-        v-if="this.$store.state.isUserLoggedIn !== true"
-        class="login-options"
+
+      <v-toolbar-title
+      class="pt-3 white--text font-weight-thin"
       >
-        <router-link to="/login">Login</router-link> |
-        <router-link to="/register">Reg</router-link>
-      </section>
-      <section v-else class="profile-clickable">
-        <router-link style="text-decoration: none;" to="/profile"
-          ><Avatar :username="this.$store.state.user.username"></Avatar
-        ></router-link>
-      </section>
+        OneRoof
+      </v-toolbar-title>
+
+   
+      <router-link to="/profile">
+          <v-icon
+          class="pt-3"
+          >
+          mdi-account-circle-outline
+          </v-icon>
+      </router-link>
+    </v-container>
+
     </v-app-bar>
     <!-- App top bar ends -->
 
@@ -88,7 +106,6 @@
 
 
 <script>
-import Avatar from "vue-avatar";
 import Login from "./views/Login.vue";
 import Register from "./views/Register";
 
@@ -98,7 +115,7 @@ export default {
     items: [
       {
         title: "Chat",
-        icon: "mdi-view-dashboard",
+        icon: "mdi-chat",
         to: "/yourhome",
         notifications: 0,
       }, //Use to: to link views
@@ -115,7 +132,6 @@ export default {
   }),
   name: "App",
   components: {
-    Avatar,
     Login,
     Register,
   },
@@ -160,7 +176,5 @@ export default {
 </script>
 
 <style>
-.profile-clickable {
-  margin-left: auto;
-}
+
 </style>
