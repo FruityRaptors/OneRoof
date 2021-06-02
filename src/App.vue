@@ -13,11 +13,11 @@
 
   <v-app v-else id="one-roof-app">
     <!-- Nav drawer starts -->
-    <v-navigation-drawer v-model="drawer" color="brown lighten-3" app>
+    <v-navigation-drawer v-model="drawer" color="brown lighten-4" app>
       <!-- Navbar title start -->
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="title"> OneRoof </v-list-item-title>
+          <v-list-item-title class="pt-3 white--text font-weight-thin"> OneRoof </v-list-item-title>
           <v-list-item-subtitle> Yamada Home </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -52,7 +52,7 @@
     <!-- App top bar start -->
     <v-app-bar 
     app
-    color="brown lighten-2"
+    color="brown lighten-4"
     class="pa-0"
     >
 
@@ -75,11 +75,21 @@
          </v-app-bar-nav-icon
       ></v-badge>
 
-      <v-toolbar-title
+      <!-- <v-toolbar-title
       class="pt-3 white--text font-weight-thin"
       >
         OneRoof
-      </v-toolbar-title>
+      </v-toolbar-title> -->
+
+      <v-img
+        src="@/assets/placeholder_logo.png"
+        height="30"
+        width="10"
+        contain
+        class="mt-3 mr-3"
+      >
+
+      </v-img>
 
    
       <router-link to="/profile">
