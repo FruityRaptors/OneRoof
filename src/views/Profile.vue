@@ -11,7 +11,7 @@
         <v-list-item-title class="text-h6 mb-1">
           House Name
         </v-list-item-title>
-        <v-list-item-subtitle class="font-weight-bold">Your House</v-list-item-subtitle>
+        <v-list-item-subtitle class="font-weight-bold">this.houseName</v-list-item-subtitle>
       </v-list-item-content>
 
       
@@ -89,7 +89,7 @@ export default {
   mounted() {
     this.username = this.$store.state.user.username;
     this.email = this.$store.state.user.email;
-    /* this.houseName = this.$store.state.houseName; */
+    // this.houseName = this.$store.state.houseName;
   },
 
   methods: {
