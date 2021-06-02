@@ -69,7 +69,7 @@
         <router-link to="/register">Reg</router-link>
       </section>
       <section v-else class="profile-clickable">
-        <router-link to="/profile"
+        <router-link style="text-decoration: none;" to="/profile"
           ><Avatar :username="this.$store.state.user.username"></Avatar
         ></router-link>
       </section>
