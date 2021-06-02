@@ -58,7 +58,6 @@
       >
         Logout
       </v-btn>
-    <UpdateUser @setProfilePageUsername="changeUsername" />
     <UpdatePhoto />
     </v-card-actions>
     </v-list-item>
