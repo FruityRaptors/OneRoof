@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on">
+        <v-btn color="green" dark v-bind="attrs" v-on="on">
           Update your Info
         </v-btn>
       </template>
@@ -22,11 +22,22 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Update Email Address (coming soon)" hint="This feature is upcoming"></v-text-field>
+                <v-text-field
+                  label="Update Email Address (coming soon)"
+                  hint="This feature is upcoming"
+                ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Update Password (coming soon)" hint="This feature is upcoming"></v-text-field>
+                <v-text-field
+                  label="Update Password (coming soon)"
+                  hint="This feature is upcoming"
+                ></v-text-field>
               </v-col>
+              <v-file-input
+                show-size
+                counter
+                label="Upload a photo"
+              ></v-file-input>
             </v-row>
           </v-container>
         </v-card-text>
@@ -36,7 +47,7 @@
             Close
           </v-btn>
           <v-btn color="blue darken-1" text @click="updateUsername">
-            Save
+            Save Changes
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -49,15 +60,15 @@ export default {
   name: "UpdateUser",
   data: () => ({
     dialog: false,
-    username: ""
+    username: "",
   }),
   methods: {
-      updateUsername() {
-          this.$store.commit("setUsername", this.username)
-          this.$emit("setProfilePageUsername", this.username)
-          this.username = ""
-          this.dialog = false
-      }
-  }
+    updateUsername() {
+      this.$store.commit("setUsername", this.username);
+      this.$emit("setProfilePageUsername", this.username);
+      this.username = "";
+      this.dialog = false;
+    },
+  },
 };
 </script>
