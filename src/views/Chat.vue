@@ -51,7 +51,7 @@
       class=""
       rounded
       max-height="100"
-      color="brown lighten-4"
+      color="brown lighten-3"
       padless
     >
         <v-text-field
@@ -62,7 +62,7 @@
           @keyup.enter="sendMessage(); ; $vuetify.goTo(99999)"
         />
         <v-btn 
-        class="mr-2 brown lighten-4"
+        class="mr-2 brown lighten-3"
         fab
         @click.prevent="sendMessage(); ; $vuetify.goTo(99999)"
         elevation="0"
