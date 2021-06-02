@@ -91,7 +91,6 @@ export default {
       messages: [],
       username: this.$store.state.user.username,
       lastMessage: '',
-      userUrl: this.$store.state.user.photo_url
     };
   }, // Data ends
 
