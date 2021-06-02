@@ -18,7 +18,7 @@
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="pt-3 font-weight-bold"> OneRoof </v-list-item-title>
-        <v-list-item-subtitle> {{this.$store.state.houseName}} </v-list-item-subtitle>
+        <v-list-item-subtitle> "Your house" </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
       <!-- Nav bar title ends -->
@@ -160,7 +160,7 @@ export default {
     if(checker) {
       await this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0])
       await this.$store.dispatch("populateVictimList", this.$store.state.user.house_keys[0]);
-      await this.$store.dispatch("getHouseName", this.$store.state.user.house_keys[0]);
+     /*  await this.$store.dispatch("getHouseName", this.$store.state.user.house_keys[0]); */
       // this.houseName = this.$store.user.houseName;
       //await get all messages for general chat
       this.allNotifications = 0;
