@@ -2,7 +2,7 @@
   <div class="view chat">
     
 <!-- chat section start -->
-    <v-container id="chat-box" class="chat-box brown lighten-5" v-on:update="$vuetify.goTo(99999)" color="brown lighten-4">
+    <v-container id="chat-box" class="chat-box brown lighten-4" v-on:update="$vuetify.goTo(99999)" color="brown lighten-4">
 
 <!-- message container starts -->
       <v-container
@@ -11,8 +11,8 @@
         :key="message.id"
         :class="
           message.username == username
-            ? 'text-right d-flex align-end flex-column mx-auto brown lighten-5 pr-0'
-            : 'text-left d-flex align-start flex-column  mx-auto brown lighten-5'
+            ? 'text-right d-flex align-end flex-column mx-auto brown lighten-4 pr-0'
+            : 'text-left d-flex align-start flex-column  mx-auto brown lighten-4'
         "
         >
         
@@ -33,7 +33,7 @@
             max-width="250"
             class="mb-2 mr-4 pa-2"
             :color="
-              message.username == username ? 'orange light-3 white--text font-weight-light text-justify' : 'orange light-1 accent-1 font-weight-light'
+              message.username == username ? 'brown lighten-1 white--text font-weight-light text-justify' : 'brown lighten-3 font-weight-light'
             "
             >{{ message.content }}
             </v-card>
