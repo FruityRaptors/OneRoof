@@ -2,7 +2,7 @@
 
 module.exports = {
    "type": "postgres",
-   "host": "/cloudsql/oneroof-315600:asia-northeast2:oneroof",
+   "socketPath": "/cloudsql/oneroof-315600:asia-northeast2:oneroof/.s.PGSQL.5432", 
    "username": "oneroof",
    "password": "oneroof",
    "database": "oneroof",
