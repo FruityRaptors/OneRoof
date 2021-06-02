@@ -92,7 +92,7 @@
       </v-img>
 
    
-      <router-link to="/profile">
+      <router-link style="text-decoration: none" to="/profile">
           <v-icon
           class="pt-3"
           >
@@ -105,7 +105,7 @@
     <!-- App top bar ends -->
 
     <!-- Main app component -->
-    <v-main>
+    <v-main class="brown lighten-4">
       <!-- Placeholder to test components -->
       <!-- Placeholder to test components -->
       <router-view></router-view>
@@ -186,5 +186,7 @@ export default {
 </script>
 
 <style>
-
+  body {
+    background-color:white;
+  }
 </style>
