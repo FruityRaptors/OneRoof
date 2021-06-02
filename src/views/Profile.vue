@@ -46,6 +46,7 @@
         Logout
       </v-btn>
     <UpdateUser @setProfilePageUsername="changeUsername" />
+    <UpdatePhoto />
     </v-card-actions>
   </v-card>
     
@@ -66,7 +67,8 @@ export default {
   },
   components: {
     UpdateUser,
-    Avatar
+    Avatar,
+    UpdatePhoto,
   },
 
   mounted() {
