@@ -3,11 +3,11 @@
       max-width="290"
       :value = "true"
     >   
-      <v-card>
+      <v-card class="brown lighten-5">
         <v-card-title class="headline">
           Delete Todo
         </v-card-title>
-        <v-card-text>You sure you wanna do that you Dingus?</v-card-text>
+        <v-card-text>Would you like to delete this todo?</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
@@ -15,7 +15,7 @@
             text
             @click="$emit('closeModal')"
           >
-            Cancel
+            CANCEL
           </v-btn>
           <v-btn
              @click="onClickDeleteButton"

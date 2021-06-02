@@ -1,7 +1,17 @@
 <template>
   <v-app>
 
+    
+
   <v-card class="mx-auto pa-5 mt-5 text-center brown lighten-5" width="300px" max-width="350">
+
+    <v-img
+        src="@/assets/OneRoof.png"
+        width="300"
+        contain
+        class="mt-2 mr-3 pa-0"
+    ></v-img>
+
     <v-card-title class="text-center d-flex justify-center">
       Welcome to Oneroof
     </v-card-title>

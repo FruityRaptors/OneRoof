@@ -1,7 +1,14 @@
 <template>
 <v-app>
-<v-card class="mx-auto mt-10 text-center pa-5" width="300" max-width="400px" color="brown lighten-5">
-  
+<v-card class="mx-auto mt-5 text-center pa-5" width="300" max-width="400px" color="brown lighten-5">
+
+        <v-img
+        src="@/assets/OneRoof.png"
+        width="300"
+        contain
+        class="mt-2 mr-3 pa-0"
+        ></v-img>
+        
       <v-container>
       <v-card-title class="text-center d-flex justify-center">
         Login

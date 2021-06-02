@@ -5,26 +5,26 @@
     <v-container id="chat-box" class="chat-box brown lighten-4" v-on:update="$vuetify.goTo(99999)" color="brown lighten-4">
 
 <!-- message container starts -->
-      <v-container
+      <v-card
         elevation="0"
         v-for="message in messages"
         :key="message.id"
         :class="
           message.username == username
-            ? 'text-right d-flex align-end flex-column mx-auto brown lighten-4 pr-0'
-            : 'text-left d-flex align-start flex-column  mx-auto brown lighten-4'
+            ? 'text-right d-flex align-end flex-column mx-auto brown lighten-4 pr-0 mb-0'
+            : 'text-left d-flex align-start flex-column  mx-auto brown lighten-4 mb-0'
         "
         >
         
 <!-- Username and Avatar starts -->
-        <v-container class="lighten-4 mb-0 pb-0 pl-0 pr-0" elevation="0" max-width="200">
+        <v-subheader class="lighten-4 mb-0 pa-0" elevation="0" max-width="200" height="20">
           <v-avatar size="20">
             <Avatar :username="message.username" :size="20"></Avatar>
           </v-avatar>
           <v-card-subtitle class="d-inline-flex">
             {{message.username}}
           </v-card-subtitle>
-        </v-container>
+        </v-subheader>
 <!-- Username and Avatar ends -->
 
 <!-- Message box starts -->
@@ -36,11 +36,11 @@
               message.username == username ? 'brown lighten-1 white--text font-weight-light text-justify' : 'brown lighten-3 font-weight-light'
             "
             >{{ message.content }}
-            </v-card>
+          </v-card>
 <!-- Message box ends -->
 
 
-      </v-container>
+      </v-card>
 <!-- message container ends -->
 
     </v-container>
@@ -59,7 +59,7 @@
           type="text"
           v-model="inputMessage"
           placeholder="Write your message..."
-          @keyup.enter="sendMessage(); ; $vuetify.goTo(99999)"
+          @keyup.enter="sendMessage(); $vuetify.goTo(99999)"
         />
         <v-btn 
         class="mr-2 brown lighten-3"
@@ -90,6 +90,7 @@ export default {
       inputMessage: "",
       messages: [],
       username: this.$store.state.user.username,
+      lastMessage: ''
     };
   }, // Data ends
 
@@ -117,6 +118,8 @@ export default {
 
       this.messages = messages;
 
+      this.lastMessage = this.messages[this.messages.length - 1].username
+
       this.scrollBottom()
     });
   }, // Mounted Ends
@@ -138,11 +141,13 @@ export default {
 
       messagesRef.push(message);
 
+      this.lastMessage = this.messages[this.messages.length - 1].username
+
       this.inputMessage = "";
     },
      scrollBottom(){
         return this.$vuetify.goTo(99999)
-      }
+      },
   }, // Method ends
 };
 </script>
