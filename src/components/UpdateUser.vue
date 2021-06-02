@@ -33,11 +33,6 @@
                   hint="This feature is upcoming"
                 ></v-text-field>
               </v-col>
-              <v-file-input
-                show-size
-                counter
-                label="Upload a photo"
-              ></v-file-input>
             </v-row>
           </v-container>
         </v-card-text>
