@@ -87,8 +87,27 @@
           </v-list-item-action>
           <!-- Assignee Dropdown Ends -->
         </v-list-item>
-        <!-- Border Between Todos -->
-        <v-divider :key="todo.id"></v-divider>
+      </v-list>
+    </v-menu>
+    
+        </v-list-item-action>
+<!-- Assignee Dropdown Ends -->
+          </v-list-item>
+<!-- Border Between Todos -->
+          <v-divider :key="todo.id"></v-divider>
+        </div>
+<!-- Each Todo in Todo list ends-->
+
+      </v-list>
+<!-- todo list platform ends-->
+
+
+<!-- No Todos if todo list is empty -->
+      <div v-else class="no-todo-bg">
+        <v-icon size="100" color="green darken-2" id="icon-todo">mdi-help-box</v-icon>
+        <div class="text-h5" >
+          Add a Todo!
+        </div>
       </div>
       <!-- Each Todo in Todo list ends-->
     </v-list>
@@ -208,3 +227,17 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+  .no-todo-bg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+  }
+
+  #icon-todo {
+    transform: translateX(12%);
+  }
+</style>
