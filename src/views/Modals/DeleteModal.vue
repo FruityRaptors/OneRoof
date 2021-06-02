@@ -3,7 +3,7 @@
       max-width="290"
       :value = "true"
     >   
-      <v-card>
+      <v-card class="brown lighten-5">
         <v-card-title class="headline">
           Delete Todo
         </v-card-title>
