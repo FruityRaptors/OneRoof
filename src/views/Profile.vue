@@ -3,11 +3,13 @@
     <h1>Hello, {{ this.username }}</h1>
     <button @click="logout">Logout</button>
     <UpdateUser @setProfilePageUsername="changeUsername" />
+    <UpdatePhoto />
   </div>
 </template>
 
 <script>
 import UpdateUser from "../components/UpdateUser";
+import UpdatePhoto from "../components/UpdatePhoto";
 export default {
   name: "Profile",
   data() {
@@ -18,6 +20,7 @@ export default {
   },
   components: {
     UpdateUser,
+    UpdatePhoto
   },
 
   mounted() {
@@ -36,3 +39,6 @@ export default {
   },
 };
 </script>
+
+
+<v-file-input show-size counter label="Upload a profile pic"></v-file-input>
