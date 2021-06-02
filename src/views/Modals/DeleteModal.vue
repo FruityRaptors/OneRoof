@@ -15,7 +15,7 @@
             text
             @click="$emit('closeModal')"
           >
-            Cancel
+            CANCEL
           </v-btn>
           <v-btn
              @click="onClickDeleteButton"
