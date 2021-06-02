@@ -4,8 +4,8 @@
 <!-- Add todo input field-->
          <v-text-field
             v-model="newTodoMessage"
-            @click:append="addTodo"
-            @keyup.enter="addTodo"
+            @click:append.prevent="addTodo"
+            @keyup.enter.prevent="addTodo"
             class="pa-2"
             outlined
             label="New Todo"
