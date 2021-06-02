@@ -3,10 +3,12 @@
     <h1>Hello, {{ this.username }}</h1>
     <button @click="logout">Logout</button>
     <UpdateUser @setProfilePageUsername="changeUsername" />
+    <UpdatePhoto />
   </div>
 </template>
 
 <script>
+import UpdatePhoto from '../components/UpdatePhoto';
 import UpdateUser from "../components/UpdateUser";
 export default {
   name: "Profile",
@@ -18,6 +20,7 @@ export default {
   },
   components: {
     UpdateUser,
+    UpdatePhoto,
   },
 
   mounted() {
