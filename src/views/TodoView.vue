@@ -90,9 +90,10 @@
 
 
 <!-- No Todos if todo list is empty -->
-      <div v-else>
-        <div id="no-todo-bg">
-          NO TODOS
+      <div v-else class="no-todo-bg">
+        <v-icon size="100" color="green darken-2" id="icon-todo">mdi-help-box</v-icon>
+        <div class="text-h5" >
+          Add a Todo!
         </div>
       </div>
 <!-- Delete Modal -->
@@ -194,3 +195,17 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+  .no-todo-bg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+  }
+
+  #icon-todo {
+    transform: translateX(12%);
+  }
+</style>
