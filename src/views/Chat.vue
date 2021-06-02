@@ -90,7 +90,8 @@ export default {
       inputMessage: "",
       messages: [],
       username: this.$store.state.user.username,
-      lastMessage: ''
+      lastMessage: '',
+      userUrl: this.$store.state.user.photo_url
     };
   }, // Data ends
 

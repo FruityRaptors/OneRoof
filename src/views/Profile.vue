@@ -19,7 +19,7 @@
       <v-list-item-avatar
         rounded="circle"
         size="83">
-        <Avatar :username="this.$store.state.user.username" :size="80"></Avatar>
+        <Avatar :src="this.$store.state.user.photo_url" :username="this.$store.state.user.username" :size="80"></Avatar>
       </v-list-item-avatar>
     </v-list-item>
 
