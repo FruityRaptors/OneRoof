@@ -2,7 +2,7 @@
   <div class="view chat">
     
 <!-- chat section start -->
-    <v-container id="chat-box" class="chat-box brown lighten-4" v-on:update="$vuetify.goTo(99999)" color="brown lighten-4">
+    <v-container id="chat-box" class="chat-box orange lighten-5" v-on:update="$vuetify.goTo(99999)" color="brown lighten-4">
 
 <!-- message container starts -->
       <v-card
@@ -11,8 +11,8 @@
         :key="message.id"
         :class="
           message.username == username
-            ? 'text-right d-flex align-end flex-column mx-auto brown lighten-4 pr-0 mb-0'
-            : 'text-left d-flex align-start flex-column  mx-auto brown lighten-4 mb-0'
+            ? 'text-right d-flex align-end flex-column mx-auto orange lighten-5 pr-0 mb-0'
+            : 'text-left d-flex align-start flex-column  mx-auto orange lighten-5 mb-0'
         "
         >
         
@@ -33,7 +33,7 @@
             max-width="250"
             class="mb-2 mr-4 pa-2"
             :color="
-              message.username == username ? 'brown lighten-1 white--text font-weight-light text-justify' : 'brown lighten-3 font-weight-light'
+              message.username == username ? 'orange accent-2 font-weight-light text-justify' : 'orange accent-1 font-weight-light'
             "
             >{{ message.content }}
           </v-card>
@@ -51,7 +51,7 @@
       class=""
       rounded
       max-height="100"
-      color="brown lighten-3"
+      color="orange lighten-4"
       padless
     >
         <v-text-field
@@ -62,13 +62,13 @@
           @keyup.enter="sendMessage(); $vuetify.goTo(99999)"
         />
         <v-btn 
-        class="mr-2 brown lighten-3"
+        class="mr-2 orange lighten-4"
         fab
         @click.prevent="sendMessage(); ; $vuetify.goTo(99999)"
         elevation="0"
         >
           <v-icon
-          color="brown"
+          color="orange darken-1"
           >
         mdi-send
           </v-icon>
