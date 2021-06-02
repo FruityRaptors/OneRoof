@@ -107,6 +107,6 @@ export default {
 
 <style scoped>
   .button{
-    padding: 5px
+    padding: 20px
   }
 </style>

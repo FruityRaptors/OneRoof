@@ -152,7 +152,7 @@ export default new Vuex.Store({
           data: {
             query: `
             mutation{
-              updateUserPhoto(email: "pete@oneroof.com", photo_url: "https://firebasestorage.googleapis.com/v0/b/oneroof-fd1d5.appspot.com/o/cb52bebe7e719bc38c807f986110fe186dff8bac.png?alt=media&token=553b41e7-a669-4e1a-b08d-6759fb30c7ed")
+              updateUserPhoto(email: "${data.email}", photo_url: "${data.url}")
             }`
           }
         }).then(() => {

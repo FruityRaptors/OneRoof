@@ -22,7 +22,7 @@
 
     <v-text-field filled v-model="email" label="Email"></v-text-field>
     <v-text-field filled type="password" v-model="password" label="Password"></v-text-field>
-    <v-text-field filled v-model="username" label="Username"></v-text-field>
+    <v-text-field filled v-model="username" label="Username" hint="What do your housemates call you?"></v-text-field>
 
     <v-btn @click="register">
       Register
