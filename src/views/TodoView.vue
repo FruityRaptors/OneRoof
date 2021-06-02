@@ -1,6 +1,5 @@
 <template>
-  <div> 
-    <div class="todo-page" id="todo-page-container">
+    <div class="todo-page brown lighten-4" id="todo-page-container">
 
 <!-- Add todo input field-->
          <v-text-field
@@ -20,10 +19,10 @@
 
 
 <!-- todo list platform -->
-      <v-list v-if="todos.length" class="pt-0" two-line flat>
+      <v-list v-if="todos.length" class="pt-0 brown lighten-4" two-line flat>
 
 <!-- Each Todo in Todo list -->
-        <div id="todo-container" v-for="todo in todos" :key="todo.id">
+        <div id="todo-container" class="brown lighten-4" v-for="todo in todos" :key="todo.id">
           <v-list-item @click="completeTodo(todo.id)" :class="{ 'green lighten-4' : todo.complete }">
           
 <!-- Todo tick box     -->
@@ -93,14 +92,13 @@
 
 <!-- No Todos if todo list is empty -->
       <div v-else>
-        <div id="no-todo-bg">
+        <div id="no-todo-bg" class="brown lighten-4">
           NO TODOS
         </div>
       </div>
-    </div>
 <!-- Delete Modal -->
           <DeleteModal v-if="modals.deleteTodo" :todo="currentId" @closeModal="modals.deleteTodo = false"  @clicked="deleteFromModal" />
-  </div>
+    </div>
 </template>
 
 <script>
@@ -114,7 +112,7 @@ export default {
   },
   data() {
     return {
-      newTodoMessage: 'HERE I AM',
+      newTodoMessage: '',
       todos: '',
       modals: {
         deleteTodo: false,
