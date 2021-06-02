@@ -19,7 +19,7 @@
 <!-- Username and Avatar starts -->
         <v-subheader class="lighten-4 mb-0 pa-0" elevation="0" max-width="200" height="20">
           <v-avatar size="20">
-            <Avatar :username="message.username" :size="20"></Avatar>
+            <Avatar :src="message.image" :username="message.username" :size="20"></Avatar>
           </v-avatar>
           <v-card-subtitle class="d-inline-flex">
             {{message.username}}
@@ -114,12 +114,12 @@ export default {
           id: key,
           username: data[key].username,
           content: data[key].content,
+          image: data[key].image
         });
       });
 
       this.messages = messages;
 
-      this.lastMessage = this.messages[this.messages.length - 1].username
 
       this.scrollBottom()
     });
@@ -138,6 +138,7 @@ export default {
       const message = {
         username: this.$store.state.user.username,
         content: this.inputMessage,
+        image: this.$store.state.user.photo_url
       };
 
       messagesRef.push(message);

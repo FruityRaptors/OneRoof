@@ -54,11 +54,12 @@
         outlined
         rounded
         text
+        class="button"
         @click="logout"
       >
         Logout
       </v-btn>
-    <UpdatePhoto />
+    <UpdatePhoto class="button" />
     </v-card-actions>
     </v-list-item>
   </v-card>
@@ -104,4 +105,8 @@ export default {
 </script>
 
 
-<v-file-input show-size counter label="Upload a profile pic"></v-file-input>
+<style scoped>
+  .button{
+    padding: 5px
+  }
+</style>
