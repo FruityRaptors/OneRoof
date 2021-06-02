@@ -156,8 +156,8 @@ export default {
   async mounted() {
     console.time("app mounting")
     this.loading = true;
-    let checker = await this.$store.dispatch("checkIfLoggedInUser");
-    if(checker) {
+    let loggedInFlag = await this.$store.dispatch("checkIfLoggedInUser");
+    if(loggedInFlag) {
       await this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0])
       await this.$store.dispatch("populateVictimList", this.$store.state.user.house_keys[0]);
       // await this.$store.dispatch("getHouseName", this.$store.state.user.house_keys[0]);
