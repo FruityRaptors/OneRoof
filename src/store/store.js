@@ -80,6 +80,7 @@ export default new Vuex.Store({
               username
               house_keys
               email
+              photo_url
              }
             }`
           }
@@ -136,6 +137,22 @@ export default new Vuex.Store({
         }).then(() => {
           context.dispatch("getUser", email)
           context.commit("setUsername", newUsername)
+        });
+    },
+
+    async updateUserPhoto(context, data) {
+      console.log("here is the URL", data.url, "and here is the email", data.email)
+        await axios({
+          method: "POST",
+          url: "/graphql",
+          data: {
+            query: `
+            mutation{
+              updateUserPhoto(email: "pete@oneroof.com", photo_url: "https://firebasestorage.googleapis.com/v0/b/oneroof-fd1d5.appspot.com/o/cb52bebe7e719bc38c807f986110fe186dff8bac.png?alt=media&token=553b41e7-a669-4e1a-b08d-6759fb30c7ed")
+            }`
+          }
+        }).then(() => {
+          context.dispatch("getUser", data.email)
         });
     },
     

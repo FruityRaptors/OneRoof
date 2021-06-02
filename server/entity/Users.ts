@@ -11,6 +11,7 @@ export class Users extends BaseEntity {
 
     @Field(() => String)
     @Column({
+        nullable: true,
         length: 20
     })
     username: string;
@@ -26,6 +27,13 @@ export class Users extends BaseEntity {
         length: 30
     })
     email: string;
+
+    @Field(() => String)
+    @Column({
+        nullable: true,
+        length: 255
+    })
+    photo_url: string;
 
     @Field(() => Boolean)
     @Column()

@@ -1,11 +1,11 @@
-import { Field, ObjectType, InputType } from 'type-graphql';
+import { Field, ObjectType, } from 'type-graphql';
 
 @ObjectType()
     export class User {
         @Field()
         id: number
 
-        @Field()
+        @Field(() => String, { nullable: true })
         username: string
 
         @Field(() => String, { nullable: true })
@@ -13,6 +13,9 @@ import { Field, ObjectType, InputType } from 'type-graphql';
 
         @Field()
         email: string
+
+        @Field(() => String, { nullable: true, })
+        photo_url: string
 
         @Field()
         isAdmin: boolean

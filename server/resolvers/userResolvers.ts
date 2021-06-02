@@ -67,6 +67,25 @@ export class userResolvers {
         }
     }
 
+    @Mutation(() => String)
+    async updateUserPhoto(
+        @Arg('email') email: string, 
+        @Arg('photo_url') photo_url: string
+    ){
+        const usernameToBeUpdated = await Users.findOne({ email });
+        if (!usernameToBeUpdated) {
+            console.log("email.not.found")
+            return "Email not found!";
+        }
+
+        if(usernameToBeUpdated) {
+        usernameToBeUpdated.photo_url = photo_url;
+            await Users.save(usernameToBeUpdated);
+            return `photo_url has been updated to ${usernameToBeUpdated.photo_url}`; 
+        }
+    }
+
+
 
     //To Add Rooms to User
     @Mutation(() => String)
