@@ -3,9 +3,6 @@
 module.exports = {
    "type": "postgres",
    "host": "/cloudsql/oneroof-315600:asia-northeast2:oneroof",
-   "extra": {
-      "socketPath": "/cloudsql/oneroof-315600:asia-northeast2:oneroof"
- },
    "username": "oneroof",
    "password": "oneroof",
    "database": "oneroof",
