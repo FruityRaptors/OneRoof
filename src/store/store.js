@@ -204,11 +204,11 @@ export default new Vuex.Store({
       })
     },
 
-    async joinHouse(context, payload) {
+    joinHouse(context, payload) {
       console.log(`Joining ${payload.email} to room ${payload.roomkey}`)
 
       //Check if house exists in the database
-      let checkExists = await axios({
+      let checkExists = axios({
         method: "POST",
         url: "/graphql",
         data: {
@@ -355,9 +355,9 @@ export default new Vuex.Store({
       }
     },
 
-    async populateVictimList(context, house_key) {
+    populateVictimList(context, house_key) {
       console.log(`Chasing victims in ${house_key}`)
-      await axios({
+      axios({
         method: "POST",
         url: "/graphql",
         data: {
@@ -374,9 +374,9 @@ export default new Vuex.Store({
       })
     },
 
-    async updateTodoVictim(context, selectedTodo) {
+    updateTodoVictim(context, selectedTodo) {
       console.log('Attemping to update VictimID', selectedTodo)
-      await axios({
+      axios({
         method: "POST",
         url: "/graphql",
         data: {
