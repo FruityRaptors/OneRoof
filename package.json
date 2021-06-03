@@ -7,7 +7,9 @@
     "server": "ts-node server/index.ts",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "ts-node server/index.ts"
+    "sql": "/cloudsql/cloud_sql_proxy -dir=./cloud_sql_proxy -instances=oneroof-315600:asia-northeast2:oneroof=tcp:0.0.0.0:1234  -credential_file=/cloudsql/oneroof-315600-026e5238ff32.json",
+    "start": "ts-node server/index.ts",
+    "deploy": "gcloud app deploy"
   },
   "dependencies": {
     "@google-cloud/storage": "^5.8.5",
@@ -22,11 +24,14 @@
     "keygenerator": "^1.0.4",
     "mysql": "^2.14.1",
     "nodemon": "^2.0.7",
+    "path": "^0.12.7",
     "pg": "^8.6.0",
     "reflect-metadata": "^0.1.10",
     "register-service-worker": "^1.7.1",
+    "ts-node": "^10.0.0",
     "type-graphql": "^1.1.1",
     "typeorm": "0.2.32",
+    "typescript": "^4.3.2",
     "vue": "^2.6.11",
     "vue-avatar": "^2.3.3",
     "vue-chat-scroll": "^1.4.0",
@@ -48,8 +53,6 @@
     "eslint-plugin-vue": "^6.2.2",
     "sass": "^1.32.0",
     "sass-loader": "^10.0.0",
-    "ts-node": "^3.3.0",
-    "typescript": "^4.2.4",
     "vue-cli-plugin-vuetify": "~2.4.0",
     "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.7.0"

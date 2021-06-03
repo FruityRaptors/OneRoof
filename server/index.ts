@@ -6,7 +6,8 @@ import express from "express";
 import { buildSchema } from 'type-graphql'
 import { userResolvers } from "./resolvers/userResolvers"
 import { todoResolvers } from "./resolvers/todoResolvers";
-import { houseResolvers } from "./resolvers/houseResolvers"
+import { houseResolvers } from "./resolvers/houseResolvers";
+import path from "path";
 
 
 (async () => {
@@ -30,6 +31,7 @@ import { houseResolvers } from "./resolvers/houseResolvers"
 
   apolloServer.applyMiddleware({ app, cors: false });
   const port = process.env.PORT || 8080;
+  console.log(port)
 
   console.log('launching server...')
   app.listen(port, () => {

@@ -69,6 +69,7 @@ export default new Vuex.Store({
     async getUser(context, email) {
       console.log(`Getting User: ${email} from the database...`)
       console.log("HERE IS THE PORT", process.env.PORT)
+      try {
         await axios({
           method: "POST",
           url: "/graphql",
@@ -97,7 +98,10 @@ export default new Vuex.Store({
             //Should route to Join a house page, THE FOLLOWING LINE SHOULD BE DELETED!
            router.push('/joinhouse')
           }
-        });
+        })
+      } catch (err){
+        console.log('logging error...', err)
+      }
     },
 
     //Adds user to the database after they have registered
