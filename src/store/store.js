@@ -14,7 +14,7 @@ export default new Vuex.Store({
   state: {
     //Current logged in User information
     user: {},
-    userTodoNotifications: 1,
+    userTodoNotifications: 0,
     isUserLoggedIn: false,
     todos: [],
     usersInSameHouse: [],
