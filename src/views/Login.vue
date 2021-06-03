@@ -1,6 +1,6 @@
 <template>
 <v-app>
-<v-card class="mx-auto mt-5 text-center pa-5" width="300" max-width="400px" color="brown lighten-5">
+<v-card class="mx-auto mt-5 text-center pa-5" width="300" max-width="400px" color="brown lighten-5" >
 
         <v-img
         src="@/assets/OneRoof.png"

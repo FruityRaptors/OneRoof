@@ -1,7 +1,7 @@
 <template>
-  <div class="text-center" v-if="this.loading == true">
+  <v-container class="text-center" v-if="this.loading == true">
     <v-progress-circular indeterminate color="primary"></v-progress-circular>
-  </div>
+  </v-container>
 
   <v-container v-else-if="this.$store.state.isUserLoggedIn == false">
     <v-container>
@@ -143,7 +143,7 @@ export default {
     },
   },
   async mounted() {
-    console.time("app mounting",);
+    console.time("app mounting");
     this.loading = true;
     let loggedInFlag = await this.$store.dispatch("checkIfLoggedInUser");
     console.log("MOUNTING USER:", this.$store.state.user);
@@ -192,6 +192,6 @@ export default {
 
 <style>
 body {
-  background-color: white;
+  background-color: tan;
 }
 </style>
