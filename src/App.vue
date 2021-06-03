@@ -5,20 +5,28 @@
 
   <v-container v-else-if="this.$store.state.isUserLoggedIn == false">
     <v-container>
-    <Login @emit="toggleRegLog" v-if="this.login === true" />
-    <Register @emit="toggleRegLog" v-if="this.login === false" />
+      <Login @emit="toggleRegLog" v-if="this.login === true" />
+      <Register @emit="toggleRegLog" v-if="this.login === false" />
     </v-container>
-   
   </v-container>
 
   <v-app v-else id="one-roof-app">
     <!-- Nav drawer starts -->
-    <v-navigation-drawer v-model="drawer" color="orange lighten-4" width="185" app>
+    <v-navigation-drawer
+      v-model="drawer"
+      color="orange lighten-4"
+      width="185"
+      app
+    >
       <!-- Navbar title start -->
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="pt-3 font-weight-bold"> OneRoof </v-list-item-title>
-        <v-list-item-subtitle> this.$store.state.houseName </v-list-item-subtitle>
+          <v-list-item-title class="pt-3 font-weight-bold">
+            OneRoof
+          </v-list-item-title>
+          <v-list-item-subtitle>
+            this.$store.state.houseName
+          </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
       <!-- Nav bar title ends -->
@@ -37,9 +45,7 @@
             overlap
           >
             <v-list-item-icon>
-              <v-icon
-              color="brown lighten-1"
-              >{{ item.icon }}</v-icon>
+              <v-icon color="brown lighten-1">{{ item.icon }}</v-icon>
             </v-list-item-icon>
           </v-badge>
           <v-list-item-content>
@@ -52,57 +58,40 @@
     <!-- Nav drawer ends -->
 
     <!-- App top bar start -->
-    <v-app-bar 
-    app
-    color="orange lighten-4"
-    >
+    <v-app-bar app color="orange lighten-4">
+      <v-container class="d-flex justify-space-between pl-0 ml-0">
+        <v-badge
+          :content="this.allNotifications"
+          :value="this.allNotifications"
+          color="red"
+          offset-x="28"
+          offset-y="50"
+          overlap
+          ><v-app-bar-nav-icon @click="drawer = !drawer" class="mr-0 pt-4 pr-6">
+          </v-app-bar-nav-icon
+        ></v-badge>
 
-    <v-container
-      class="d-flex justify-space-between pl-0 ml-0"
-      
-      >
-      <v-badge
-        :content="this.allNotifications"
-        :value="this.allNotifications"
-        color="red"
-        offset-x="28"
-        offset-y="50"
-        overlap
-        ><v-app-bar-nav-icon
-         @click="drawer = !drawer"
-         class="mr-0 pt-4 pr-6"
-         >
-          
-         </v-app-bar-nav-icon
-      ></v-badge>
-
-      <!-- <v-toolbar-title
+        <!-- <v-toolbar-title
       class="pt-3 white--text font-weight-thin"
       >
         OneRoof
       </v-toolbar-title> -->
 
-      <v-img
-        src="@/assets/OneRoof.png"
-        height="50"
-        width="20"
-        contain
-        class="mt-2 mr-3 pa-0"
-      >
+        <v-img
+          src="@/assets/OneRoof.png"
+          height="50"
+          width="20"
+          contain
+          class="mt-2 mr-3 pa-0"
+        >
+        </v-img>
 
-      </v-img>
-
-   
-      <router-link style="text-decoration: none" to="/profile">
-          <v-icon
-          class="pt-5"
-          color="brown lighten-1"
-          >
-          mdi-account-circle-outline
+        <router-link style="text-decoration: none" to="/profile">
+          <v-icon class="pt-5" color="brown lighten-1">
+            mdi-account-circle-outline
           </v-icon>
-      </router-link>
-    </v-container>
-
+        </router-link>
+      </v-container>
     </v-app-bar>
     <!-- App top bar ends -->
 
@@ -154,15 +143,24 @@ export default {
     },
   },
   async mounted() {
-    console.time("app mounting")
+    console.time("app mounting",);
     this.loading = true;
     let loggedInFlag = await this.$store.dispatch("checkIfLoggedInUser");
-    console.log("MOUNTING USER:", this.$store.state.user)
-    if(loggedInFlag) {
-      await this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0])
-      console.log("MOUNTING TODOS:", this.$store.state.todos)
-      await this.$store.dispatch("populateVictimList", this.$store.state.user.house_keys[0]);
-      console.log("MOUNTING VICTIM LIST:", this.$store.state.usersInSameHouse)
+    console.log("MOUNTING USER:", this.$store.state.user);
+    if (loggedInFlag) {
+      if (this.$store.state.user.username) {
+        await this.$store.dispatch("calculateUserRGB", this.$store.state.user.username)
+      }
+      await this.$store.dispatch(
+        "getTodos",
+        this.$store.state.user.house_keys[0]
+      );
+      console.log("MOUNTING TODOS:", this.$store.state.todos);
+      await this.$store.dispatch(
+        "populateVictimList",
+        this.$store.state.user.house_keys[0]
+      );
+      console.log("MOUNTING VICTIM LIST:", this.$store.state.usersInSameHouse);
       // await this.$store.dispatch("getHouseName", this.$store.state.user.house_keys[0]);
       // this.houseName = this.$store.user.houseName;
       //await get all messages for general chat
@@ -172,7 +170,7 @@ export default {
         this.allNotifications += item.notifications;
       }
     }
-    console.timeEnd("app mounting")
+    console.timeEnd("app mounting");
     this.loading = false;
   },
   computed: {
@@ -193,7 +191,7 @@ export default {
 </script>
 
 <style>
-  body {
-    background-color:white;
-  }
+body {
+  background-color: white;
+}
 </style>
