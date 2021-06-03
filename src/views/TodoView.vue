@@ -45,7 +45,7 @@
               
 
 <!-- Delete Button -->
-        <v-list-item-action class="">
+        <v-list-item-action>
           
             <v-icon 
             icon @click.stop="setState(todo)" 
@@ -78,7 +78,7 @@
     </v-menu>
 <!-- Assignee Dropdown Ends -->
 <!-- Todo Menu Starts -->
-      <TodoMenu />
+      <TodoMenu :todo="todo" v-on:deleteFromModal="deleteFromModal" v-on:deleteClicked="setState(todo)" />
         </v-list-item-action>
 <!-- Todo Menu Ends -->
           </v-list-item>
@@ -98,29 +98,22 @@
           Add a Todo!
         </div>
       </div>
-<!-- Delete Modal -->
-          <DeleteModal v-if="modals.deleteTodo" :todo="currentId" @closeModal="modals.deleteTodo = false"  @clicked="deleteFromModal" />
     </div>
 </template>
 
 <script>
 // import TodoList from '../components/TodoList.vue'
-import DeleteModal from './Modals/DeleteModal.vue'
 import TodoMenu from '../components/TodoMenu.vue'
 
 export default {
   name: "Home",
   components: {
-    DeleteModal,
     TodoMenu
   },
   data() {
     return {
       newTodoMessage: '',
       todos: '',
-      modals: {
-        deleteTodo: false,
-      },
       currentId: '',
       selectedVictim: '',
       users: this.$store.state.usersInSameHouse
@@ -165,11 +158,10 @@ export default {
 
     async setState(todo){
       console.log('abracadabra...', todo.id)
-      this.modals.deleteTodo = true
       this.currentId = todo.id
     },
     deleteFromModal(){
-
+      
       this.$store.dispatch('deleteTodo', this.currentId).then(() => {
       console.log("getting updated to do list...")
       this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0])
@@ -194,8 +186,9 @@ export default {
       await this.$store.dispatch("updateTodoVictim", todoToUpdate)
       await this.$store.dispatch("getTodos", todoToUpdate.house_key)
       this.todos = this.$store.state.todos; 
-    }
+    },
   },
+  
 };
 </script>
 

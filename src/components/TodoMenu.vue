@@ -1,4 +1,5 @@
 <template>
+<div>
   <v-menu bottom left>
     <template v-slot:activator="{ on, attrs }">
         <v-btn icon v-bind="attrs" v-on="on" >
@@ -14,20 +15,38 @@
         </v-list-item>
     </v-list>
    </v-menu>
+   <DeleteModal v-if="modals.deleteTodo" :todo="todo" @closeModal="modals.deleteTodo = false" @console="consolelogger" />
+</div>
 </template>
 
 <script>
+import DeleteModal from '../views/Modals/DeleteModal.vue'
+
 export default {
+    props: ['todo'],
+    components: {
+        DeleteModal, 
+    },
     data: () => ({
+        modals: {
+            deleteTodo: false,
+        },
       features: [
         { name: 'Assign', icon:'mdi-account-plus', click() { console.log("Assign")} },
         { name: 'Edit', icon:'mdi-square-edit-outline', click() { console.log("Edit")} },
-        { name: 'Delete', icon:'mdi-delete', click() { console.log("Delete")} },
+        { name: 'Delete', icon:'mdi-delete', click(){ 
+            this.$emit('deleteClicked')
+            this.modals.deleteTodo = true
+            } 
+        },
       ],
     }),
     methods: {
         onClick(idx) {
-            this.features[idx].click()
+            this.features[idx].click.call(this)
+        },
+        consolelogger(todo){
+            console.log(todo)
         }
     }
   }
