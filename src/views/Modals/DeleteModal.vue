@@ -40,7 +40,8 @@
     methods: {
         onClickDeleteButton() {
             this.$emit('closeModal');
-            this.$emit('clicked');
+            this.$parent.$emit('deleteFromModal');
+            this.$emit('console')
         }
     }
 };

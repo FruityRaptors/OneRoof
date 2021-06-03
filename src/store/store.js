@@ -17,7 +17,7 @@ export default new Vuex.Store({
     isUserLoggedIn: false,
     todos: [],
     usersInSameHouse: [],
-    houseName: ''
+    houseName: '',
     // areTodosLoaded: false, // add a way to change it to false
   },
 
@@ -60,7 +60,7 @@ export default new Vuex.Store({
 
     setHouseName(state, name){
       state.houseName = name
-    }
+    },
   },
 
   actions: {
