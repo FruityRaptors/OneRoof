@@ -98,7 +98,7 @@ export default {
     Avatar,
   }, //Components ends
   
-  mounted() {
+  created() {
     const messagesRef = firebase
       .database()
       .ref(this.$store.state.user.house_keys[0])

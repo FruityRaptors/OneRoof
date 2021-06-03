@@ -106,11 +106,11 @@ export default new Vuex.Store({
     },
 
     //Adds user to the database after they have registered
-    addUserToSQLDatabase(context, user) {
+    async addUserToSQLDatabase(context, user) {
       let email = user.email
       console.log(`adding ${user.email} ${user.username} to database...`)
   
-        axios({
+        await axios({
           method: "POST",
           url: "/graphql",
           data: {
@@ -125,11 +125,11 @@ export default new Vuex.Store({
     },
 
     // Updates user's username
-    changeUsername(context, user) {
+    async changeUsername(context, user) {
       let email = user.email
       let newUsername = user.newUsername
       console.log(`changing user: ${email}'s username to ${newUsername}`)
-        axios({
+        await axios({
           method: "POST",
           url: "/graphql",
           data: {
@@ -171,11 +171,11 @@ export default new Vuex.Store({
     ///////
 
     //Creating a new chat room + pushes it to the database + assigning it to the front end state
-    createHouse: (context, payload) => {
+    async createHouse(context, payload) {
       let roomkey = keygen._()
 
       console.log(`Adding ${payload.homename} to database... with the key ${roomkey}`)
-      axios({
+      await axios({
         method: "POST",
         url: "/graphql",
         data: {
@@ -202,11 +202,11 @@ export default new Vuex.Store({
       })
     },
 
-    joinHouse: (context, payload) => {
+    async joinHouse(context, payload) {
       console.log(`Joining ${payload.email} to room ${payload.roomkey}`)
 
       //Check if house exists in the database
-      let checkExists = axios({
+      let checkExists = await axios({
         method: "POST",
         url: "/graphql",
         data: {
@@ -359,9 +359,9 @@ async addTodo(context, newTodo) {
     }
 },
 
-populateVictimList(context, house_key) {
+async populateVictimList(context, house_key) {
   console.log(`Chasing victims in ${house_key}`)
-  axios({
+  await axios({
     method: "POST",
     url: "/graphql",
     data: {
@@ -410,8 +410,8 @@ populateVictimList(context, house_key) {
     //Firebase related actions starts
     ///////
 
-    loginUser: (context, user) => {
-      firebase
+    async loginUser(context, user) {
+      await firebase
         .auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
         .then(() => {
           firebase.auth().signInWithEmailAndPassword(user.email, user.password)
@@ -427,8 +427,8 @@ populateVictimList(context, house_key) {
         });
     },
 
-    registerUser: (context, user) => {
-      firebase
+    async registerUser(context, user) {
+      await firebase
         .auth()
         .createUserWithEmailAndPassword(user.email, user.password)
         .then(() => {
@@ -441,8 +441,8 @@ populateVictimList(context, house_key) {
         });
     },
 
-    logoutUser(context) {
-      firebase
+    async logoutUser(context) {
+      await firebase
         .auth()
         .signOut()
         .then(() => {

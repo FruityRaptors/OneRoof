@@ -157,9 +157,12 @@ export default {
     console.time("app mounting")
     this.loading = true;
     let loggedInFlag = await this.$store.dispatch("checkIfLoggedInUser");
+    console.log("MOUNTING USER:", this.$store.state.user)
     if(loggedInFlag) {
       await this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0])
+      console.log("MOUNTING TODOS:", this.$store.state.todos)
       await this.$store.dispatch("populateVictimList", this.$store.state.user.house_keys[0]);
+      console.log("MOUNTING VICTIM LIST:", this.$store.state.usersInSameHouse)
       // await this.$store.dispatch("getHouseName", this.$store.state.user.house_keys[0]);
       // this.houseName = this.$store.user.houseName;
       //await get all messages for general chat
@@ -180,7 +183,6 @@ export default {
   watch: {
     countNotifications(newCount) {
       this.items[1].notifications = newCount;
-      console.log(this.items[1].notifications);
       this.allNotifications = 0;
       for (let item of this.items) {
         this.allNotifications += item.notifications;
