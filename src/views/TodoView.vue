@@ -76,9 +76,11 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    
-        </v-list-item-action>
 <!-- Assignee Dropdown Ends -->
+<!-- Todo Menu Starts -->
+      <TodoMenu />
+        </v-list-item-action>
+<!-- Todo Menu Ends -->
           </v-list-item>
 <!-- Border Between Todos -->
           <v-divider :key="todo.id"></v-divider>
@@ -104,11 +106,13 @@
 <script>
 // import TodoList from '../components/TodoList.vue'
 import DeleteModal from './Modals/DeleteModal.vue'
+import TodoMenu from '../components/TodoMenu.vue'
 
 export default {
   name: "Home",
   components: {
-    DeleteModal
+    DeleteModal,
+    TodoMenu
   },
   data() {
     return {
