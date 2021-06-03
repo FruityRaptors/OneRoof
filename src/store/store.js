@@ -193,7 +193,7 @@ export default new Vuex.Store({
           data: {
             query: `
         mutation{
-        addToRoom(email:"${payload.email}", house_key:"${roomkey}")
+          addToRoom(email:"${payload.email}", house_key:"${roomkey}")
         }`
           }
         })
