@@ -95,7 +95,6 @@
 </template>
 
 <script>
-// import TodoList from '../components/TodoList.vue'
 import TodoMenu from '../components/TodoMenu.vue'
 
 export default {
@@ -114,24 +113,22 @@ export default {
     };
   },
   mounted() {
-   //here we need the house key
-   /* await this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0]); */
-  //  await this.$store.dispatch("populateVictimList", this.$store.state.user.house_keys[0]);
    this.todos = this.$store.state.todos;  
   },
+
   methods: {
     async addTodo() {
       if (this.newTodoMessage.length <= 0) {
         return console.log("Please insert a Todo")
       }
         let newTodo = {
-            // id: Date.now(), and maybe + random number? To ensure it would not match other IDs?
+            // id:
             todo: this.newTodoMessage,
             date: Date.now(),
             victimid: "Everyone",
             creatorid: this.$store.state.user.username,
             complete: false,
-            house_key: this.$store.state.user.house_keys[0]  //getting from user state
+            house_key: this.$store.state.user.house_keys[0] 
         }
         await this.$store.dispatch("addTodo", newTodo)
         this.todos.push(newTodo)
@@ -151,10 +148,10 @@ export default {
     },
 
     async setState(todo){
-      console.log('abracadabra...', todo.id)
-      console.log("HERE IS THE CURRENT TODO", todo)
+      console.log('abracadabra...', todo.id) //remove later (before due date added)
+      console.log("HERE IS THE CURRENT TODO", todo) //remove later (before due date added)
       this.$store.commit('setCurrentTodo', todo)
-      this.currentTodo = todo //for testing purposes
+      this.currentTodo = todo  //remove later? (before due date added)
       this.currentId = todo.id
     },
     deleteFromModal(){
@@ -175,9 +172,7 @@ export default {
        
     },
     async editFromModal() {
-      console.log("reached here", this.$store.state.currentTodoMessage)
       this.$store.state.currentTodo.todo = this.$store.state.currentTodoMessage
-      console.log("EVEN FURTHER", this.$store.state.currentTodo )
       await this.$store.dispatch('updateTodo', this.$store.state.currentTodo)
     },
     async setAssignee(user, todo){
