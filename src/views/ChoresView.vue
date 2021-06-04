@@ -7,8 +7,9 @@
         id="chore-container"
         class="orange lighten-4"
         v-for="chore in chores"
-        :key="chore.chore" 
-      ><!-- THIS KEY NEEDS TO BE UPDATED! -->
+        :key="chore.chore"
+      >
+        <!-- THIS KEY NEEDS TO BE UPDATED! -->
         <v-list-item>
           <!-- Chore list text -->
           <v-list-item-content>
@@ -19,7 +20,10 @@
               {{ chore.victimid }}
             </v-list-item-subtitle>
             <v-list-item-action class="">
-              <v-icon icon @click.stop="showChoreInfo(chore)" color="orange accent-3"
+              <v-icon
+                icon
+                @click.stop="showChoreInfo(chore)"
+                color="orange accent-3"
                 >mdi-clipboard-edit</v-icon
               >
             </v-list-item-action>
@@ -28,7 +32,12 @@
         <!-- Border Between Todos -->
         <v-divider :key="chore.id"></v-divider>
       </div>
-      <ChoreInfo v-if="modals.ChoreInfo" @closeModalPlease="modals.ChoreInfo = false" @deleteChorePlease="deleteChore" :chore="this.clickedChore" />
+      <ChoreInfo
+        v-if="modals.ChoreInfo"
+        @closeModalPlease="modals.ChoreInfo = false"
+        @deleteChorePlease="deleteChore"
+        :chore="this.clickedChore"
+      />
       <AddChore @addThisChorePlease="pushChore" />
     </v-list>
     <!-- todo list platform ends-->
@@ -58,21 +67,21 @@ export default {
   },
   mounted() {
     console.log("mounting");
-    this.currentUser = this.$store.state.user
+    this.currentUser = this.$store.state.user;
     this.$store.commit("resetChorelist");
     let seedChore1 = {
       chore: "Mow the Lawn",
-      description: "watch out for Potato's presents!",
-      asignee: "Pete"
-    }
+      description: "watch out for Potato's pooptatoes!",
+      asignee: "Pete",
+    };
     let seedChore2 = {
       chore: "Do dishes",
       description: "Do the dishes after dinner every day",
-      asignee: "Jeff!"
-    }
-    this.$store.state.chores.push(seedChore1)
-    this.$store.state.chores.push(seedChore2)
-    
+      asignee: "Jeff!",
+    };
+    this.$store.state.chores.push(seedChore1);
+    this.$store.state.chores.push(seedChore2);
+
     this.chores = this.$store.state.chores;
   },
   methods: {
@@ -80,22 +89,24 @@ export default {
       console.log("Pushing chore:", chore);
       this.$store.commit("addChore", chore);
     },
+
     showChoreInfo(chore) {
-      this.clickedChore = chore
-      this.modals.ChoreInfo = true
+      this.clickedChore = chore;
+      this.modals.ChoreInfo = true;
     },
+
     deleteChore(chorename) {
-      console.log("deleting:", chorename)
-      // the following lines are super ghetto, I know. 
-      let newChores = []
+      console.log("deleting:", chorename);
+      // the following lines are super ghetto, I know.
+      let newChores = [];
       for (let chore of this.chores) {
         if (chore.chore !== chorename) {
-          newChores.push(chore)
+          newChores.push(chore);
         }
       }
-      this.chores = newChores
+      this.chores = newChores;
       // sorry about that, fellas
-      this.modals.ChoreInfo = false
+      this.modals.ChoreInfo = false;
     },
 
     //for dev purposes only
@@ -109,15 +120,4 @@ export default {
 </script>
 
 <style scoped>
-.no-chore-bg {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0.5;
-}
-
-#icon-chore {
-  transform: translateX(12%);
-}
 </style>

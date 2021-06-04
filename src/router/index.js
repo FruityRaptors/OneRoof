@@ -54,7 +54,7 @@ const routes = [
     path: '/chores',
     name: 'Chore List',
     component: () =>
-      import('../views/ChoreView.vue'),
+      import('../views/ChoresView.vue'),
     meta: {
       authRequired: true,
     }
