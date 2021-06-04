@@ -129,7 +129,7 @@ export default {
       },
       {
         title: "Chores",
-        icon: "mdi-format-list-checks",
+        icon: "mdi-clipboard-edit",
         to: "/chores",
         notifications: 0,
       },
