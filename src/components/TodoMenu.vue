@@ -16,24 +16,33 @@
     </v-list>
    </v-menu>
    <DeleteModal v-if="modals.deleteTodo" :todo="todo" @closeModal="modals.deleteTodo = false" @console="consolelogger" />
+   <EditModal v-if="modals.editTodo" :todo="todo" @closeModal="modals.editTodo = false" @console="consolelogger" />
 </div>
 </template>
 
 <script>
 import DeleteModal from '../views/Modals/DeleteModal.vue'
+import EditModal from '../views/Modals/EditModal.vue'
 
 export default {
     props: ['todo'],
     components: {
         DeleteModal, 
+        EditModal,
     },
     data: () => ({
         modals: {
+            editTodo: false,
             deleteTodo: false,
         },
       features: [
         { name: 'Assign', icon:'mdi-account-plus', click() { console.log("Assign")} },
-        { name: 'Edit', icon:'mdi-square-edit-outline', click() { console.log("Edit")} },
+        { name: 'Edit', icon:'mdi-square-edit-outline', click() { 
+            console.log("Edit")
+            // this.$emit('editClicked') //Make this in the todoview
+            // this.modals.editTodo = true
+            } 
+        },
         { name: 'Delete', icon:'mdi-delete', click(){ 
             this.$emit('deleteClicked')
             this.modals.deleteTodo = true

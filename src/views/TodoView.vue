@@ -44,15 +44,8 @@
 <!-- Todo list text ends -->
               
 
-<!-- Delete Button -->
         <v-list-item-action>
           
-            <v-icon 
-            icon @click.stop="setState(todo)" 
-            color="orange accent-3">
-            mdi-delete</v-icon>
-          
-<!-- Delete Button ends-->
 <!-- Assignee Dropdown Starts -->
     <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
