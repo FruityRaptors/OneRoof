@@ -12,12 +12,12 @@
           v-bind="attrs"
           v-on="on"
         >
-          Open Dialog
+          Add a Chore
         </v-btn>
       </template>
       <v-card>
         <v-card-title>
-          <span class="text-h5">User Profile</span>
+          <span class="text-h5">Chore info</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -28,42 +28,15 @@
                 md="4"
               >
                 <v-text-field
-                  label="Legal first name*"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                  label="Legal middle name"
-                  hint="example of helper text only on focus"
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-                md="4"
-              >
-                <v-text-field
-                  label="Legal last name*"
-                  hint="example of persistent helper text"
-                  persistent-hint
+                  label="Chore name"
+                  v-model="chore.chore"
                   required
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field
-                  label="Email*"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  label="Password*"
-                  type="password"
+                  label="Category"
+                  v-model="chore.category"
                   required
                 ></v-text-field>
               </v-col>
@@ -72,20 +45,11 @@
                 sm="6"
               >
                 <v-select
-                  :items="['0-17', '18-29', '30-54', '54+']"
-                  label="Age*"
+                  :items="victims"
+                  label="Asignee"
+                  v-model="chore.asignee"
                   required
                 ></v-select>
-              </v-col>
-              <v-col
-                cols="12"
-                sm="6"
-              >
-                <v-autocomplete
-                  :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                  label="Interests"
-                  multiple
-                ></v-autocomplete>
               </v-col>
             </v-row>
           </v-container>
@@ -103,7 +67,7 @@
           <v-btn
             color="blue darken-1"
             text
-            @click="dialog = false"
+            @click="pushChore"
           >
             Save
           </v-btn>
@@ -117,6 +81,27 @@
   export default {
     data: () => ({
       dialog: false,
+      users: [],
+      victims: [],
+      chore: {
+          chore: "",
+          category: "",
+          asignee: ""
+      }
     }),
+    mounted() {
+        this.users = this.$store.state.usersInSameHouse
+        this.victims = [] 
+         for (let user of this.users) {
+            this.victims.push(user.username)
+        } 
+    },
+    methods: {
+        pushChore() {
+            this.$emit("addThisChorePlease", this.chore);
+            this.chore = {}
+            this.dialog = false
+        }
+    }
   }
 </script>
