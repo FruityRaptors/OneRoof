@@ -71,7 +71,7 @@
     </v-menu>
 <!-- Assignee Dropdown Ends -->
 <!-- Todo Menu Starts -->
-      <TodoMenu :todo="todo" v-on:deleteFromModal="deleteFromModal" v-on:optionClicked="setState(todo)" />
+      <TodoMenu :todo="todo" v-on:deleteFromModal="deleteFromModal" v-on:editFromModal="editFromModal" v-on:optionClicked="setState(todo)" />
         </v-list-item-action>
 <!-- Todo Menu Ends -->
           </v-list-item>
@@ -173,6 +173,12 @@ export default {
 
       })
        
+    },
+    async editFromModal() {
+      console.log("reached here", this.$store.state.currentTodoMessage)
+      this.$store.state.currentTodo.todo = this.$store.state.currentTodoMessage
+      console.log("EVEN FURTHER", this.$store.state.currentTodo )
+      await this.$store.dispatch('updateTodo', this.$store.state.currentTodo)
     },
     async setAssignee(user, todo){
       let todoToUpdate = {
