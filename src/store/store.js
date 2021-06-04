@@ -19,6 +19,7 @@ export default new Vuex.Store({
     todos: [],
     usersInSameHouse: [],
     houseName: '',
+    currentTodo: {},
     // areTodosLoaded: false, // add a way to change it to false
   },
 
@@ -66,6 +67,9 @@ export default new Vuex.Store({
     setHouseName(state, name) {
       state.houseName = name
     },
+    setCurrentTodo(state, todo) {
+      state.currentTodo = todo
+    }
   },
 
   actions: {
@@ -391,6 +395,11 @@ export default new Vuex.Store({
       }).then(() => {
         context.dispatch('getTodos', selectedTodo.house_key)
       })
+    },
+
+    setCurrentTodo(context, todo) {
+      console.log('Setting current todo', todo)
+      context.commit('setCurrentTodo', todo)
     },
 
     ///////

@@ -151,6 +151,8 @@ export default {
 
     async setState(todo){
       console.log('abracadabra...', todo.id)
+      console.log("HERE IS THE CURRENT TODO", todo)
+      this.currentTodo = todo
       this.currentId = todo.id
     },
     deleteFromModal(){

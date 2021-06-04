@@ -7,7 +7,9 @@
         <v-card-title class="headline">
           Edit Todo
         </v-card-title>
-        <v-card-text>Please edit your todo</v-card-text>
+        <v-card-text>Please edit your todo
+          <v-text-field v-model="todo"/>
+        </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
@@ -34,7 +36,7 @@
     name: 'Test',
     data(){
       return {
-       
+       todo: null
       }
     },
     methods: {
@@ -43,6 +45,9 @@
             this.$parent.$emit('deleteFromModal');
             this.$emit('console')
         }
+    },
+    mounted() {
+      this.todo = this.$store.state.currentTodo.todo
     }
 };
  </script>
