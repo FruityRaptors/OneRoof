@@ -71,7 +71,7 @@
     </v-menu>
 <!-- Assignee Dropdown Ends -->
 <!-- Todo Menu Starts -->
-      <TodoMenu :todo="todo" v-on:deleteFromModal="deleteFromModal" v-on:deleteClicked="setState(todo)" />
+      <TodoMenu :todo="todo" v-on:deleteFromModal="deleteFromModal" v-on:optionClicked="setState(todo)" />
         </v-list-item-action>
 <!-- Todo Menu Ends -->
           </v-list-item>
@@ -109,7 +109,8 @@ export default {
       todos: '',
       currentId: '',
       selectedVictim: '',
-      users: this.$store.state.usersInSameHouse
+      users: this.$store.state.usersInSameHouse,
+      currentTodo: {},
     };
   },
   mounted() {
@@ -152,7 +153,8 @@ export default {
     async setState(todo){
       console.log('abracadabra...', todo.id)
       console.log("HERE IS THE CURRENT TODO", todo)
-      this.currentTodo = todo
+      this.$store.commit('setCurrentTodo', todo)
+      this.currentTodo = todo //for testing purposes
       this.currentId = todo.id
     },
     deleteFromModal(){
