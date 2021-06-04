@@ -30,8 +30,6 @@
       </div>
       <ChoreInfo v-if="modals.ChoreInfo" @closeModalPlease="modals.ChoreInfo = false" @deleteChorePlease="deleteChore" :chore="this.clickedChore" />
       <AddChore @addThisChorePlease="pushChore" />
-      <button @click="resetChores">reset chores (dev)</button>
-      <!-- Each Todo in Todo list ends-->
     </v-list>
     <!-- todo list platform ends-->
   </div>
@@ -119,7 +117,7 @@ export default {
   opacity: 0.5;
 }
 
-#icon-todo {
+#icon-chore {
   transform: translateX(12%);
 }
 </style>
