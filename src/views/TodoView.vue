@@ -52,13 +52,7 @@
           </v-list-item-content>
           <!-- Todo list text ends -->
 
-          <!-- Delete Button -->
-          <v-list-item-action class="">
-            <v-icon icon @click.stop="setState(todo)" color="orange accent-3">
-              mdi-delete</v-icon
-            >
-
-            <!-- Delete Button ends-->
+          <v-list-item-action>
             <!-- Assignee Dropdown Starts -->
             <v-menu offset-y>
               <template v-slot:activator="{ on, attrs }">
@@ -71,15 +65,82 @@
                 >
               </template>
               <v-list>
-                <v-list-item v-for="user in users" :key="user.id" :value="todo">
-                  <v-list-item-title @click="setAssignee(user, todo)">
-                    {{ user.username }}
-                  </v-list-item-title>
+                <v-list-item
+                  @click="completeTodo(todo.id)"
+                  :class="{ 'light-green accent-1': todo.complete }"
+                >
+                  <!-- Todo tick box     -->
+                  <v-list-item-action>
+                    <v-checkbox
+                      :input-value="todo.complete"
+                      color="light-green darken-4"
+                    >
+                    </v-checkbox>
+                  </v-list-item-action>
+                  <!-- Todo tick box ends -->
+
+                  <!-- Todo list text -->
+                  <v-list-item-content>
+                    <v-list-item-title
+                      :class="{ 'text-decoration-line-through': todo.complete }"
+                    >
+                      {{ todo.todo }}
+                    </v-list-item-title>
+
+                    <v-list-item-subtitle>
+                      {{ todo.victimid }}
+                    </v-list-item-subtitle>
+                  </v-list-item-content>
+                  <!-- Todo list text ends -->
+
+                  <!-- Delete Button -->
+                  <v-list-item-action class="">
+                    <v-icon
+                      icon
+                      @click.stop="setState(todo)"
+                      color="orange accent-3"
+                    >
+                      mdi-delete</v-icon
+                    >
+
+                    <!-- Delete Button ends-->
+                    <!-- Assignee Dropdown Starts -->
+                    <v-menu offset-y>
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-icon
+                          class="pt-2 pr-1"
+                          color="orange accent-3"
+                          v-bind="attrs"
+                          v-on="on"
+                          >mdi-account-plus</v-icon
+                        >
+                      </template>
+                      <v-list>
+                        <v-list-item
+                          v-for="user in users"
+                          :key="user.id"
+                          :value="todo"
+                        >
+                          <v-list-item-title @click="setAssignee(user, todo)">
+                            {{ user.username }}
+                          </v-list-item-title>
+                        </v-list-item>
+                      </v-list>
+                    </v-menu>
+                  </v-list-item-action>
+                  <!-- Assignee Dropdown Ends -->
                 </v-list-item>
               </v-list>
             </v-menu>
+            <!-- Assignee Dropdown Ends -->
+            <!-- Todo Menu Starts -->
+            <TodoMenu
+              :todo="todo"
+              v-on:deleteFromModal="deleteFromModal"
+              v-on:deleteClicked="setState(todo)"
+            />
           </v-list-item-action>
-          <!-- Assignee Dropdown Ends -->
+          <!-- Todo Menu Ends -->
         </v-list-item>
         <!-- Border Between Todos -->
         <v-divider :key="todo.id"></v-divider>
@@ -95,32 +156,22 @@
       >
       <div class="text-h5">Add a Todo!</div>
     </div>
-    <!-- Delete Modal -->
-    <DeleteModal
-      v-if="modals.deleteTodo"
-      :todo="currentId"
-      @closeModal="modals.deleteTodo = false"
-      @clicked="deleteFromModal"
-    />
   </div>
 </template>
 
 <script>
 // import TodoList from '../components/TodoList.vue'
-import DeleteModal from "./Modals/DeleteModal.vue";
+import TodoMenu from "../components/TodoMenu.vue";
 
 export default {
   name: "Home",
   components: {
-    DeleteModal,
+    TodoMenu,
   },
   data() {
     return {
       newTodoMessage: "",
       todos: "",
-      modals: {
-        deleteTodo: false,
-      },
       currentId: "",
       selectedVictim: "",
       users: this.$store.state.usersInSameHouse,
@@ -169,7 +220,8 @@ export default {
 
     async setState(todo) {
       console.log("abracadabra...", todo.id);
-      this.modals.deleteTodo = true;
+      console.log("HERE IS THE CURRENT TODO", todo);
+      this.currentTodo = todo;
       this.currentId = todo.id;
     },
     deleteFromModal() {
