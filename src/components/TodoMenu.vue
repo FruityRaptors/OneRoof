@@ -54,8 +54,8 @@ export default {
         onClick(idx) {
             this.features[idx].click.call(this)
         },
-        consolelogger(todo){
-            console.log(todo)
+        consolelogger(){
+            console.log("consolelogger", this.$store.state.currentTodoMessage)
         }
     }
   }

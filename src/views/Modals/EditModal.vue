@@ -20,7 +20,7 @@
             CANCEL
           </v-btn>
           <v-btn
-             @click="onClickDeleteButton"
+             @click="onClickEditButton"
             color="green lighten-0"
             text
           >
@@ -40,9 +40,11 @@
       }
     },
     methods: {
-        onClickDeleteButton() {
+        onClickEditButton() {
+            console.log(this.todo)
+            this.$store.commit('setCurrentTodoMessage',this.todo)
             this.$emit('closeModal');
-            this.$parent.$emit('deleteFromModal');
+            this.$parent.$emit('editFromModal');
             this.$emit('console')
         }
     },
