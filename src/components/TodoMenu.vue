@@ -38,13 +38,13 @@ export default {
       features: [
         { name: 'Assign', icon:'mdi-account-plus', click() { console.log("Assign")} },
         { name: 'Edit', icon:'mdi-square-edit-outline', click() { 
-            console.log("Edit")
-            // this.$emit('editClicked') //Make this in the todoview
+            console.log("Edit Clicked")
+            this.$emit('optionClicked')
             this.modals.editTodo = true
             } 
         },
         { name: 'Delete', icon:'mdi-delete', click(){ 
-            this.$emit('deleteClicked')
+            this.$emit('optionClicked')
             this.modals.deleteTodo = true
             } 
         },
@@ -54,8 +54,8 @@ export default {
         onClick(idx) {
             this.features[idx].click.call(this)
         },
-        consolelogger(todo){
-            console.log(todo)
+        consolelogger(){
+            console.log("consolelogger", this.$store.state.currentTodoMessage)
         }
     }
   }
