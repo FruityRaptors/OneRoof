@@ -397,11 +397,6 @@ export default new Vuex.Store({
       })
     },
 
-    setCurrentTodo(context, todo) {
-      console.log('Setting current todo', todo)
-      context.commit('setCurrentTodo', todo)
-    },
-
     ///////
     //Todolist related actions end
     ///////
