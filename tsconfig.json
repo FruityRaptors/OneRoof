@@ -12,6 +12,7 @@
      "resolveJsonModule": true /* Include modules imported with '.json' extension */,
      "experimentalDecorators": true,
      "strictPropertyInitialization": false,
+     "emitDecoratorMetadata": true,
 },
 "include": ["server/**/*"],
 "exclude": ["srd/**/*.spec.ts"]
