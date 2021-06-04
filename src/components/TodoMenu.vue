@@ -40,7 +40,7 @@ export default {
         { name: 'Edit', icon:'mdi-square-edit-outline', click() { 
             console.log("Edit")
             // this.$emit('editClicked') //Make this in the todoview
-            // this.modals.editTodo = true
+            this.modals.editTodo = true
             } 
         },
         { name: 'Delete', icon:'mdi-delete', click(){ 

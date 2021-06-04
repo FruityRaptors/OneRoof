@@ -1,5 +1,6 @@
  <template>
  <v-dialog
+      persistent
       max-width="290"
       :value = "true"
     >   
