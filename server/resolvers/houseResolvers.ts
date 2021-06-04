@@ -1,10 +1,10 @@
-import { Query, Resolver, Mutation, Arg } from 'type-graphql'
-import { House } from '../schemas/houseSchema'
-import { Houses } from '../entity/Houses'
+const { Query, Resolver, Mutation, Arg } = require('type-graphql');
+const { House }= require('../schemas/houseSchema');
+const { Houses } = require ('../entity/Houses');
 
 
 @Resolver()
-export class houseResolvers {
+   class houseResolvers {
     @Query(() => House)
     getHouseName(@Arg("house_key") house_key: string){
         return Houses.findOne({ where: { house_key } })
@@ -19,3 +19,5 @@ export class houseResolvers {
         return `${house_name} has been added to database!`
     }
 }
+
+module.exports = { houseResolvers }

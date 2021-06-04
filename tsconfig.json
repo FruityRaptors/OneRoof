@@ -1,10 +1,11 @@
 {
    "compilerOptions": {
       "lib": [
+         "esnext.asynciterable",
          "es6"
       ],
-      "target": "es6",
-      "module": "commonjs",
+      "target": "es5",
+      "module": "es2015",
       "moduleResolution": "node",
       "outDir": "./build",
       "emitDecoratorMetadata": true,

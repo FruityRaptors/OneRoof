@@ -1,13 +1,13 @@
-import "dotenv/config";
-import "reflect-metadata";
-import { ApolloServer } from 'apollo-server-express'
-import { connectDB } from "./database";
-import express from "express";
-import { buildSchema } from 'type-graphql'
-import { userResolvers } from "./resolvers/userResolvers"
-import { todoResolvers } from "./resolvers/todoResolvers";
-import { houseResolvers } from "./resolvers/houseResolvers";
-import path from "path";
+require("dotenv/config");
+require("reflect-metadata");
+const { ApolloServer } = require('apollo-server-express');
+const { connectDB } = require ("./database");
+const express = require ("express");
+const { buildSchema } = require ('type-graphql');
+const { userResolvers } = require ("./resolvers/userResolvers");
+const { todoResolvers } = require ("./resolvers/todoResolvers");
+const { houseResolvers }= require ("./resolvers/houseResolvers");
+const path = require("path");
 
 
 (async () => {
@@ -26,7 +26,7 @@ import path from "path";
       resolvers: [userResolvers, todoResolvers, houseResolvers],
       validate: true
     }),
-    context: ({ req, res }) => ({ req, res })
+    context: ({ req , res }:any) => ({ req, res })
   });
 
   apolloServer.applyMiddleware({ app, cors: false });

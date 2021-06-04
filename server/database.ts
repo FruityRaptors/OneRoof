@@ -1,8 +1,8 @@
-import { createConnection } from 'typeorm';
+const { createConnection } = require('typeorm');
 
 const dbSocketPath = process.env.DB_SOCKET_PATH || "/cloudsql";
 
-export const connectDB = async () => {
+module.exports.connectDB = async () => {
    let connection = await createConnection();
    return connection
 };

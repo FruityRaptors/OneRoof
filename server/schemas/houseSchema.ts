@@ -1,7 +1,7 @@
-import { Field, ObjectType, InputType } from 'type-graphql';
+const { Field, ObjectType, InputType } = require('type-graphql');
 
 @ObjectType()
-    export class House {
+    class House {
         @Field()
         id: number
 
@@ -11,3 +11,6 @@ import { Field, ObjectType, InputType } from 'type-graphql';
         @Field()
         house_key: string
     }
+
+
+    module.exports = { House };

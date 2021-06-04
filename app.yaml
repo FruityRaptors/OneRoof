@@ -1,5 +1,5 @@
-runtime: custom
-env: flex
+runtime: nodejs14
+# env: flex
 
 handlers:
   # Serve all static files with urls ending with a file extension
