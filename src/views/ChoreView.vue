@@ -28,7 +28,7 @@
         <!-- Border Between Todos -->
         <v-divider :key="chore.id"></v-divider>
       </div>
-      <ChoreInfo v-if="modals.ChoreInfo" @closeModal="modals.ChoreInfo = false" :chore="this.clickedChore" />
+      <ChoreInfo v-if="modals.ChoreInfo" @closeModalPlease="modals.ChoreInfo = false" @deleteChorePlease="deleteChore" :chore="this.clickedChore" />
       <AddChore @addThisChorePlease="pushChore" />
       <button @click="resetChores">reset chores (dev)</button>
       <!-- Each Todo in Todo list ends-->
@@ -49,19 +49,18 @@ export default {
   },
   data() {
     return {
-      rerenderkey: 0,
-      newChoreName: "",
+      currentUser: {},
       chores: [],
+      clickedChore: {},
       modals: {
         ChoreInfo: false,
       },
-      clickedChore: {},
-      selectedVictim: "",
       users: this.$store.state.usersInSameHouse,
     };
   },
   mounted() {
     console.log("mounting");
+    this.currentUser = this.$store.state.user
     this.$store.commit("resetChorelist");
     let seedChore1 = {
       chore: "Mow the Lawn",
@@ -86,6 +85,19 @@ export default {
     showChoreInfo(chore) {
       this.clickedChore = chore
       this.modals.ChoreInfo = true
+    },
+    deleteChore(chorename) {
+      console.log("deleting:", chorename)
+      // the following lines are super ghetto, I know. 
+      let newChores = []
+      for (let chore of this.chores) {
+        if (chore.chore !== chorename) {
+          newChores.push(chore)
+        }
+      }
+      this.chores = newChores
+      // sorry about that, fellas
+      this.modals.ChoreInfo = false
     },
 
     //for dev purposes only
