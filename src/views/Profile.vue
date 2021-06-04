@@ -1,6 +1,6 @@
 <template>
     <v-card
-    class="mx-auto pa-2 mt-5 brown lighten-5"
+    class="mx-auto pa-2 mt-5 orange lighten-4"
     width="344px" max-width="350"
   >
     <v-list-item three-line>
@@ -11,7 +11,7 @@
         <v-list-item-title class="text-h6 mb-1">
           House Name
         </v-list-item-title>
-        <v-list-item-subtitle class="font-weight-bold">Yamada House</v-list-item-subtitle>
+        <v-list-item-subtitle class="font-weight-bold">{{this.houseName}}</v-list-item-subtitle>
       </v-list-item-content>
 
       
@@ -19,7 +19,7 @@
       <v-list-item-avatar
         rounded="circle"
         size="83">
-        <Avatar :username="this.$store.state.user.username" :size="80"></Avatar>
+        <Avatar :src="this.$store.state.user.photo_url" :username="this.$store.state.user.username" :size="80"></Avatar>
       </v-list-item-avatar>
     </v-list-item>
 
@@ -54,11 +54,12 @@
         outlined
         rounded
         text
+        class="button"
         @click="logout"
       >
         Logout
       </v-btn>
-    <UpdatePhoto />
+    <UpdatePhoto class="button" />
     </v-card-actions>
     </v-list-item>
   </v-card>
@@ -76,6 +77,7 @@ export default {
     return {
       username: "",
       email: "",
+      houseName: "",
     };
   },
   components: {
@@ -87,6 +89,7 @@ export default {
   mounted() {
     this.username = this.$store.state.user.username;
     this.email = this.$store.state.user.email;
+    this.houseName = this.$store.state.houseName;
   },
 
   methods: {
@@ -102,4 +105,8 @@ export default {
 </script>
 
 
-<v-file-input show-size counter label="Upload a profile pic"></v-file-input>
+<style scoped>
+  .button{
+    padding: 20px
+  }
+</style>

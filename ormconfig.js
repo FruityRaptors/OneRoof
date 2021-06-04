@@ -2,7 +2,7 @@
 
 module.exports = {
    "type": "postgres",
-   "host": `cloudsql/${process.env.INSTANCE_CONNECTION_NAME}`,
+   "host": `/cloudsql/${process.env.INSTANCE_CONNECTION_NAME}`,
    "extra": {
    "socketPath": `/cloudsql/${process.env.INSTANCE_CONNECTION_NAME}`,
    },

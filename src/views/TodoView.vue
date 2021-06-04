@@ -1,16 +1,15 @@
 <template>
-    <div class="todo-page brown lighten-4" id="todo-page-container">
+    <div class="todo-page orange lighten-5" id="todo-page-container">
 
 <!-- Add todo input field-->
          <v-text-field
             v-model="newTodoMessage"
-            @click:append="addTodo"
-            @keyup.enter="addTodo"
-            class="pa-2"
+            @click:append.prevent="addTodo"
+            @keyup.enter.prevent="addTodo"
+            class="pa-2 orange lighten-4"
             outlined
             label="New Todo"
             append-icon="mdi-pencil-plus-outline"
-            color="black lighten-3"
             clearable
             hide-details
           >
@@ -19,15 +18,15 @@
 
 
 <!-- todo list platform -->
-      <v-list v-if="todos.length" class="pt-0 brown lighten-4" two-line flat>
+      <v-list v-if="todos.length" class="pa-0 orange lighten-5" two-line flat>
 
 <!-- Each Todo in Todo list -->
-        <div id="todo-container" class="brown lighten-4" v-for="todo in todos" :key="todo.id">
-          <v-list-item @click="completeTodo(todo.id)" :class="{ 'green lighten-4' : todo.complete }">
+        <div id="todo-container" class="orange lighten-4" v-for="todo in todos" :key="todo.id">
+          <v-list-item @click="completeTodo(todo.id)" :class="{ 'light-green accent-1' : todo.complete }">
           
 <!-- Todo tick box     -->
               <v-list-item-action>
-                <v-checkbox :input-value="todo.complete" color="green"> </v-checkbox>
+                <v-checkbox :input-value="todo.complete" color="light-green darken-4"> </v-checkbox>
               </v-list-item-action>
 <!-- Todo tick box ends -->
 
@@ -50,7 +49,7 @@
           
             <v-icon 
             icon @click.stop="setState(todo)" 
-            color="brown lighten-3">
+            color="orange accent-3">
             mdi-delete</v-icon>
           
 <!-- Delete Button ends-->
@@ -58,8 +57,8 @@
     <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
           <v-icon 
-          class="pt-2"
-          color="brown lighten-3"
+          class="pt-2 pr-1"
+          color="orange accent-3"
           v-bind="attrs"
           v-on="on"
           >mdi-account-plus</v-icon>
@@ -80,9 +79,9 @@
     
         </v-list-item-action>
 <!-- Assignee Dropdown Ends -->
-
-
           </v-list-item>
+<!-- Border Between Todos -->
+          <v-divider :key="todo.id"></v-divider>
         </div>
 <!-- Each Todo in Todo list ends-->
 
@@ -91,9 +90,10 @@
 
 
 <!-- No Todos if todo list is empty -->
-      <div v-else>
-        <div id="no-todo-bg" class="brown lighten-4">
-          NO TODOS
+      <div v-else class="no-todo-bg">
+        <v-icon size="100" color="green darken-2" id="icon-todo">mdi-help-box</v-icon>
+        <div class="text-h5" >
+          Add a Todo!
         </div>
       </div>
 <!-- Delete Modal -->
@@ -130,6 +130,9 @@ export default {
   },
   methods: {
     async addTodo() {
+      if (this.newTodoMessage.length <= 0) {
+        return console.log("Please insert a Todo")
+      }
         let newTodo = {
             // id: Date.now(), and maybe + random number? To ensure it would not match other IDs?
             todo: this.newTodoMessage,
@@ -186,9 +189,22 @@ export default {
       }
       await this.$store.dispatch("updateTodoVictim", todoToUpdate)
       await this.$store.dispatch("getTodos", todoToUpdate.house_key)
-      console.log("YOOOOOOO LINE 189!!!")
       this.todos = this.$store.state.todos; 
     }
   },
 };
 </script>
+
+<style scoped>
+  .no-todo-bg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+  }
+
+  #icon-todo {
+    transform: translateX(12%);
+  }
+</style>
