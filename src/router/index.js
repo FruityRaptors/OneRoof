@@ -51,6 +51,15 @@ const routes = [
     }
   },
   {
+    path: '/chores',
+    name: 'Chore List',
+    component: () =>
+      import('../views/ChoreView.vue'),
+    meta: {
+      authRequired: true,
+    }
+  },
+  {
     path: '/joinhouse',
     name: 'JoinHouse',
     component: () =>
