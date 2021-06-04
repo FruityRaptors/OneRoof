@@ -53,6 +53,36 @@
       max-height="100"
       color="orange lighten-4"
       padless
+      absolute
+    >
+        <v-text-field
+          class="d-flex align-start mt-3 pl-5"
+          type="text"
+          v-model="inputMessage"
+          placeholder="Write your message..."
+          @keyup.enter="sendMessage(); $vuetify.goTo(99999)"
+        />
+        <v-btn 
+        class="mr-2 orange lighten-4"
+        fab
+        @click.prevent="sendMessage(); ; $vuetify.goTo(99999)"
+        elevation="0"
+        >
+          <v-icon
+          color="orange darken-1"
+          >
+        mdi-send
+          </v-icon>
+        </v-btn>
+    </v-footer>
+   
+    <v-footer
+      class=""
+      rounded
+      max-height="100"
+      color="orange lighten-4"
+      padless
+      fixed
     >
         <v-text-field
           class="d-flex align-start mt-3 pl-5"

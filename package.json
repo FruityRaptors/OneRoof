@@ -7,12 +7,14 @@
     "server": "ts-node server/index.ts",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "ts-node server/index.ts"
+    "start": "node build/server/index.js",
+    "build:server": "tsc"
   },
   "dependencies": {
     "@google-cloud/storage": "^5.8.5",
     "apollo-server-express": "^2.24.1",
     "axios": "^0.21.1",
+    "class-validator": "^0.13.1",
     "concurrently": "^6.2.0",
     "core-js": "^3.6.5",
     "dotenv": "^10.0.0",
