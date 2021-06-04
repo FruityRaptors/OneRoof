@@ -96,7 +96,6 @@
 
 <script>
 import TodoMenu from '../components/TodoMenu.vue'
-
 export default {
   name: "Home",
   components: {
@@ -146,7 +145,6 @@ export default {
         this.todos = this.$store.state.todos
         await this.$store.dispatch("deleteTodo", id)
     },
-
     async setState(todo){
       console.log('abracadabra...', todo.id) //remove later (before due date added)
       console.log("HERE IS THE CURRENT TODO", todo) //remove later (before due date added)
@@ -159,15 +157,12 @@ export default {
       this.$store.dispatch('deleteTodo', this.currentId).then(() => {
       console.log("getting updated to do list...")
       this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0])
-
       }).then(()=> {
         
         this.todos = this.$store.state.todos
   
       }).then(() => {
-
          this.todos = this.todos.filter((todo) => todo.id !== this.currentId)
-
       })
        
     },
@@ -198,7 +193,6 @@ export default {
     transform: translate(-50%, -50%);
     opacity: 0.5;
   }
-
   #icon-todo {
     transform: translateX(12%);
   }

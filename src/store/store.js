@@ -17,6 +17,7 @@ export default new Vuex.Store({
     userTodoNotifications: 0,
     isUserLoggedIn: false,
     todos: [],
+    chores: [],
     usersInSameHouse: [],
     houseName: '',
     currentTodo: {},
@@ -68,6 +69,15 @@ export default new Vuex.Store({
     setHouseName(state, name) {
       state.houseName = name
     },
+
+    addChore(state, chore) {
+      state.chores.push(chore)
+    },
+
+    resetChorelist(state) {
+      state.chores = []
+    },
+    
     setCurrentTodo(state, todo) {
       state.currentTodo = todo
     },
