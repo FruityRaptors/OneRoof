@@ -1,0 +1,31 @@
+ <template>
+  <v-dialog persistent max-width="290" :value="true">
+    <v-card class="brown lighten-5">
+      <v-card-title class="headline"> Delete Chore </v-card-title>
+      <v-card-text
+        >Are you sure you would like to delete {{ this.chorename }}</v-card-text
+      >
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="green lighten-0" text @click="$emit('closeModalPlease')">
+          CANCEL
+        </v-btn>
+        <v-btn @click="deleteChoreEmitter" color="green lighten-0" text>
+          DELETE
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+</template>
+
+<script>
+export default {
+  name: "DeleteChoreCheck",
+  props: ["chorename"],
+  methods: {
+    deleteChoreEmitter() {
+      this.$emit("deleteChorePlease", this.chorename);
+    },
+  },
+};
+</script>
