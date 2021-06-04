@@ -1,6 +1,7 @@
  <template>
  <v-dialog
       max-width="290"
+      persistent
       :value = "true"
     >   
       <v-card class="brown lighten-5">
@@ -29,7 +30,7 @@
     </v-dialog>
  </template>
 
- <script>
+<script>
  export default {
     name: 'Test',
     data(){
