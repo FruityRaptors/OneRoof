@@ -44,15 +44,8 @@
 <!-- Todo list text ends -->
               
 
-<!-- Delete Button -->
-        <v-list-item-action class="">
+        <v-list-item-action>
           
-            <v-icon 
-            icon @click.stop="setState(todo)" 
-            color="orange accent-3">
-            mdi-delete</v-icon>
-          
-<!-- Delete Button ends-->
 <!-- Assignee Dropdown Starts -->
     <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
@@ -76,9 +69,11 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    
-        </v-list-item-action>
 <!-- Assignee Dropdown Ends -->
+<!-- Todo Menu Starts -->
+      <TodoMenu :todo="todo" v-on:deleteFromModal="deleteFromModal" v-on:editFromModal="editFromModal" v-on:optionClicked="setState(todo)" />
+        </v-list-item-action>
+<!-- Todo Menu Ends -->
           </v-list-item>
 <!-- Border Between Todos -->
           <v-divider :key="todo.id"></v-divider>
@@ -96,30 +91,25 @@
           Add a Todo!
         </div>
       </div>
-<!-- Delete Modal -->
-          <DeleteModal v-if="modals.deleteTodo" :todo="currentId" @closeModal="modals.deleteTodo = false"  @clicked="deleteFromModal" />
     </div>
 </template>
 
 <script>
 // import TodoList from '../components/TodoList.vue'
-import DeleteModal from './Modals/DeleteModal.vue'
-
+import TodoMenu from '../components/TodoMenu.vue'
 export default {
   name: "Home",
   components: {
-    DeleteModal
+    TodoMenu
   },
   data() {
     return {
       newTodoMessage: '',
       todos: '',
-      modals: {
-        deleteTodo: false,
-      },
       currentId: '',
       selectedVictim: '',
-      users: this.$store.state.usersInSameHouse
+      users: this.$store.state.usersInSameHouse,
+      currentTodo: {},
     };
   },
   mounted() {
@@ -158,28 +148,32 @@ export default {
         this.todos = this.$store.state.todos
         await this.$store.dispatch("deleteTodo", id)
     },
-
     async setState(todo){
       console.log('abracadabra...', todo.id)
-      this.modals.deleteTodo = true
+      console.log("HERE IS THE CURRENT TODO", todo)
+      this.$store.commit('setCurrentTodo', todo)
+      this.currentTodo = todo //for testing purposes
       this.currentId = todo.id
     },
     deleteFromModal(){
-
+      
       this.$store.dispatch('deleteTodo', this.currentId).then(() => {
       console.log("getting updated to do list...")
       this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0])
-
       }).then(()=> {
         
         this.todos = this.$store.state.todos
   
       }).then(() => {
-
          this.todos = this.todos.filter((todo) => todo.id !== this.currentId)
-
       })
        
+    },
+    async editFromModal() {
+      console.log("reached here", this.$store.state.currentTodoMessage)
+      this.$store.state.currentTodo.todo = this.$store.state.currentTodoMessage
+      console.log("EVEN FURTHER", this.$store.state.currentTodo )
+      await this.$store.dispatch('updateTodo', this.$store.state.currentTodo)
     },
     async setAssignee(user, todo){
       let todoToUpdate = {
@@ -190,8 +184,9 @@ export default {
       await this.$store.dispatch("updateTodoVictim", todoToUpdate)
       await this.$store.dispatch("getTodos", todoToUpdate.house_key)
       this.todos = this.$store.state.todos; 
-    }
+    },
   },
+  
 };
 </script>
 
@@ -203,7 +198,6 @@ export default {
     transform: translate(-50%, -50%);
     opacity: 0.5;
   }
-
   #icon-todo {
     transform: translateX(12%);
   }

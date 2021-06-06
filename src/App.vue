@@ -127,6 +127,12 @@ export default {
         to: "/todo",
         notifications: 0,
       },
+      {
+        title: "Chores",
+        icon: "mdi-clipboard-edit",
+        to: "/chores",
+        notifications: 0,
+      },
     ],
     allNotifications: 0,
     login: true,

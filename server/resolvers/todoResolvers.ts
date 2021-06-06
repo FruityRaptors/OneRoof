@@ -41,7 +41,7 @@ export class todoResolvers {
     }
     //Update a todo by it's ID
     @Mutation(() => String)
-    async updateTodo(
+    async updateTodoVictim(
         @Arg('id') id: number,
         @Arg('victimid') victimid: string,
     ){
@@ -56,19 +56,28 @@ export class todoResolvers {
         Todos.save(todoToBeUpdated)
 
         return "Saved!"
-        // if(JSON.parse(todoToBeUpdated.victimid)) {
-        //     let victimIdArr = JSON.parse(todoToBeUpdated.victimid)
-        //     victimIdArr.push(victimid)
-        //     todoToBeUpdated.victimid = victimIdArr
-        //    Todos.save(todoToBeUpdated)
-        //    return "Saved!"
-        // } else {
-        //     todoToBeUpdated.victimid = JSON.stringify([victimid])
-        //     Todos.save(todoToBeUpdated)
-        //     return "Saved!"
-        // }
 
     }
+
+      //Update a todo's message
+      @Mutation(() => String)
+      async updateTodoMessage(
+          @Arg('id') id: number,
+          @Arg('todo') todo: string,
+      ){
+          let todoToBeUpdated = await Todos.findOne( { where: { id } })
+          if(!todoToBeUpdated){
+              console.log('Error!')
+              return
+          }
+  
+          todoToBeUpdated.todo = todo
+  
+          Todos.save(todoToBeUpdated)
+  
+          return "Saved!"
+  
+      }
 
 }
     

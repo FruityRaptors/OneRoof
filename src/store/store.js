@@ -17,8 +17,11 @@ export default new Vuex.Store({
     userTodoNotifications: 0,
     isUserLoggedIn: false,
     todos: [],
+    chores: [],
     usersInSameHouse: [],
     houseName: '',
+    currentTodo: {},
+    currentTodoMessage: '',
     // areTodosLoaded: false, // add a way to change it to false
   },
 
@@ -65,7 +68,22 @@ export default new Vuex.Store({
 
     setHouseName(state, name) {
       state.houseName = name
-    }
+    },
+
+    addChore(state, chore) {
+      state.chores.push(chore)
+    },
+
+    resetChorelist(state) {
+      state.chores = []
+    },
+    
+    setCurrentTodo(state, todo) {
+      state.currentTodo = todo
+    },
+    setCurrentTodoMessage(state, message) {
+      state.currentTodoMessage = message
+    },
   },
 
   actions: {
@@ -328,6 +346,26 @@ export default new Vuex.Store({
       }
     },
 
+    async updateTodo(context, todo) {
+      console.log(`UPDATING TODO ${todo.id} & ${todo.todo}`)
+      try {
+        await axios({
+          method: "POST",
+          url: "/graphql",
+          data: {
+            query: `
+            mutation {
+              updateTodoMessage(id:${todo.id}, todo:"${todo.todo}")
+            }`
+          }
+        }).then(() => {
+          console.log("TODO UPDATED")
+        })
+      } catch (error) {
+        console.log("This is your error", error)
+      }
+    },
+
     async addTodo(context, newTodo) {
       console.log('Adding a todo to database')
       try {
@@ -382,7 +420,7 @@ export default new Vuex.Store({
         data: {
           query: `
         mutation{
-          updateTodo(
+          updateTodoVictim(
             id: ${selectedTodo.id},
             victimid: "${selectedTodo.victimid}"
           )
