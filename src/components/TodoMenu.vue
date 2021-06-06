@@ -35,9 +35,10 @@ export default {
             editTodo: false,
             deleteTodo: false,
         },
-      features: [
-        { name: 'Assign', icon:'mdi-account-plus', click() { console.log("Assign")} },
-        { name: 'Edit', icon:'mdi-square-edit-outline', click() { 
+        users: this.$store.state.usersInSameHouse,
+        features: [
+          { name: 'Assign', icon:'mdi-account-plus', click() { console.log("Assign")} },
+          { name: 'Edit', icon:'mdi-square-edit-outline', click() { 
             console.log("Edit Clicked")
             this.$emit('optionClicked')
             this.modals.editTodo = true
