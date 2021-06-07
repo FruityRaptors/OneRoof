@@ -1,6 +1,5 @@
 <template>
-<v-app>
-<v-card class="mx-auto mt-5 text-center pa-5" width="300" max-width="400px" color="brown lighten-5" >
+<v-card class="mx-auto text-center pa-5" width="300" max-width="100%" color="orange lighten-5" elevation="5">
 
         <v-img
         src="@/assets/OneRoof.png"
@@ -32,9 +31,6 @@
         Register
       </v-btn>
 </v-card>
-
-
-</v-app>
 
 </template>
 

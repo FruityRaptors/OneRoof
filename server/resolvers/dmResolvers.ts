@@ -5,39 +5,39 @@ import { DM } from '../schemas/dmSchema'
 
 @Resolver()
 export class dmResolvers {
+    @Query(() => [DM])
+    getAllChat(){
+        return Dms.find()
+    }
+
     @Query(() => DM)
     async checkIfInSameDm(
-        @Arg("username_1") username_1: string,
-        @Arg("username_2") username_2: string
+        @Arg("userid1") userid1: string,
+        @Arg("userid2") userid2: string
     ){
-        
-        let searchString1 = `${username_2.toLocaleLowerCase()}/${username_1.toLocaleLowerCase()}`
-        let searchString2 = `${username_1.toLocaleLowerCase()}/${username_2.toLocaleLowerCase()}`
 
-        let findContact1 = await Dms.findOne({ where: {users: searchString1} })
-        let findContact2 = await Dms.findOne({ where: {users: searchString2} })
+        console.log(`${userid2}/${userid1}`)
+        console.log(`${userid1}/${userid2}`)
 
-        console.log('result.', findContact1, findContact2)
-
-        if(findContact1){
-            console.log(findContact1)
-            return findContact1
-        }
-        if (findContact2){
-            console.log(findContact2)
-            return findContact2
+        let result1 = await Dms.findOne( { where: {users: `${userid2}/${userid1}`} } )
+        if(result1){
+            return result1
+        } else {
+            let result2 = await Dms.findOne( { where: {users: `${userid1}/${userid2}`} } )
+            if (result2) {
+                return result2
+            }
         }
     }
 
     @Mutation(() => String)
     async addUsersToChat(
-        @Arg("username_1") username_1: string,
-        @Arg("username_2") username_2: string,
+        @Arg("userid1") userid1: string,
+        @Arg("userid2") userid2: string,
         @Arg("dm_key") dm_key: string,
     ){
-        let users = `${username_1}/${username_2}`
 
-        await Dms.insert({ users, dm_key })
+        await Dms.insert({ users: `${userid1}/${userid2}`, dm_key: dm_key })
 
         return "success!"
     }

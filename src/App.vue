@@ -1,14 +1,15 @@
 <template>
-  <v-container class="text-center" v-if="this.loading == true">
+  <v-card class="text-center" v-if="this.loading == true">
     <v-progress-circular indeterminate color="primary"></v-progress-circular>
-  </v-container>
+  </v-card>
 
-  <v-container v-else-if="this.$store.state.isUserLoggedIn == false">
-    <v-container>
-      <Login @emit="toggleRegLog" v-if="this.login === true" />
-      <Register @emit="toggleRegLog" v-if="this.login === false" />
+  <v-app v-else-if="this.$store.state.isUserLoggedIn == false">
+    <v-container class="orange lighten-5 fill-height">
+       <Login @emit="toggleRegLog" v-if="this.login === true" />
+       <Register @emit="toggleRegLog" v-if="this.login === false" />
     </v-container>
-  </v-container>
+      
+  </v-app>
 
   <v-app v-else id="one-roof-app">
     <!-- Nav drawer starts -->

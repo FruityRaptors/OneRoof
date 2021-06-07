@@ -403,6 +403,7 @@ export default new Vuex.Store({
       {
         getUsersByHousekey(house_keys:"${house_key}"){
           username
+          id
         }
       }
       `
@@ -439,6 +440,7 @@ export default new Vuex.Store({
     //DM  related starts
     ///////
     async checkDmTarget(context, users){
+      console.log(users)
       let checkIfAlreadyChatted = await axios({
         method: "POST",
         url: "/graphql",
@@ -446,8 +448,8 @@ export default new Vuex.Store({
           query: `
           {
             checkIfInSameDm(
-              username_1:"${users.username_1}",
-              username_2:"${users.username_2}"
+              userid1:"${users.username_1}",
+              userid2:"${users.username_2}"
             ){
               dm_key
             }
@@ -465,28 +467,31 @@ export default new Vuex.Store({
         console.log("MADE IT TO ELSE")
         let roomkey = keygen._()
 
+        console.log(users, roomkey)
+
         await axios({
           method: "POST",
           url: "/graphql",
-          data:`
-          mutation{
-            addUsersToChat(
-              username_1:"${users.username_1}",
-              username_2:"${users.username_2}",
-              dm_key:"${roomkey}"
-            )
-          }
-          `
-        }).then(() => {
-         let result = axios({
+          data: {
+            query: `
+               mutation{
+                 addUsersToChat(
+                    userid1:"${users.username_1}",
+                    userid2:"${users.username_2}",
+                    dm_key:"${roomkey}")
+                    }`
+                }})
+      
+         
+        let result = await axios({
             method: "POST",
             url: "/graphql",
             data: {
               query: `
               {
                 checkIfInSameDm(
-                  username_1:"${users.username_1}",
-                  username_2:"${users.username_2}"
+                  userid1:"${users.username_1}",
+                  userid2:"${users.username_2}"
                 ){
                   dm_key
                 }
@@ -495,9 +500,10 @@ export default new Vuex.Store({
             }
           })
 
+          console.log(result)
+
           return result.data.data.checkIfInSameDm.dm_key
-        })
-      }
+        }
 
     },
     ///////
