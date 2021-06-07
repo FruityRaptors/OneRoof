@@ -87,7 +87,7 @@ export default {
   methods: {
     pushChore(chore) {
       console.log("Pushing chore to store:", chore);
-      this.$store.commit("addChore", chore); // here is where we run the addChoreAPI call
+      this.$store.dispatch("addNewChore", chore); // here is where we run the addChoreAPI call
       console.log("store:", this.$store.state.chores)
     },
 
