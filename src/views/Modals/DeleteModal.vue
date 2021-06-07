@@ -3,7 +3,7 @@
       <v-card class="brown lighten-5">
         <v-card-title class="headline">
           Delete Todo
-        </v-card-title>
+        </v-card-title> 
 
         <v-card-text>
           Would you like to delete this todo?
