@@ -12,7 +12,7 @@
         <v-btn
           text
           color="deep-purple accent-4"
-          @click="modals.deleteCheck = true"
+          @click="openModal"
         >
           Delete
         </v-btn>
@@ -27,7 +27,7 @@
       @deleteChorePlease="passAndClose"
       @closeModalPlease="modals.deleteCheck = false"
       v-if="modals.deleteCheck"
-      :chorename="this.chorename"
+      :choreID="this.choreID"
     />
   </v-dialog>
 </template>
@@ -42,19 +42,23 @@ export default {
   },
   data() {
     return {
-      chorename: this.chore.chore,
+      choreID: this.chore.id,
       modals: {
         deleteCheck: false,
       },
     };
   },
   methods: {
+    openModal() {
+      this.modals.deleteCheck= true
+    },
+
     closeModalEmitter() {
       this.$emit("closeModalPlease");
     },
 
-    passAndClose(chorename) {
-      this.$emit("deleteChorePlease", chorename)
+    passAndClose(choreID) {
+      this.$emit("deleteChorePlease", choreID)
       this.deleteCheck = false;
     },
   },

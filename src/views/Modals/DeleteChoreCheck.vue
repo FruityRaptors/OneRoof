@@ -3,7 +3,7 @@
     <v-card class="brown lighten-5">
       <v-card-title class="headline"> Delete Chore </v-card-title>
       <v-card-text
-        >Are you sure you would like to delete {{ this.chorename }}</v-card-text
+        >Are you sure you would like to delete {{ this.choreID }}</v-card-text
       >
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -21,10 +21,10 @@
 <script>
 export default {
   name: "DeleteChoreCheck",
-  props: ["chorename"],
+  props: ["choreID"],
   methods: {
     deleteChoreEmitter() {
-      this.$emit("deleteChorePlease", this.chorename);
+      this.$emit("deleteChorePlease", this.choreID);
     },
   },
 };
