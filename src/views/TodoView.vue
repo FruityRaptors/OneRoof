@@ -144,7 +144,7 @@ export default {
     },
     async deleteTodo(id) {
         console.log("THIS IS THE ID",id)
-        this.$store.state.todos = this.$store.state.filter(todo => todo.id !== id)
+        this.$store.state.todos = this.$store.state.todos.filter(todo => todo.id !== id)
         this.todos = this.$store.state.todos
         await this.$store.dispatch("deleteTodo", id)
     },

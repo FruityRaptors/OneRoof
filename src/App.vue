@@ -161,19 +161,16 @@ export default {
     let loggedInFlag = await this.$store.dispatch("checkIfLoggedInUser");
     console.log("MOUNTING USER:", this.$store.state.user);
     if (loggedInFlag) {
-      if (this.$store.state.user.username) {
-        await this.$store.dispatch("calculateUserRGB", this.$store.state.user.username)
+      let username = this.$store.state.user.username;
+      let house_key = this.$store.state.user.house_keys[0];
+      if (username) {
+        await this.$store.dispatch("calculateUserRGB", username);
       }
-      await this.$store.dispatch(
-        "getTodos",
-        this.$store.state.user.house_keys[0]
-      );
-      console.log("MOUNTING TODOS:", this.$store.state.todos);
-      await this.$store.dispatch(
-        "populateVictimList",
-        this.$store.state.user.house_keys[0]
-      );
-      console.log("MOUNTING VICTIM LIST:", this.$store.state.usersInSameHouse);
+      await this.$store.dispatch("getTodos", house_key);
+      await this.$store.dispatch("populateVictimList", house_key);
+      console.log("MOUNTING TODOS AND VICTIMS:", this.$store.state.todos);
+      await this.$store.dispatch("getChores", house_key);
+      console.log("MOUNTING CHORES:", this.$store.state.chores);
       // await this.$store.dispatch("getHouseName", this.$store.state.user.house_keys[0]);
       // this.houseName = this.$store.user.houseName;
       //await get all messages for general chat
