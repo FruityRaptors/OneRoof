@@ -86,8 +86,9 @@ export default {
   },
   methods: {
     pushChore(chore) {
-      console.log("Pushing chore:", chore);
-      this.$store.commit("addChore", chore);
+      console.log("Pushing chore to store:", chore);
+      this.$store.commit("addChore", chore); // here is where we run the addChoreAPI call
+      console.log("store:", this.$store.state.chores)
     },
 
     showChoreInfo(chore) {
@@ -101,10 +102,12 @@ export default {
       let newChores = [];
       for (let chore of this.chores) {
         if (chore.chore !== chorename) {
+          console.log("pushing locally:", chore)
           newChores.push(chore);
         }
       }
       this.chores = newChores;
+      this.$store.state.chores = newChores // here is where we run the delete API call
       // sorry about that, fellas
       this.modals.ChoreInfo = false;
     },
