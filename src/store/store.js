@@ -17,6 +17,7 @@ export default new Vuex.Store({
     userTodoNotifications: 0,
     isUserLoggedIn: false,
     todos: [],
+    chores: [],
     usersInSameHouse: [],
     houseName: '',
     currentTodo: {},
@@ -68,6 +69,15 @@ export default new Vuex.Store({
     setHouseName(state, name) {
       state.houseName = name
     },
+
+    setChores(state, chores) {
+      state.chores = chores
+    },
+
+    resetChorelist(state) {
+      state.chores = []
+    },
+
     setCurrentTodo(state, todo) {
       state.currentTodo = todo
     },
@@ -383,6 +393,7 @@ export default new Vuex.Store({
       }
     },
 
+    // I changed this, maybe didn't need to. Jay didn't like it ;)
     populateVictimList(context, house_key) {
       console.log(`Chasing victims in ${house_key}`)
       axios({
@@ -423,6 +434,91 @@ export default new Vuex.Store({
 
     ///////
     //Todolist related actions end
+    ///////
+
+    ///////
+    //Chores related actions start
+    ///////
+    async getChores(context, house_key) {
+      console.log(`Getting Chores By House...`, house_key)
+      try {
+        await axios({
+          method: "POST",
+          url: "/graphql",
+          data: {
+            query: `
+            {
+              getChoresByHouse(house_key:"${house_key}"){
+                id
+                creatorid
+                asignee
+                chore
+                description
+                house_key
+              }
+            }`
+          }
+        })
+          .then((response) => {
+            let choresByHouse = response.data.data.getChoresByHouse
+            console.log("Received chores from server...", choresByHouse)
+            context.commit("setChores", choresByHouse)
+          })
+      } catch (error) {
+        console.log("No user is logged in")
+        return
+      }
+    },
+
+    async addNewChore(context, newChore) {
+      console.log('Adding a chore to database:', newChore)
+      try {
+        await axios({
+          method: "POST",
+          url: "/graphql",
+          data: {
+            query: `
+          mutation {
+            createChore(
+              chore: "${newChore.chore}", 
+              description: "${newChore.description}",
+              asignee: "${newChore.asignee}",
+              creatorid: "${newChore.creatorid}",
+              house_key: "${newChore.house_key}",
+            )
+          }`
+          }
+        })
+        .then(() => {})
+      } catch (error) {
+        console.log("This is your error", error)
+      }
+    },
+
+    async deleteChore(context, id) {
+      console.log(`Deleting Chore with ID: ${id}`)
+      try {
+        await axios({
+          method: "POST",
+          url: "/graphql",
+          data: {
+            query: `
+            mutation{
+              deleteChore(id:${id})
+            }`
+          }
+        })
+          .then(() => {
+            console.log('Chore deleted')
+            context.dispatch('getChores', this.state.user.house_keys[0])
+          })
+      } catch (error) {
+        console.log("This is your error", error)
+      }
+    },
+
+    ///////
+    //Chores related actions end
     ///////
 
     ///////
