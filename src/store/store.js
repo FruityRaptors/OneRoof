@@ -436,6 +436,77 @@ export default new Vuex.Store({
     ///////
 
     ///////
+    //DM  related starts
+    ///////
+    async checkDmTarget(context, users){
+      let checkIfAlreadyChatted = await axios({
+        method: "POST",
+        url: "/graphql",
+        data: {
+          query: `
+          {
+            checkIfInSameDm(
+              username_1:"${users.username_1}",
+              username_2:"${users.username_2}"
+            ){
+              dm_key
+            }
+          }
+          `
+        }
+      })
+
+      if (checkIfAlreadyChatted.data.data){
+        console.log('if statement passed...')
+        return checkIfAlreadyChatted.data.data.checkIfInSameDm.dm_key
+      } 
+      
+      else  {
+        console.log("MADE IT TO ELSE")
+        let roomkey = keygen._()
+
+        await axios({
+          method: "POST",
+          url: "/graphql",
+          data:`
+          mutation{
+            addUsersToChat(
+              username_1:"${users.username_1}",
+              username_2:"${users.username_2}",
+              dm_key:"${roomkey}"
+            )
+          }
+          `
+        }).then(() => {
+         let result = axios({
+            method: "POST",
+            url: "/graphql",
+            data: {
+              query: `
+              {
+                checkIfInSameDm(
+                  username_1:"${users.username_1}",
+                  username_2:"${users.username_2}"
+                ){
+                  dm_key
+                }
+              }
+              `
+            }
+          })
+
+          return result.data.data.checkIfInSameDm.dm_key
+        })
+      }
+
+    },
+    ///////
+    //DM  related ends
+    ///////
+
+
+
+    ///////
     //Firebase related actions start
     ///////
 
