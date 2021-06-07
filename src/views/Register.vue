@@ -1,9 +1,5 @@
 <template>
-  <v-app>
-
-    
-
-  <v-card class="mx-auto pa-5 mt-5 text-center brown lighten-5" width="300px" max-width="350">
+  <v-card class="mx-auto pa-5 text-center orange lighten-5" width="300px" max-width="350" elevation="5">
 
     <v-img
         src="@/assets/OneRoof.png"
@@ -38,8 +34,7 @@
         Back to Login
     </v-btn>
   </v-card>
-    
-  </v-app>
+
 </template>
 
 <script>

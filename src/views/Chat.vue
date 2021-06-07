@@ -1,9 +1,9 @@
 <template>
-  <div class="view chat">
-    
+  <v-card class="orange lighten-5">
 <!-- chat section start -->
-    <v-card id="chat-box" class="chat-box orange lighten-5 mb-10 pb-10" v-on:update="$vuetify.goTo(99999)" color="brown lighten-4" elevation="0">
+    <v-card id="chat-box" class="chat-box orange lighten-5" v-on:update="$vuetify.goTo(99999)" color="brown lighten-4" elevation="0">
 
+      <v-card elevation="0" class="pb-10 mb-10 orange lighten-5 mx-auto">
 <!-- message container starts -->
       <v-card
         elevation="0"
@@ -43,39 +43,12 @@
       </v-card>
 <!-- message container ends -->
 
+</v-card>
+
     </v-card>
 <!-- chat section ends -->
 
 <!-- input and send section start -->
-    <v-footer
-      class=""
-      rounded
-      max-height="100"
-      color="orange lighten-4"
-      padless
-      absolute
-    >
-        <v-text-field
-          class="d-flex align-start mt-3 pl-5"
-          type="text"
-          v-model="inputMessage"
-          placeholder="Write your message..."
-          @keyup.enter="sendMessage(); $vuetify.goTo(99999)"
-        />
-        <v-btn 
-        class="mr-2 orange lighten-4"
-        fab
-        @click.prevent="sendMessage(); ; $vuetify.goTo(99999)"
-        elevation="0"
-        >
-          <v-icon
-          color="orange darken-1"
-          >
-        mdi-send
-          </v-icon>
-        </v-btn>
-    </v-footer>
-   
     <v-footer
       class=""
       rounded
@@ -105,7 +78,7 @@
         </v-btn>
     </v-footer>
 <!-- input and send section start -->
-  </div>
+ </v-card>
 </template>
 
 

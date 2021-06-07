@@ -1,8 +1,30 @@
 <template>
-    <div class="view chat">
+    <v-container>
+
+<!-- Top bar for going back  -->
+    <v-chip color="orange lighten-3" class="mb-4 d-flex">
+       <v-avatar color="orange lighten-4" @click="$emit('back')">
+         <v-icon >
+             mdi-arrow-left
+         </v-icon>
+       </v-avatar>
+       
+
+         <v-card-subtitle class="d-flex">
+         Messaging... {{user}}
+        </v-card-subtitle>
+
+
+    </v-chip>
+<!-- Top bar for going back  -->
+   
+
+    <v-divider></v-divider>
     
 <!-- chat section start -->
-    <v-card id="chat-box" class="chat-box orange lighten-5 mb-10 pb-10" v-on:update="$vuetify.goTo(99999)" color="brown lighten-4" elevation="0">
+    <v-card elevation="0" class="pb-10 mb-10 orange lighten-5 mx-auto">
+
+    <v-card id="chat-box" class="chat-box orange lighten-5" v-on:update="$vuetify.goTo(99999)" elevation="0">
 
 <!-- message container starts -->
       <v-card
@@ -43,6 +65,8 @@
       </v-card>
 <!-- message container ends -->
 
+        </v-card>
+
     </v-card>
 <!-- chat section ends -->
 
@@ -76,46 +100,22 @@
         </v-btn>
     </v-footer>
    
-    <v-footer
-      class=""
-      rounded
-      max-height="100"
-      color="orange lighten-4"
-      padless
-      fixed
-    >
-        <v-text-field
-          class="d-flex align-start mt-3 pl-5"
-          type="text"
-          v-model="inputMessage"
-          placeholder="Write your message..."
-          @keyup.enter="sendMessage(); $vuetify.goTo(99999)"
-        />
-        <v-btn 
-        class="mr-2 orange lighten-4"
-        fab
-        @click.prevent="sendMessage(); ; $vuetify.goTo(99999)"
-        elevation="0"
-        >
-          <v-icon
-          color="orange darken-1"
-          >
-        mdi-send
-          </v-icon>
-        </v-btn>
-    </v-footer>
 <!-- input and send section start -->
-  </div>
+    </v-container>
 </template>
 
 <script>
 import firebase from "firebase";
+import Avatar from 'vue-avatar'
 
 export default {
     name: "SingleChat",
-
+    components: {
+        Avatar
+    },
     props:{
-            roomkey: String
+            roomkey: String,
+            user: String
         },
 
     data(){
@@ -123,6 +123,7 @@ export default {
             messages: [],
             house_key: '',
             inputMessage: '',
+            username: this.$store.state.user.username,
         }
     }, //Data ends
 
@@ -173,7 +174,10 @@ export default {
       this.lastMessage = this.messages[this.messages.length - 1].username
 
       this.inputMessage = "";
-  }
+  },
+  scrollBottom(){
+        return this.$vuetify.goTo(99999)
+      },
 }, //Methods Ends
 }
 </script>

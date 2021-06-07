@@ -10,9 +10,7 @@ export class Dms extends BaseEntity {
     id: number;
 
     @Field(() => String)
-    @Column({
-        length: 20
-    })
+    @Column()
     dm_key: string;
 
     @Field(() => String)
