@@ -70,8 +70,8 @@ export default new Vuex.Store({
       state.houseName = name
     },
 
-    setChores(state, chore) { 
-      state.chores.push(chore)
+    setChores(state, chores) { 
+      state.chores = chores
     },
 
     resetChorelist(state) {
@@ -480,7 +480,7 @@ export default new Vuex.Store({
     },
 
     async addNewChore(context, newChore) {
-      console.log('Adding a chore to database')
+      console.log('Adding a chore to database:', newChore)
       try {
         await axios({
           method: "POST",
@@ -490,14 +490,15 @@ export default new Vuex.Store({
           mutation {
             createChore(
               chore: "${newChore.chore}", 
+              description: "${newChore.description}",
               asignee: "${newChore.asignee}",
               creatorid: "${newChore.creatorid}",
               house_key: "${newChore.house_key}",
-              description: "${newChore.description}
             )
           }`
           }
         }).then(() => {
+          console.log("success!")
           context.dispatch("getChores")
         })
       } catch (error) {

@@ -38,7 +38,7 @@
         @deleteChorePlease="deleteChore"
         :chore="this.clickedChore"
       />
-      <AddChore @addThisChorePlease="pushChore" />
+      <AddChore @addThisChorePlease="setChore" />
     </v-list>
     <!-- todo list platform ends-->
   </div>
@@ -59,6 +59,7 @@ export default {
       currentUser: {},
       chores: [],
       clickedChore: {},
+      choreToAdd:{},
       modals: {
         ChoreInfo: false,
       },
@@ -66,9 +67,9 @@ export default {
     };
   },
   mounted() {
-    console.log("mounting");
     this.currentUser = this.$store.state.user;
-    this.$store.commit("resetChorelist");
+    
+    /* this.$store.commit("resetChorelist");
     let seedChore1 = {
       chore: "Mow the Lawn",
       description: "watch out for Potato's pooptatoes!",
@@ -80,15 +81,26 @@ export default {
       asignee: "Jeff!",
     };
     this.$store.state.chores.push(seedChore1);
-    this.$store.state.chores.push(seedChore2);
+    this.$store.state.chores.push(seedChore2); */
 
     this.chores = this.$store.state.chores;
   },
   methods: {
-    pushChore(chore) {
-      console.log("Pushing chore to store:", chore);
-      this.$store.dispatch("addNewChore", chore); // here is where we run the addChoreAPI call
-      console.log("store:", this.$store.state.chores)
+    setChore(chore) {
+      this.choreToAdd = chore
+      this.pushChore()
+    },
+
+    pushChore() {
+      let newChore = {
+        chore: this.choreToAdd.chore,
+        description: this.choreToAdd.description,
+        asignee: this.choreToAdd.asignee,
+        creatorid: this.currentUser.id,
+        house_key: this.currentUser.house_keys[0],
+      }
+      console.log("CHORE TO ADD:", newChore)
+      this.$store.dispatch("addNewChore", newChore); 
     },
 
     showChoreInfo(chore) {
