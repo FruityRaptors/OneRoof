@@ -393,6 +393,7 @@ export default new Vuex.Store({
       }
     },
 
+    // I changed this, maybe didn't need to. Jay didn't like it ;)
     populateVictimList(context, house_key) {
       console.log(`Chasing victims in ${house_key}`)
       axios({
