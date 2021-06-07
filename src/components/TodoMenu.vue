@@ -31,7 +31,7 @@
 
     </v-list>
    </v-menu>
-   <AssignMenu v-if="modals.assignTodo" :todo="todo" @closeModal="modals.assignTodo = false" @console="consolelogger"   />
+   <AssignMenu v-if="modals.assignTodo" :todo="todo" @closeModal="modals.assignTodo = false" @console="consolelogger"       />
    <DeleteModal v-if="modals.deleteTodo" :todo="todo" @closeModal="modals.deleteTodo = false" @console="consolelogger" />
    <EditModal v-if="modals.editTodo" :todo="todo" @closeModal="modals.editTodo = false" @console="consolelogger" />
 
