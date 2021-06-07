@@ -17,7 +17,7 @@
       <v-text-field  filled  label="Email" v-model="email"></v-text-field>
       <v-text-field filled  type="password" label="Password" v-model="password"></v-text-field>
 
-      <v-btn class="text-center ma-2 pa-5" @click="login">
+      <v-btn class="text-center ma-2 pa-5 orange lighten-2 white--text" @click="login">
         Login
       </v-btn>
 
@@ -27,7 +27,7 @@
         </v-card-subtitle>
       </v-container>
 
-      <v-btn block @click="$emit('emit')"> 
+      <v-btn block @click="$emit('emit')" class="orange lighten-2 white--text"> 
         Register
       </v-btn>
 </v-card>
