@@ -25,7 +25,7 @@
     </v-dialog>
  </template>
 
- <script>
+<script>
  export default {
     name: 'Test',
     data(){
