@@ -20,7 +20,7 @@
     <v-text-field filled type="password" v-model="password" label="Password"></v-text-field>
     <v-text-field filled v-model="username" label="Username" hint="What do your housemates call you?"></v-text-field>
 
-    <v-btn @click="register">
+    <v-btn @click="register" class="orange lighten-2 white--text">
       Register
     </v-btn>
 
@@ -30,7 +30,7 @@
         </v-card-subtitle>
     </v-container>
 
-    <v-btn block @click="$emit('emit')"> 
+    <v-btn block @click="$emit('emit')" class="orange lighten-2 white--text"> 
         Back to Login
     </v-btn>
   </v-card>
