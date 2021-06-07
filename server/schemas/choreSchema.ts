@@ -6,19 +6,16 @@ import { Field, ObjectType } from 'type-graphql';
         id: number
 
         @Field()
-        todo: string
+        chore: string
 
         @Field()
-        category: number
+        description: number
 
         @Field()
         house_key: string
 
         @Field()
-        date: string
-
-        @Field()
-        victimid: [string]
+        asignee: string
 
         @Field()
         creatorid: string
