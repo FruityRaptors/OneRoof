@@ -56,8 +56,9 @@
           v-on="on"
           >mdi-account-plus</v-icon>
       </template>
+      
       <v-list>
-        <v-list-item
+        <v-list-item 
           v-for="user in users"
           :key="user.id"
           :value="todo"
@@ -71,7 +72,7 @@
     </v-menu>
 <!-- Assignee Dropdown Ends -->
 <!-- Todo Menu Starts -->
-      <TodoMenu :todo="todo" v-on:deleteFromModal="deleteFromModal" v-on:editFromModal="editFromModal" v-on:optionClicked="setState(todo)" />
+      <TodoMenu :todo="todo" v-on:deleteFromModal="deleteFromModal" v-on:editFromModal="editFromModal" v-on:optionClicked="setState(todo)" @setAssignee="setAssignee" />
         </v-list-item-action>
 <!-- Todo Menu Ends -->
           </v-list-item>
@@ -96,6 +97,7 @@
 
 <script>
 import TodoMenu from '../components/TodoMenu.vue'
+
 export default {
   name: "Home",
   components: {
@@ -109,6 +111,7 @@ export default {
       selectedVictim: '',
       users: this.$store.state.usersInSameHouse,
       currentTodo: {},
+
     };
   },
   mounted() {
@@ -145,6 +148,7 @@ export default {
         this.todos = this.$store.state.todos
         await this.$store.dispatch("deleteTodo", id)
     },
+
     async setState(todo){
       console.log('abracadabra...', todo.id) //remove later (before due date added)
       console.log("HERE IS THE CURRENT TODO", todo) //remove later (before due date added)
@@ -157,12 +161,15 @@ export default {
       this.$store.dispatch('deleteTodo', this.currentId).then(() => {
       console.log("getting updated to do list...")
       this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0])
+
       }).then(()=> {
         
         this.todos = this.$store.state.todos
   
       }).then(() => {
+
          this.todos = this.todos.filter((todo) => todo.id !== this.currentId)
+
       })
        
     },
@@ -170,14 +177,16 @@ export default {
       this.$store.state.currentTodo.todo = this.$store.state.currentTodoMessage
       await this.$store.dispatch('updateTodo', this.$store.state.currentTodo)
     },
-    async setAssignee(user, todo){
-      let todoToUpdate = {
-        id: todo.id,
-        victimid: user.username,
-        house_key: todo.house_key
-      }
-      await this.$store.dispatch("updateTodoVictim", todoToUpdate)
-      await this.$store.dispatch("getTodos", todoToUpdate.house_key)
+    async setAssignee(value){
+      // let todoToUpdate = {
+      //   id: todo.id,
+      //   victimid: user.username,
+      //   house_key: todo.house_key
+      // }
+      console.log(value)
+      this.currentTodo.victimid = value
+      console.log(this.currentTodo)
+      await this.$store.dispatch("updateTodoVictim", this.currentTodo)
       this.todos = this.$store.state.todos; 
     },
   },
@@ -193,6 +202,7 @@ export default {
     transform: translate(-50%, -50%);
     opacity: 0.5;
   }
+
   #icon-todo {
     transform: translateX(12%);
   }
