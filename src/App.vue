@@ -133,6 +133,12 @@ export default {
         to: "/chores",
         notifications: 0,
       },
+      {
+        title: "Direct Messages",
+        icon: "mdi-message-text",
+        to: "/dm",
+        notifications: 0,
+      }
     ],
     allNotifications: 0,
     login: true,
