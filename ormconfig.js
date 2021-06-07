@@ -1,5 +1,4 @@
-
-
+// "node build/server/index.js"
 module.exports = {
    "type": "postgres",
    "host": `/cloudsql/${process.env.INSTANCE_CONNECTION_NAME}`,

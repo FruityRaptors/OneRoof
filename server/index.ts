@@ -12,6 +12,7 @@ import { houseResolvers } from "./resolvers/houseResolvers"
 (async () => {
   console.log("spinning up express")
   const app = express();
+  app.enable('trust proxy');
   console.log("connecting to SQL database")
   try {
     await connectDB()

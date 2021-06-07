@@ -7,3 +7,7 @@ temp/
 .env
 .gcloudignore
 app.standard.yaml
+.git
+.gitignore
+scripts
+dist
