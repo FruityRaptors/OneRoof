@@ -33,6 +33,7 @@
         <v-divider :key="chore.id"></v-divider>
       </div>
       <ChoreInfo
+        persistent
         v-if="modals.ChoreInfo"
         @closeModalPlease="modals.ChoreInfo = false"
         @deleteChorePlease="deleteChore"
@@ -59,7 +60,7 @@ export default {
       currentUser: {},
       chores: [],
       clickedChore: {},
-      choreToAdd:{},
+      choreToAdd: {},
       modals: {
         ChoreInfo: false,
       },
@@ -68,39 +69,33 @@ export default {
   },
   mounted() {
     this.currentUser = this.$store.state.user;
-    
-    /* this.$store.commit("resetChorelist");
-    let seedChore1 = {
-      chore: "Mow the Lawn",
-      description: "watch out for Potato's pooptatoes!",
-      asignee: "Pete",
-    };
-    let seedChore2 = {
-      chore: "Do dishes",
-      description: "Do the dishes after dinner every day",
-      asignee: "Jeff!",
-    };
-    this.$store.state.chores.push(seedChore1);
-    this.$store.state.chores.push(seedChore2); */
-
-    this.chores = this.$store.state.chores;
+    this.updateChores();
   },
   methods: {
     setChore(chore) {
-      this.choreToAdd = chore
-      this.pushChore()
+      this.choreToAdd = chore;
+      this.updateChores();
     },
 
-    pushChore() {
+    async updateChores() {
+      if(this.choreToAdd.chore) {
+        console.log("there's a chore to add!")
+        await this.addChoreAndGetChore()
+      }
+      this.chores = this.$store.state.chores
+    },
+
+    async addChoreAndGetChore() {
+      // here we find our two API calls
       let newChore = {
         chore: this.choreToAdd.chore,
         description: this.choreToAdd.description,
         asignee: this.choreToAdd.asignee,
         creatorid: this.currentUser.id,
         house_key: this.currentUser.house_keys[0],
-      }
-      console.log("CHORE TO ADD:", newChore)
-      this.$store.dispatch("addNewChore", newChore); 
+      };
+      await this.$store.dispatch("addNewChore", newChore)
+      await this.$store.dispatch("getChores", newChore.house_key);
     },
 
     showChoreInfo(chore) {
@@ -108,18 +103,26 @@ export default {
       this.modals.ChoreInfo = true;
     },
 
-    deleteChore(chorename) {
-      console.log("deleting:", chorename);
+    async deleteChore(choreID) {
+      this.$store.state.chores = this.$store.state.chores.filter(
+        (chore) => chore.id !== choreID
+      );
+      this.chores = this.$store.state.chores;
+
+      await this.$store.dispatch("deleteChore", choreID);
+      this.chores = this.$store.state.chores;
+
       // the following lines are super ghetto, I know.
-      let newChores = [];
+      /* let newChores = [];
       for (let chore of this.chores) {
         if (chore.chore !== chorename) {
-          console.log("pushing locally:", chore)
+          console.log("pushing locally:", chore);
           newChores.push(chore);
         }
       }
       this.chores = newChores;
-      this.$store.state.chores = newChores // here is where we run the delete API call
+      this.$store.dispatch("deleteChore", choreID) */
+      // here is where we run the delete API call
       // sorry about that, fellas
       this.modals.ChoreInfo = false;
     },

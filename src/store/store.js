@@ -70,14 +70,14 @@ export default new Vuex.Store({
       state.houseName = name
     },
 
-    setChores(state, chores) { 
+    setChores(state, chores) {
       state.chores = chores
     },
 
     resetChorelist(state) {
       state.chores = []
     },
-    
+
     setCurrentTodo(state, todo) {
       state.currentTodo = todo
     },
@@ -440,7 +440,7 @@ export default new Vuex.Store({
     //Chores related actions start
     ///////
     async getChores(context, house_key) {
-      console.log(`Getting Chores By House...`)
+      console.log(`Getting Chores By House...`, house_key)
       try {
         await axios({
           method: "POST",
@@ -460,18 +460,9 @@ export default new Vuex.Store({
           }
         })
           .then((response) => {
-            console.log("Received chores from server...")
             let choresByHouse = response.data.data.getChoresByHouse
+            console.log("Received chores from server...", choresByHouse)
             context.commit("setChores", choresByHouse)
-            // WILL WE HAVE CHORE NOTIFICATIONS? OR WILL WE FOLD THOSE INTO TODO NOTIFICATIONS?
-            /* context.commit("resetTodoNotifications")
-            let notifications = 0
-            for (let todo of todosByHouse) {
-              if (todo.victimid === this.state.user.username) {
-                notifications++
-              }
-            } 
-            context.commit("setTodoNotifications", notifications) */
           })
       } catch (error) {
         console.log("No user is logged in")
@@ -497,10 +488,30 @@ export default new Vuex.Store({
             )
           }`
           }
-        }).then(() => {
-          console.log("success!")
-          context.dispatch("getChores")
         })
+        .then(() => {})
+      } catch (error) {
+        console.log("This is your error", error)
+      }
+    },
+
+    async deleteChore(context, id) {
+      console.log(`Deleting Chore with ID: ${id}`)
+      try {
+        await axios({
+          method: "POST",
+          url: "/graphql",
+          data: {
+            query: `
+            mutation{
+              deleteChore(id:${id})
+            }`
+          }
+        })
+          .then(() => {
+            console.log('Chore deleted')
+            context.dispatch('getChores', this.state.user.house_keys[0])
+          })
       } catch (error) {
         console.log("This is your error", error)
       }
