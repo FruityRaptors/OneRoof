@@ -1,9 +1,10 @@
 <template>
-<v-container>
-    <v-list-item v-for="user in users" :key="user">
+<v-card>
+HELLO
+    <v-list v-for="user in users" :key="user.id">
         <v-list-item-title>{{user.username}}</v-list-item-title>
-    </v-list-item>
-</v-container>
+    </v-list>
+</v-card>
 </template>
 
 <script>
@@ -11,8 +12,11 @@ export default {
     name: 'DM',
     data(){
         return {
-            users: this.$store.state.usersInSameHouse
+            users: '',
         }
+    },
+    mounted(){
+        this.users = this.$store.state.usersInSameHouse
     }
     
 }
