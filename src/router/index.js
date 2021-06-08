@@ -67,6 +67,15 @@ const routes = [
     meta: {
       authRequired: true,
     }
+  },
+  {
+    path: '/dm',
+    name: 'DM',
+    component: () => 
+    import('../views/Dm.vue'),
+    meta: {
+      authRequired: true,
+    }
   }
 ]
 
