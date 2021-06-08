@@ -459,7 +459,7 @@ export default new Vuex.Store({
     ///////
 
     ///////
-    //DM  related starts
+    //DM related actions start
     ///////
     async checkDmTarget(context, users){
       console.log(users)
@@ -526,45 +526,45 @@ export default new Vuex.Store({
 
         }
       },
-///////
-//DM  related ends
-///////
+    ///////
+    //DM related actions end
+    ///////
 
 
 
 //////
 //Chores related actions start
 //////
-  async getChores(context, house_key) {
-    console.log(`Getting Chores By House...`, house_key)
-    try {
-      await axios({
-        method: "POST",
-        url: "/graphql",
-        data: {
-          query: `
-          {
-            getChoresByHouse(house_key:"${house_key}"){
-              id
-              creatorid
-              asignee
-              chore
-              description
-              house_key
-            }
-          }`
-        }
-      })
-        .then((response) => {
-          let choresByHouse = response.data.data.getChoresByHouse
-          console.log("Received chores from server...", choresByHouse)
-          context.commit("setChores", choresByHouse)
+    async getChores(context, house_key) {
+      console.log(`Getting Chores By House...`, house_key)
+      try {
+        await axios({
+          method: "POST",
+          url: "/graphql",
+          data: {
+            query: `
+            {
+              getChoresByHouse(house_key:"1Ubwo8IMWZqrT9Yb2jb8wq4bgPZUg7GQ"){
+                id
+                creatorid
+                assignee
+                chore
+                description
+                house_key
+              }
+            }`
+          }
         })
-    } catch (error) {
-      console.log("No user is logged in")
-      return
-    }
-  },
+          .then((response) => {
+            let choresByHouse = response.data.data.getChoresByHouse
+            console.log("Received chores from server...", choresByHouse)
+            context.commit("setChores", choresByHouse)
+          })
+      } catch (error) {
+        console.log("No user is logged in or house key not recognized")
+        return
+      }
+    },
 
     async addNewChore(context, newChore) {
       console.log('Adding a chore to database:', newChore)
@@ -578,7 +578,7 @@ export default new Vuex.Store({
             createChore(
               chore: "${newChore.chore}", 
               description: "${newChore.description}",
-              asignee: "${newChore.asignee}",
+              assignee: "${newChore.assignee}",
               creatorid: "${newChore.creatorid}",
               house_key: "${newChore.house_key}",
             )
@@ -586,6 +586,26 @@ export default new Vuex.Store({
           }
         })
         .then(() => {})
+      } catch (error) {
+        console.log("This is your error", error)
+      }
+    },
+
+    async updateChore(context, chore) {
+      console.log(`Updating chore number ${chore.id}'s assignee to ${chore.newAssignee}`)
+      try {
+        await axios({
+          method: "POST",
+          url: "/graphql",
+          data: {
+            query: `
+            mutation {
+              updateChoreAssignee(id:${chore.id}, newAssignee:"${chore.newAssignee}")
+            }`
+          }
+        }).then(() => {
+          console.log("CHORE UPDATED")
+        })
       } catch (error) {
         console.log("This is your error", error)
       }
