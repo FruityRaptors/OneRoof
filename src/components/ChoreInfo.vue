@@ -108,7 +108,7 @@ export default {
     assignChoreAndCloseAssign(assignee) {
       const choreInfo = {
         assignee: assignee,
-        choreID: this.choreID
+        id: this.choreID
       }
       this.$emit("assignChorePlease", choreInfo);
       this.modals.assignModalCheck = false;

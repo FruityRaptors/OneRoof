@@ -528,7 +528,7 @@ export default new Vuex.Store({
           data: {
             query: `
             {
-              getChoresByHouse(house_key:"${house_key}"){
+              getChoresByHouse(house_key:"1Ubwo8IMWZqrT9Yb2jb8wq4bgPZUg7GQ"){
                 id
                 creatorid
                 assignee
@@ -545,7 +545,7 @@ export default new Vuex.Store({
             context.commit("setChores", choresByHouse)
           })
       } catch (error) {
-        console.log("No user is logged in")
+        console.log("No user is logged in or house key not recognized")
         return
       }
     },
