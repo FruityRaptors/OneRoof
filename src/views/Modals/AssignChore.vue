@@ -16,10 +16,17 @@
             <v-card-title v-else>Reassign Manually</v-card-title>
             <v-select
               :items="victims"
-              label="Assignee"
+              label="new assignee"
               v-model="newAssignee"
             ></v-select>
-            <v-btn v-if="this.newAssignee" @click="assignChoreAndClose" color="blue darken-1" text> Save </v-btn>
+            <v-btn
+              v-if="this.newAssignee"
+              @click="assignChoreAndClose"
+              color="blue darken-1"
+              text
+            >
+              Save
+            </v-btn>
           </v-card>
           <v-divider horizontal></v-divider>
           <v-card>
@@ -27,6 +34,18 @@
               >Assign Automatically</v-card-title
             >
             <v-card-title v-else>Reassign Automatically</v-card-title>
+            <v-btn text color="blue darken-1" @click="randomizeAssignee"
+              >Roll the dice!</v-btn
+            >
+            <v-list-item-subtitle>The lucky winner is...</v-list-item-subtitle>
+            <div v-if="this.newAssigneeRandom">
+              <v-list-item-title>{{
+                this.newAssigneeRandom
+              }}</v-list-item-title>
+              <v-btn @click="assignChoreAndClose" color="blue darken-1" text>
+                Save
+              </v-btn>
+            </div>
           </v-card>
         </v-container>
         <v-card-actions>
@@ -50,6 +69,7 @@ export default {
       victims: [],
       assignee: this.chore.assignee,
       newAssignee: "",
+      newAssigneeRandom: "",
     };
   },
   mounted() {
@@ -64,7 +84,21 @@ export default {
       this.$emit("closeAssignModalPlease");
     },
     assignChoreAndClose() {
-      this.$emit("assignChorePlease", this.newAssignee);
+      let newAssignee = "butt";
+      if (this.newAssignee) {
+        newAssignee = this.newAssignee;
+        
+      } else if (this.newAssigneeRandom) {
+        newAssignee = this.newAssigneeRandom;
+      }
+      this.$emit("assignChorePlease", newAssignee);
+    },
+
+    randomizeAssignee() {
+      const options = this.victims;
+      const limit = options.length;
+      const winnerIndex = Math.floor(Math.random() * limit);
+      this.newAssigneeRandom = options[winnerIndex];
     },
   },
 };

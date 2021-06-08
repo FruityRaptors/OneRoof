@@ -107,7 +107,7 @@ export default {
 
     assignChoreAndCloseAssign(assignee) {
       const choreInfo = {
-        assignee: assignee,
+        newAssignee: assignee,
         id: this.choreID
       }
       this.$emit("assignChorePlease", choreInfo);

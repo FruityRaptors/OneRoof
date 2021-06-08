@@ -40,7 +40,7 @@
         v-if="modals.ChoreInfo"
         @closeModalPlease="modals.ChoreInfo = false"
         @deleteChorePlease="deleteChore"
-        @assignChorePlease="assignChore"
+        @assignChorePlease="assignChoreAndGetChores"
         :chore="this.clickedChore"
       />
       <AddChore @addThisChorePlease="setChore" />
@@ -118,10 +118,9 @@ export default {
     },
 
     async assignChoreAndGetChores(choreInfo) {
-      this.modals.ChoreInfo = false; // this might should come at the end
-      console.log(`Changing chore number ${choreInfo.id}'s assignee to ${choreInfo.assignee}`)
+      this.modals.ChoreInfo = false;
       await this.$store.dispatch("updateChore", choreInfo);
-      await this.$store.dispatch("getChores", this.currentUser.house_key);
+      await this.$store.dispatch("getChores", this.currentUser.house_keys[0]);
       this.updateChores()
     },
 

@@ -584,7 +584,7 @@ export default new Vuex.Store({
           data: {
             query: `
             mutation {
-              updateChoreAssignee(id:${chore.id}, todo:"${chore.newAssignee}")
+              updateChoreAssignee(id:${chore.id}, newAssignee:"${chore.newAssignee}")
             }`
           }
         }).then(() => {
