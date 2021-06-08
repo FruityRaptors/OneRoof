@@ -1,0 +1,20 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "deploy scripts that put less resource use on gcloud deploy",
+  "main": "build.js",
+  "bin": {
+    "build": "./build.js",
+    "deploy": "./deploy.js"
+  },
+  "scripts": {
+    "build": "node build",
+    "deploy": "node deploy"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "shelljs": "^0.8.4",
+    "winston": "^3.3.3"
+  }
+}

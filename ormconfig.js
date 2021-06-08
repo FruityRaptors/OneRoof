@@ -1,8 +1,8 @@
 module.exports = {
    "type": "postgres",
-   "host": process.env.CLOUD_SQL_CONNECTION_NAME || "127.0.0.1",
+   "host": `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}` || "127.0.0.1",
    "extra": {
-      "socketPath": process.env.CLOUD_SQL_CONNECTION_NAME
+      "socketPath": `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`,
  },
    "username": process.env.DB_USER,
    "password": process.env.DB_PASS,
@@ -10,13 +10,13 @@ module.exports = {
    "synchronize": true,
    "logging": false,
    "entities": [
-      "build/server/entity/**/*.js"
+      "dist/server/entity/**/*.js"
    ],
    "migrations": [
-      "server/migration/**/*.js"
+      "dist/server/migration/**/*.js"
    ],
    "subscribers": [
-      "server/subscriber/**/*.js"
+      "dist/server/subscriber/**/*.js"
    ],
    "cli": {
       "entitiesDir": "server/entity",

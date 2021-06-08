@@ -14,6 +14,7 @@ import { choreResolvers } from "./resolvers/choreResolvers"
 (async () => {
   console.log("spinning up express")
   const app = express();
+  app.enable('trust proxy');
   console.log("connecting to SQL database")
   try {
     await connectDB()
@@ -31,7 +32,7 @@ import { choreResolvers } from "./resolvers/choreResolvers"
   });
 
   apolloServer.applyMiddleware({ app, cors: false });
-  const port = process.env.PORT || 4000;
+  const port = process.env.PORT || 8080;
 
   console.log('launching server...')
   app.listen(port, () => {
