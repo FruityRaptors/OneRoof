@@ -25,7 +25,7 @@
             OneRoof
           </v-list-item-title>
           <v-list-item-subtitle>
-            this.$store.state.houseName
+            {{this.$store.state.houseName}}
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
