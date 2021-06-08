@@ -2,7 +2,7 @@ import { Field, ObjectType, } from 'type-graphql';
 
 @ObjectType()
     export class User {
-        @Field()
+        @Field(() => Number)
         id: number
 
         @Field(() => String, { nullable: true })
@@ -11,12 +11,12 @@ import { Field, ObjectType, } from 'type-graphql';
         @Field(() => String, { nullable: true })
         house_keys: string
 
-        @Field()
+        @Field(() => String)
         email: string
 
         @Field(() => String, { nullable: true, })
         photo_url: string
 
-        @Field()
+        @Field(() => Boolean)
         isAdmin: boolean
     }

@@ -3,6 +3,7 @@ import { House } from '../schemas/houseSchema'
 import { Houses } from '../entity/Houses'
 
 
+
 @Resolver()
 export class houseResolvers {
     @Query(() => House)
@@ -18,4 +19,6 @@ export class houseResolvers {
         await Houses.insert({ house_name, house_key })
         return `${house_name} has been added to database!`
     }
+
+    
 }

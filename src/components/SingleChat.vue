@@ -1,9 +1,31 @@
 <template>
-  <v-card class="orange lighten-5">
-<!-- chat section start -->
-    <v-card id="chat-box" class="chat-box orange lighten-5" v-on:update="$vuetify.goTo(99999)" color="brown lighten-4" elevation="0">
+    <v-container>
 
-      <v-card elevation="0" class="pb-10 mb-10 orange lighten-5 mx-auto">
+<!-- Top bar for going back  -->
+    <v-chip color="orange lighten-3" class="mb-4 d-flex">
+       <v-avatar color="orange lighten-4" @click="$emit('back')">
+         <v-icon >
+             mdi-arrow-left
+         </v-icon>
+       </v-avatar>
+       
+
+         <v-card-subtitle class="d-flex">
+         Messaging... {{user}}
+        </v-card-subtitle>
+
+
+    </v-chip>
+<!-- Top bar for going back  -->
+   
+
+    <v-divider></v-divider>
+    
+<!-- chat section start -->
+    <v-card elevation="0" class="pb-10 mb-10 orange lighten-5 mx-auto">
+
+    <v-card id="chat-box" class="chat-box orange lighten-5" v-on:update="$vuetify.goTo(99999)" elevation="0">
+
 <!-- message container starts -->
       <v-card
         elevation="0"
@@ -43,7 +65,7 @@
       </v-card>
 <!-- message container ends -->
 
-</v-card>
+        </v-card>
 
     </v-card>
 <!-- chat section ends -->
@@ -55,7 +77,7 @@
       max-height="100"
       color="orange lighten-4"
       padless
-      fixed
+      absolute
     >
         <v-text-field
           class="d-flex align-start mt-3 pl-5"
@@ -77,34 +99,38 @@
           </v-icon>
         </v-btn>
     </v-footer>
+   
 <!-- input and send section start -->
- </v-card>
+    </v-container>
 </template>
-
 
 <script>
 import firebase from "firebase";
-import Avatar from "vue-avatar";
+import Avatar from 'vue-avatar'
 
 export default {
-  name: "Chat",
-  data() {
-    return {
-      inputMessage: "",
-      messages: [],
-      username: this.$store.state.user.username,
-      lastMessage: '',
-    };
-  }, // Data ends
+    name: "SingleChat",
+    components: {
+        Avatar
+    },
+    props:{
+            roomkey: String,
+            user: String
+        },
 
-  components: {
-    Avatar,
-  }, //Components ends
-  
-  created() {
+    data(){
+        return{
+            messages: [],
+            house_key: '',
+            inputMessage: '',
+            username: this.$store.state.user.username,
+        }
+    }, //Data ends
+
+    created() {
     const messagesRef = firebase
       .database()
-      .ref(this.$store.state.user.house_keys[0])
+      .ref(this.roomkey)
       .limitToLast(50);
 
     messagesRef.on("value", (snapshot) => {
@@ -128,10 +154,10 @@ export default {
   }, // Mounted Ends
 
   methods: {
-    sendMessage() {
+      sendMessage() {
       const messagesRef = firebase
         .database()
-        .ref(this.$store.state.user.house_keys[0]);
+        .ref(this.roomkey);
 
       if (this.inputMessage === "" || this.inputMessage === null) {
         return;
@@ -148,14 +174,10 @@ export default {
       this.lastMessage = this.messages[this.messages.length - 1].username
 
       this.inputMessage = "";
-    },
-     scrollBottom(){
+  },
+  scrollBottom(){
         return this.$vuetify.goTo(99999)
       },
-  }, // Method ends
-};
+}, //Methods Ends
+}
 </script>
-
-<style lang="scss">
-
-</style>

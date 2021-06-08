@@ -1,10 +1,8 @@
 <template>
-<div>
-
 <!-- Main card starts -->
- <v-card class="mx-auto text-center mt-10" max-width="400px" rounded>
+ <v-card class="mx-auto text-center mt-10 orange lighten-5" max-width="300px" rounded elevation="5">
 
-     <v-card-title class="text-center">Looks like you don't have a home yet...</v-card-title>
+     <v-card-subtitle class="text-center text-justify font-weight-bold">Looks like you don't have a home yet...</v-card-subtitle>
 
          <v-card-text class="font-weight-bold">Enter House key</v-card-text>
    
@@ -20,7 +18,7 @@
 
     <v-btn
       rounded
-      color="brown"
+      color="orange lighten-3"
       dark
       class="mb-5"
       @click="joinHouse"
@@ -44,7 +42,7 @@
 
     <v-btn
       rounded
-      color="brown"
+      color="orange lighten-3"
       dark
       class="mb-5"
       @click="createHouse"
@@ -57,8 +55,6 @@
 
  </v-card>
 <!-- Main card ends -->
-
- </div>
 </template>
 
 <script>

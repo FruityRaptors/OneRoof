@@ -404,6 +404,7 @@ export default new Vuex.Store({
       {
         getUsersByHousekey(house_keys:"${house_key}"){
           username
+          id
         }
       }
       `
@@ -437,38 +438,112 @@ export default new Vuex.Store({
     ///////
 
     ///////
-    //Chores related actions start
+    //DM  related starts
     ///////
-    async getChores(context, house_key) {
-      console.log(`Getting Chores By House...`, house_key)
-      try {
+    async checkDmTarget(context, users){
+      console.log(users)
+      let checkIfAlreadyChatted = await axios({
+        method: "POST",
+        url: "/graphql",
+        data: {
+          query: `
+          {
+            checkIfInSameDm(
+              userid1:"${users.username_1}",
+              userid2:"${users.username_2}"
+            ){
+              dm_key
+            }
+          }
+          `
+        }
+      })
+
+      if (checkIfAlreadyChatted.data.data){
+        return checkIfAlreadyChatted.data.data.checkIfInSameDm.dm_key
+      } 
+      
+      else  {
+        let roomkey = keygen._()
+
+        console.log(users, roomkey)
+
         await axios({
           method: "POST",
           url: "/graphql",
           data: {
             query: `
-            {
-              getChoresByHouse(house_key:"${house_key}"){
-                id
-                creatorid
-                asignee
-                chore
-                description
-                house_key
+               mutation{
+                 addUsersToChat(
+                    userid1:"${users.username_1}",
+                    userid2:"${users.username_2}",
+                    dm_key:"${roomkey}")
+                    }`
+                }})
+      
+         
+        let result = await axios({
+            method: "POST",
+            url: "/graphql",
+            data: {
+              query: `
+              {
+                checkIfInSameDm(
+                  userid1:"${users.username_1}",
+                  userid2:"${users.username_2}"
+                ){
+                  dm_key
+                }
               }
-            }`
-          }
-        })
-          .then((response) => {
-            let choresByHouse = response.data.data.getChoresByHouse
-            console.log("Received chores from server...", choresByHouse)
-            context.commit("setChores", choresByHouse)
+              `
+            }
           })
-      } catch (error) {
-        console.log("No user is logged in")
-        return
-      }
-    },
+
+          console.log(result)
+
+          return result.data.data.checkIfInSameDm.dm_key
+
+        }
+      },
+///////
+//DM  related ends
+///////
+
+
+
+//////
+//Chores related actions start
+//////
+  async getChores(context, house_key) {
+    console.log(`Getting Chores By House...`, house_key)
+    try {
+      await axios({
+        method: "POST",
+        url: "/graphql",
+        data: {
+          query: `
+          {
+            getChoresByHouse(house_key:"${house_key}"){
+              id
+              creatorid
+              asignee
+              chore
+              description
+              house_key
+            }
+          }`
+        }
+      })
+        .then((response) => {
+          let choresByHouse = response.data.data.getChoresByHouse
+          console.log("Received chores from server...", choresByHouse)
+          context.commit("setChores", choresByHouse)
+        })
+    } catch (error) {
+      console.log("No user is logged in")
+      return
+    }
+  },
 
     async addNewChore(context, newChore) {
       console.log('Adding a chore to database:', newChore)
@@ -520,6 +595,8 @@ export default new Vuex.Store({
     ///////
     //Chores related actions end
     ///////
+
+    
 
     ///////
     //Firebase related actions start
