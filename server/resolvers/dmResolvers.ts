@@ -1,5 +1,5 @@
 import { Query, Resolver, Mutation, Arg } from 'type-graphql'
-import { Dms } from '../entity/DM'
+import { DMs } from '../entity/DM'
 import { DM } from '../schemas/dmSchema'
 
 
@@ -7,7 +7,7 @@ import { DM } from '../schemas/dmSchema'
 export class dmResolvers {
     @Query(() => [DM])
     getAllChat(){
-        return Dms.find()
+        return DMs.find()
     }
 
     @Query(() => DM)
@@ -19,11 +19,11 @@ export class dmResolvers {
         console.log(`${userid2}/${userid1}`)
         console.log(`${userid1}/${userid2}`)
 
-        let result1 = await Dms.findOne( { where: {users: `${userid2}/${userid1}`} } )
+        let result1 = await DMs.findOne( { where: {users: `${userid2}/${userid1}`} } )
         if(result1){
             return result1
         } else {
-            let result2 = await Dms.findOne( { where: {users: `${userid1}/${userid2}`} } )
+            let result2 = await DMs.findOne( { where: {users: `${userid1}/${userid2}`} } )
             if (result2) {
                 return result2
             }
@@ -37,7 +37,7 @@ export class dmResolvers {
         @Arg("dm_key") dm_key: string,
     ){
 
-        await Dms.insert({ users: `${userid1}/${userid2}`, dm_key: dm_key })
+        await DMs.insert({ users: `${userid1}/${userid2}`, dm_key: dm_key })
 
         return "success!"
     }

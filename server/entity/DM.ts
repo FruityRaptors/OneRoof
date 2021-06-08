@@ -3,7 +3,7 @@ import { ObjectType, Field, ID } from "type-graphql";
 
 @Entity()
 @ObjectType()
-export class Dms extends BaseEntity {
+export class DMs extends BaseEntity {
 
     @Field(() => ID)
     @PrimaryGeneratedColumn()
