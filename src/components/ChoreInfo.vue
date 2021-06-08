@@ -1,65 +1,117 @@
  <template>
-  <v-dialog max-width="290" :value="true">
+  <v-dialog max-width="344" :value="true">
     <v-card class="mx-auto brown lighten-5" max-width="344">
       <v-card-text>
         <p class="display-1 text--primary">{{ this.chore.chore }}</p>
-        <p>{{ this.chore.asignee }}</p>
         <div class="text--primary">
           {{ this.chore.description }}
         </div>
+        <div v-if="this.chore.asignee">
+          <Avatar
+            :src="this.$store.state.user.photo_url"
+            :username="this.chore.asignee"
+            :size="80"
+          />
+          <p>
+            This chore is currently assigned to:
+            <strong>{{ this.chore.asignee }}</strong>
+          </p>
+        </div>
+        <div v-else>
+          <Avatar :username="this.unknown" />
+          <p>This chore is currently <strong>unassigned!</strong></p>
+        </div>
       </v-card-text>
       <v-card-actions>
+        <v-spacer></v-spacer>
         <v-btn
+          v-if="this.chore.asignee"
+          @click="openAssignModal"
           text
           color="deep-purple accent-4"
-          @click="openModal"
         >
+          Reassign
+        </v-btn>
+        <v-btn
+          v-else
+          @click="openAssignModal"
+          text
+          color="deep-purple accent-4"
+        >
+          Assign
+        </v-btn>
+        <v-btn text color="deep-purple accent-4" @click="openDeleteModal">
           Delete
         </v-btn>
-      </v-card-actions>
-      <v-card-actions>
         <v-btn text color="deep-purple accent-4" @click="closeModalEmitter">
           Close
         </v-btn>
       </v-card-actions>
     </v-card>
     <DeleteChoreCheck
-      @deleteChorePlease="passAndClose"
-      @closeModalPlease="modals.deleteCheck = false"
-      v-if="modals.deleteCheck"
+      @deleteChorePlease="passChoreAndCloseDelete"
+      @closeDeleteModalPlease="modals.deleteModalCheck = false"
+      v-if="modals.deleteModalCheck"
       :choreID="this.choreID"
+    />
+    <AssignChore 
+    v-if="modals.assignModalCheck"
+    @closeAssignModalPlease="modals.assignModalCheck = false"
+    @assignChorePlease="assignChoreAndCloseAssign"
+    :chore="this.chore"
     />
   </v-dialog>
 </template>
 
 <script>
 import DeleteChoreCheck from "../views/Modals/DeleteChoreCheck";
+import AssignChore from "../views/Modals/AssignChore.vue"
+import Avatar from "vue-avatar";
+
+
 export default {
   name: "ChoreInfo",
   props: ["chore"],
   components: {
     DeleteChoreCheck,
+    AssignChore,
+    Avatar,
   },
   data() {
     return {
       choreID: this.chore.id,
+      unknown: "???",
       modals: {
-        deleteCheck: false,
+        deleteModalCheck: false,
+        assignModalCheck: false,
       },
     };
   },
   methods: {
-    openModal() {
-      this.modals.deleteCheck= true
+    openDeleteModal() {
+      this.modals.deleteModalCheck = true;
+    },
+
+    openAssignModal() {
+      this.modals.assignModalCheck = true;
     },
 
     closeModalEmitter() {
       this.$emit("closeModalPlease");
     },
 
-    passAndClose(choreID) {
-      this.$emit("deleteChorePlease", choreID)
-      this.deleteCheck = false;
+    passChoreAndCloseDelete(choreID) {
+      this.$emit("deleteChorePlease", choreID);
+      this.modals.deleteModalCheck = false;
+    },
+
+    assignChoreAndCloseAssign(asignee) {
+      const choreInfo = {
+        asignee: asignee,
+        choreID: this.choreID
+      }
+      this.$emit("assignChorePlease", choreInfo);
+      this.modals.assignModalCheck = false;
     },
   },
 };
