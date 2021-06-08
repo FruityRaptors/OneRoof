@@ -95,37 +95,42 @@ export default new Vuex.Store({
     //Fetches user and set user to front end state
     async getUser(context, email) {
       console.log(`Getting User: ${email} from the database...`)
-
-      await axios({
-        method: "POST",
-        url: "/graphql",
-        data: {
-          query: `
-            {
-            getUserByEmail(email:"${email}"){
-              id
-              username
-              house_keys
-              email
-              photo_url
-             }
-            }`
-        }
-      }).then((response) => {
-        context.commit("toggleLoginBool", "true")
-        context.commit("setUser", response.data.data.getUserByEmail)
-        //If fetched user belonged to a house, set user normally
-        if (response.data.data.getUserByEmail.house_keys) {
-          let housekey = JSON.parse(response.data.data.getUserByEmail.house_keys)
-          response.data.data.getUserByEmail.house_keys = housekey
-          console.log(`User already belonged to chat room(s)... going to home page`)
-          router.push('/yourhome')
-        } else {
-          console.log(`User doesn't have a home... going to join a home page`)
-          //Should route to Join a house page, THE FOLLOWING LINE SHOULD BE DELETED!
-          router.push('/joinhouse')
-        }
-      });
+      try {
+        await axios({
+          method: "POST",
+          url: "/graphql",
+          data: {
+            query: `
+              {
+              getUserByEmail(email:"${email}"){
+                id
+                username
+                house_keys
+                email
+                photo_url
+               }
+              }`
+          }
+        }).then((response) => {
+          context.commit("toggleLoginBool", "true")
+          context.commit("setUser", response.data.data.getUserByEmail)
+          //If fetched user belonged to a house, set user normally
+          if (response.data.data.getUserByEmail.house_keys) {
+            let housekey = JSON.parse(response.data.data.getUserByEmail.house_keys)
+            response.data.data.getUserByEmail.house_keys = housekey
+            console.log(`User already belonged to chat room(s)... going to home page`)
+            router.push('/yourhome')
+          } else {
+            console.log(`User doesn't have a home... going to join a home page`)
+            //Should route to Join a house page, THE FOLLOWING LINE SHOULD BE DELETED!
+            router.push('/joinhouse')
+          }
+        });
+      } catch (error) {
+        console.log(error)
+        return
+      }
+      
     },
 
     //Adds user to the database after they have registered
@@ -655,6 +660,7 @@ export default new Vuex.Store({
         await context.dispatch("getUser", user.email)
         return true
       } else {
+        console.log("no user, pushing to login")
         router.push('/login')
         return false
       }
