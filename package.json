@@ -7,7 +7,7 @@
     "server": "ts-node server/index.ts",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "ts-node server/index.ts",
+    "start": "node build/server/index.js",
     "build:server": "tsc"
   },
   "dependencies": {
