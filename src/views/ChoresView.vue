@@ -117,12 +117,12 @@ export default {
       this.modals.ChoreInfo = false;
     },
 
-    async assignChore(choreInfo) {
+    async assignChoreAndGetChores(choreInfo) {
       this.modals.ChoreInfo = false; // this might should come at the end
-      const choreID = choreInfo.choreID;
-      const assignee = choreInfo.assignee;
-      console.log(`Changing chore number ${choreID}'s assignee to ${assignee}`)
-      // here's where the logic I'll add this afternoon comes in
+      console.log(`Changing chore number ${choreInfo.id}'s assignee to ${choreInfo.assignee}`)
+      await this.$store.dispatch("updateChore", choreInfo);
+      await this.$store.dispatch("getChores", this.currentUser.house_key);
+      this.updateChores()
     },
 
   },
