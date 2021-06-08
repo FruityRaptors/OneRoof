@@ -131,6 +131,7 @@ export default new Vuex.Store({
         }).then((response) => {
           
           context.commit("setUser", response.data.data.getUserByEmail)
+          router.push('/yourhome')
           //If fetched user belonged to a house, set user normally
           if (response.data.data.getUserByEmail.house_keys) {
             let housekey = JSON.parse(response.data.data.getUserByEmail.house_keys)
@@ -474,7 +475,6 @@ export default new Vuex.Store({
     //DM related actions start
     ///////
     async checkDmTarget(context, users){
-      console.log(users)
       let checkIfAlreadyChatted = await axios({
         method: "POST",
         url: "/graphql",
@@ -498,9 +498,6 @@ export default new Vuex.Store({
       
       else  {
         let roomkey = keygen._()
-
-        console.log(users, roomkey)
-
         await axios({
           method: "POST",
           url: "/graphql",
@@ -531,9 +528,6 @@ export default new Vuex.Store({
               `
             }
           })
-
-          console.log(result)
-
           return result.data.data.checkIfInSameDm.dm_key
 
         }
@@ -662,8 +656,6 @@ export default new Vuex.Store({
           firebase.auth().signInWithEmailAndPassword(user.email, user.password)
             .then(() => {
               context.dispatch("getUser", user.email)
-            }).then(()=> {
-              router.push('/yourhome')
             })
             .catch(error => {
               alert(error.message);

@@ -141,6 +141,8 @@ export default {
         let house_key = this.$store.state.user.house_keys[0]
 
         await this.$store.dispatch("getChores", house_key);
+        await this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0]);
+        await this.$store.dispatch("populateVictimList", this.$store.state.user.house_keys[0]);
 
         return loggedInFlag
       }

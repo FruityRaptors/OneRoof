@@ -173,7 +173,6 @@ export default {
       //   victimid: user.username,
       //   house_key: todo.house_key
       // }
-      console.log(value)
       this.currentTodo.victimid = value
       console.log(this.currentTodo)
       await this.$store.dispatch("updateTodoVictim", this.currentTodo)
