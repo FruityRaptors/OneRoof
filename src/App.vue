@@ -142,6 +142,7 @@ export default {
       },
     ],
     allNotifications: 0,
+    loggedInFlag: false,
     login: true,
     loading: true,
   }),
@@ -159,8 +160,8 @@ export default {
     console.time("app mounting");
     this.loading = true;
     let loggedInFlag = await this.$store.dispatch("checkIfLoggedInUser");
-    console.log("MOUNTING USER:", this.$store.state.user);
-    if (loggedInFlag) {
+    if (loggedInFlag !== false) {
+      console.log("MOUNTING USER:", this.$store.state.user);
       let username = this.$store.state.user.username;
       let house_key = this.$store.state.user.house_keys[0];
       if (username) {
