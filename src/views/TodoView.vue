@@ -6,7 +6,7 @@
             v-model="newTodoMessage"
             @click:append.prevent="addTodo"
             @keyup.enter.prevent="addTodo"
-            class="pa-2 orange lighten-4"
+            class="pa-2 orange lighten-5"
             outlined
             label="New Todo"
             append-icon="mdi-pencil-plus-outline"
@@ -18,10 +18,10 @@
 
 
 <!-- todo list platform -->
-      <v-list v-if="todos.length" class="pa-0 orange lighten-5" two-line flat>
+      <v-list v-if="checkTodo.length" class="pa-0 orange lighten-5" two-line flat>
 
 <!-- Each Todo in Todo list -->
-        <div id="todo-container" class="orange lighten-4" v-for="todo in todos" :key="todo.id">
+        <div id="todo-container" class="orange lighten-4" v-for="todo in checkTodo" :key="todo.id">
           <v-list-item @click="completeTodo(todo.id)" :class="{ 'light-green accent-1' : todo.complete }">
           
 <!-- Todo tick box     -->
@@ -106,16 +106,15 @@ export default {
   data() {
     return {
       newTodoMessage: '',
-      todos: '',
       currentId: '',
       selectedVictim: '',
       users: this.$store.state.usersInSameHouse,
       currentTodo: {},
-
     };
   },
   mounted() {
-   this.todos = this.$store.state.todos;  
+   this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0]);
+   this.$store.dispatch("populateVictimList", this.$store.state.user.house_keys[0]);
   },
 
   methods: {
@@ -123,6 +122,7 @@ export default {
       if (this.newTodoMessage.length <= 0) {
         return console.log("Please insert a Todo")
       }
+
         let newTodo = {
             // id:
             todo: this.newTodoMessage,
@@ -132,11 +132,11 @@ export default {
             complete: false,
             house_key: this.$store.state.user.house_keys[0] 
         }
+
         await this.$store.dispatch("addTodo", newTodo)
-        this.todos.push(newTodo)
-        this.newTodoMessage = 
         await this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0]);
-        this.todos = this.$store.state.todos;  
+
+        this.newTodoMessage = ''
     },
     completeTodo(id) {
         let todo = this.todos.filter(todo => todo.id === id)[0]
@@ -145,7 +145,6 @@ export default {
     async deleteTodo(id) {
         console.log("THIS IS THE ID",id)
         this.$store.state.todos = this.$store.state.todos.filter(todo => todo.id !== id)
-        this.todos = this.$store.state.todos
         await this.$store.dispatch("deleteTodo", id)
     },
 
@@ -161,15 +160,6 @@ export default {
       this.$store.dispatch('deleteTodo', this.currentId).then(() => {
       console.log("getting updated to do list...")
       this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0])
-
-      }).then(()=> {
-        
-        this.todos = this.$store.state.todos
-  
-      }).then(() => {
-
-         this.todos = this.todos.filter((todo) => todo.id !== this.currentId)
-
       })
        
     },
@@ -183,13 +173,19 @@ export default {
       //   victimid: user.username,
       //   house_key: todo.house_key
       // }
-      console.log(value)
       this.currentTodo.victimid = value
       console.log(this.currentTodo)
       await this.$store.dispatch("updateTodoVictim", this.currentTodo)
-      this.todos = this.$store.state.todos; 
+      // this.todos = this.$store.state.todos; 
     },
-  },
+  }, // method ends
+
+  computed: {
+    checkTodo: function(){
+     return this.$store.state.todos
+    },
+  
+  }
   
 };
 </script>

@@ -38,14 +38,13 @@ export default {
     },
     data(){
         return {
-            users: '',
             dming: false,
             roomkey: '',
             dmingUser: '',
         }
     },
     mounted(){
-        this.users = this.filterUserList(this.$store.state.usersInSameHouse)
+        this.$store.dispatch("populateVictimList", this.$store.state.user.house_keys[0])
     },
     methods: {
 
@@ -67,6 +66,11 @@ export default {
         },
         
     },
+    computed: {
+        users: function(){
+            return this.filterUserList(this.$store.state.usersInSameHouse)
+        }
+    }
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <v-card class="orange lighten-5">
+  <v-card class="orange lighten-5" elevation="0">
 <!-- chat section start -->
     <v-card id="chat-box" class="chat-box orange lighten-5" v-on:update="$vuetify.goTo(99999)" color="brown lighten-4" elevation="0">
 
@@ -32,8 +32,9 @@
             rounded
             max-width="250"
             class="mb-2 mr-4 pa-2"
+            elevation="0"
             :color="
-              message.username == username ? 'orange accent-2 font-weight-light text-justify' : 'orange accent-1 font-weight-light'
+              message.username == username ? 'orange accent-2 font-weight-normal text-justify' : 'orange accent-1 font-weight-normal'
             "
             >{{ message.content }}
           </v-card>

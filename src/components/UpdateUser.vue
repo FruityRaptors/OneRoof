@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="green" dark v-bind="attrs" v-on="on">
+        <v-btn color="orange lighten-2 black--text" rounded dark v-bind="attrs" v-on="on">
           Update your Info
         </v-btn>
       </template>
