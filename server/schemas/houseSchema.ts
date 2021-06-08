@@ -11,6 +11,6 @@ import { Field, ObjectType} from 'type-graphql';
         @Field()
         house_key: string
 
-        @Field()
+        @Field(() => String, { nullable: true, })
         modules: string
     }
