@@ -34,14 +34,14 @@
               >Assign Automatically</v-card-title
             >
             <v-card-title v-else>Reassign Automatically</v-card-title>
-            <v-btn text color="blue darken-1" @click="randomizeAssignee"
-              >Roll the dice!</v-btn
-            >
+            <div v-if="!this.newAssigneeRandom">
+              <v-btn text color="blue darken-1" @click="randomizeAssignee"
+                >Roll the dice!</v-btn
+              >
+            </div>
             <v-list-item-subtitle>The lucky winner is...</v-list-item-subtitle>
-            <div v-if="this.newAssigneeRandom">
-              <v-list-item-title>{{
-                this.newAssigneeRandom
-              }}</v-list-item-title>
+            <div v-if="this.newAssigneeRandom" class="scroller">
+              <p class="scroller-text"><VScrollin> {{ this.newAssigneeRandom }} </VScrollin></p>
               <v-btn @click="assignChoreAndClose" color="blue darken-1" text>
                 Save
               </v-btn>
@@ -60,9 +60,14 @@
 </template>
 
 <script>
+import VScrollin from "vue-scrollin";
+
 export default {
   name: "AssignChore",
   props: ["chore"],
+  components: {
+    VScrollin,
+  },
   data() {
     return {
       users: [],
@@ -84,10 +89,9 @@ export default {
       this.$emit("closeAssignModalPlease");
     },
     assignChoreAndClose() {
-      let newAssignee = "butt";
+      let newAssignee = "";
       if (this.newAssignee) {
         newAssignee = this.newAssignee;
-        
       } else if (this.newAssigneeRandom) {
         newAssignee = this.newAssigneeRandom;
       }
@@ -103,3 +107,14 @@ export default {
   },
 };
 </script>
+
+<style>
+.scroller {
+  text-align: center;
+}
+.scroller-text {
+  font-size:1.5em;
+  text-transform:uppercase;
+  font-family: 'Oswald', sans-serif;
+}
+</style>
