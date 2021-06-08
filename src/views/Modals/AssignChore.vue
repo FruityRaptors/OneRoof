@@ -3,8 +3,8 @@
     <v-dialog persistent max-width="600px" :value="true">
       <v-card>
         <v-card-title>
-          <span v-if="this.asignee" class="text-h5"
-            >This chore is currently assigned to: {{ this.asignee }}</span
+          <span v-if="this.assignee" class="text-h5"
+            >This chore is currently assigned to: {{ this.assignee }}</span
           >
           <span v-else class="text-h5"
             >This chore is not currently assigned</span
@@ -12,18 +12,18 @@
         </v-card-title>
         <v-container>
           <v-card>
-            <v-card-title v-if="this.asignee">Assign Manually</v-card-title>
+            <v-card-title v-if="this.assignee">Assign Manually</v-card-title>
             <v-card-title v-else>Reassign Manually</v-card-title>
             <v-select
               :items="victims"
-              label="Asignee"
-              v-model="newAsignee"
+              label="Assignee"
+              v-model="newAssignee"
             ></v-select>
-            <v-btn v-if="this.newAsignee" @click="assignChoreAndClose" color="blue darken-1" text> Save </v-btn>
+            <v-btn v-if="this.newAssignee" @click="assignChoreAndClose" color="blue darken-1" text> Save </v-btn>
           </v-card>
           <v-divider horizontal></v-divider>
           <v-card>
-            <v-card-title v-if="this.asignee"
+            <v-card-title v-if="this.assignee"
               >Assign Automatically</v-card-title
             >
             <v-card-title v-else>Reassign Automatically</v-card-title>
@@ -48,8 +48,8 @@ export default {
     return {
       users: [],
       victims: [],
-      asignee: this.chore.asignee,
-      newAsignee: "",
+      assignee: this.chore.assignee,
+      newAssignee: "",
     };
   },
   mounted() {
@@ -64,7 +64,7 @@ export default {
       this.$emit("closeAssignModalPlease");
     },
     assignChoreAndClose() {
-      this.$emit("assignChorePlease", this.newAsignee);
+      this.$emit("assignChorePlease", this.newAssignee);
     },
   },
 };

@@ -15,7 +15,7 @@ import { Field, ObjectType } from 'type-graphql';
         house_key: string
 
         @Field()
-        asignee: string
+        assignee: string
 
         @Field()
         creatorid: string

@@ -6,15 +6,15 @@
         <div class="text--primary">
           {{ this.chore.description }}
         </div>
-        <div v-if="this.chore.asignee">
+        <div v-if="this.chore.assignee">
           <Avatar
             :src="this.$store.state.user.photo_url"
-            :username="this.chore.asignee"
+            :username="this.chore.assignee"
             :size="80"
           />
           <p>
             This chore is currently assigned to:
-            <strong>{{ this.chore.asignee }}</strong>
+            <strong>{{ this.chore.assignee }}</strong>
           </p>
         </div>
         <div v-else>
@@ -25,7 +25,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn
-          v-if="this.chore.asignee"
+          v-if="this.chore.assignee"
           @click="openAssignModal"
           text
           color="deep-purple accent-4"
@@ -105,9 +105,9 @@ export default {
       this.modals.deleteModalCheck = false;
     },
 
-    assignChoreAndCloseAssign(asignee) {
+    assignChoreAndCloseAssign(assignee) {
       const choreInfo = {
-        asignee: asignee,
+        assignee: assignee,
         choreID: this.choreID
       }
       this.$emit("assignChorePlease", choreInfo);

@@ -15,8 +15,8 @@
             <v-list-item-title>
               {{ chore.chore }}
             </v-list-item-title>
-            <v-list-item-subtitle v-if="chore.asignee">
-              {{ chore.asignee }}
+            <v-list-item-subtitle v-if="chore.assignee">
+              {{ chore.assignee }}
             </v-list-item-subtitle>
             <v-list-item-subtitle v-else>
               this chore is currently unassigned
@@ -93,7 +93,7 @@ export default {
       let newChore = {
         chore: this.choreToAdd.chore,
         description: this.choreToAdd.description,
-        asignee: this.choreToAdd.asignee,
+        assignee: this.choreToAdd.assignee,
         creatorid: this.currentUser.id,
         house_key: this.currentUser.house_keys[0],
       };
@@ -120,17 +120,11 @@ export default {
     async assignChore(choreInfo) {
       this.modals.ChoreInfo = false; // this might should come at the end
       const choreID = choreInfo.choreID;
-      const asignee = choreInfo.asignee;
-      console.log(`Changing chore number ${choreID}'s asignee to ${asignee}`)
+      const assignee = choreInfo.assignee;
+      console.log(`Changing chore number ${choreID}'s assignee to ${assignee}`)
       // here's where the logic I'll add this afternoon comes in
     },
 
-    //for dev purposes only
-    resetChores() {
-      this.$store.commit("resetChorelist");
-    },
-
-    //end dev methods
   },
 };
 </script>

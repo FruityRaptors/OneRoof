@@ -37,7 +37,7 @@ export class Chores extends BaseEntity {
         nullable: true
     }
     )
-    asignee: string;
+    assignee: string;
 
     @Field(() => String)
     @Column()
