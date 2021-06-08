@@ -79,7 +79,6 @@ export default {
 
     async updateChores() {
       if(this.choreToAdd.chore) {
-        console.log("there's a chore to add!")
         await this.addChoreAndGetChore()
       }
       this.chores = this.$store.state.chores
@@ -111,19 +110,6 @@ export default {
 
       await this.$store.dispatch("deleteChore", choreID);
       this.chores = this.$store.state.chores;
-
-      // the following lines are super ghetto, I know.
-      /* let newChores = [];
-      for (let chore of this.chores) {
-        if (chore.chore !== chorename) {
-          console.log("pushing locally:", chore);
-          newChores.push(chore);
-        }
-      }
-      this.chores = newChores;
-      this.$store.dispatch("deleteChore", choreID) */
-      // here is where we run the delete API call
-      // sorry about that, fellas
       this.modals.ChoreInfo = false;
     },
 
