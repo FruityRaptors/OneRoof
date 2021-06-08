@@ -44,5 +44,4 @@ export class Todos extends BaseEntity {
     @Field(() => Boolean)
     @Column()
     complete: boolean;
-
 } 

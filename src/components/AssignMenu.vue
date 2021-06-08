@@ -35,7 +35,6 @@ export default {
             console.log("HI");
         },
         assignUser(userName) {
-            console.log(userName)
             this.$parent.$emit('setAssignee', userName)
             this.$emit('closeModal')
         },

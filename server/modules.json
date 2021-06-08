@@ -1,0 +1,35 @@
+{
+
+    "chat": {
+        
+        "title": "Chat",
+        "icon": "mdi-chat",
+        "to": "/yourhome",
+        "notifications": 0,
+        "purchased": true
+    }, 
+    "directmessage": {
+    
+        "title": "Direct Messages",
+        "icon": "mdi-message-text",
+        "to": "/dm",
+        "notifications": 0,
+        "purchased": true
+    },
+    "todo": {
+
+        "title": "To-do",
+        "icon": "mdi-format-list-checks",
+        "to": "/todo",
+        "notifications": 0,
+        "purchased": true
+    },
+    "chores": {
+       
+        "title": "Chores",
+        "icon": "mdi-clipboard-edit",
+        "to": "/chores",
+        "notifications": 0,
+        "purchased": true
+    }
+}
