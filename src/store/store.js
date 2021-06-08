@@ -36,7 +36,20 @@ export default new Vuex.Store({
     },
 
     resetUser(state) {
-      state.loggedInUser = {}
+      state.user = {
+        //Current logged in User information
+        user: {},
+        userTodoNotifications: 0,
+        isUserLoggedIn: false,
+        todos: [],
+        chores: [],
+        usersInSameHouse: [],
+        houseName: '',
+        currentTodo: {},
+        currentTodoMessage: '',
+        currentHouseModules: '',
+        // areTodosLoaded: false, // add a way to change it to false
+      }
     },
 
     setUserRGB(state, rgb) {
@@ -86,7 +99,6 @@ export default new Vuex.Store({
       state.currentTodoMessage = message
     },
     setCurrentHouseModules(state, modules) {
-      console.log('setting House modules with..', modules)
       state.currentHouseModules = modules
     }
   },
@@ -122,13 +134,11 @@ export default new Vuex.Store({
           //If fetched user belonged to a house, set user normally
           if (response.data.data.getUserByEmail.house_keys) {
             let housekey = JSON.parse(response.data.data.getUserByEmail.house_keys)
-            
             context.dispatch('getHouseName', housekey[0])
-           
             context.commit("toggleLoginBool", "true")
             response.data.data.getUserByEmail.house_keys = housekey
             console.log(`User already belonged to chat room(s)... going to home page`)
-            router.push('/yourhome')
+            // router.push('/yourhome')
           } else {
             console.log(`User doesn't have a home... going to join a home page`)
             context.commit("toggleLoginBool", "true")
@@ -289,11 +299,9 @@ export default new Vuex.Store({
           `
         }
       }).then((response) => {
-        context.commit('setHouseName', response.data.data.getHouseName.house_name)
         return JSON.parse(response.data.data.getHouseName.modules)
         
       }).then((response) => {
-        console.log('made it passed the then', response)
         context.commit('setCurrentHouseModules', response)
       })
     },
@@ -305,10 +313,10 @@ export default new Vuex.Store({
     ///////
     //Todolist related actions starts
     ///////
-    async getTodos(context, house_key) {
+    getTodos(context, house_key) {
       console.log(`Getting Todos By House...`)
       try {
-        await axios({
+        axios({
           method: "POST",
           url: "/graphql",
           data: {
@@ -330,15 +338,21 @@ export default new Vuex.Store({
             console.log("Received todos from server...")
             let todosByHouse = response.data.data.getTodosByHouse
             context.commit("addTodosToList", todosByHouse)
-            context.commit("resetTodoNotifications")
-            let notifications = 0
-            for (let todo of todosByHouse) {
-              if (todo.victimid === this.state.user.username) {
-                notifications++
-              }
-            }
-            context.commit("setTodoNotifications", notifications)
-          })
+            return todosByHouse
+            }).then((todosByHouse) => {
+
+                context.commit("resetTodoNotifications")
+                return todosByHouse
+                    }).then((todosByHouse) => {
+
+                        let notifications = 0
+                        for (let todo of todosByHouse) {
+                          if (todo.victimid === this.state.user.username) {
+                            notifications++
+                          }
+                        }
+                         context.commit("setTodoNotifications", notifications)
+                        })
       } catch (error) {
         console.log("No user is logged in")
         return
@@ -406,8 +420,6 @@ export default new Vuex.Store({
             )
           }`
           }
-        }).then(() => {
-          context.dispatch("getTodos", /* response.data.data.getAllTodos */)
         })
       } catch (error) {
         console.log("This is your error", error)
@@ -650,6 +662,8 @@ export default new Vuex.Store({
           firebase.auth().signInWithEmailAndPassword(user.email, user.password)
             .then(() => {
               context.dispatch("getUser", user.email)
+            }).then(()=> {
+              router.push('/yourhome')
             })
             .catch(error => {
               alert(error.message);
@@ -680,10 +694,11 @@ export default new Vuex.Store({
         .signOut()
         .then(() => {
           console.log("logging out user")
-          context.commit("toggleLoginBool")
-          context.commit("resetUser")
-          router.push('/');
-        })
+          }).then(() => {
+            context.commit("resetUser")
+            context.commit("toggleLoginBool")
+            router.push('/');
+          })
         .catch(error => {
           alert(error.message);
           router.push('/');

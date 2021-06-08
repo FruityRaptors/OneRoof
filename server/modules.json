@@ -30,6 +30,6 @@
         "icon": "mdi-clipboard-edit",
         "to": "/chores",
         "notifications": 0,
-        "purchased": false
+        "purchased": true
     }
 }

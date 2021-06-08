@@ -13,17 +13,10 @@ module.exports = {
       "build/server/entity/**/*.js"
    ],
    "migrations": [
-<<<<<<< HEAD
       "build/server/migration/**/*.js"
    ],
    "subscribers": [
       "build/server/subscriber/**/*.js"
-=======
-      "server/migration/**/*.js"
-   ],
-   "subscribers": [
-      "server/subscriber/**/*.js"
->>>>>>> ceeb7029d8d8467595e86c5cf6b6e16e122dc02d
    ],
    "cli": {
       "entitiesDir": "server/entity",

@@ -5,14 +5,28 @@
   >
     <v-list-item three-line>
       <v-list-item-content>
-        <div class="text-overline mb-4 text-decoration-underline">
+        <v-list-item-title class="text-overline mb-4 text-decoration-underline">
           {{ this.username }}'s Profile 
-        </div>
-        <v-list-item-title class="text-h6 mb-1">
-          House Name
         </v-list-item-title>
-        <v-list-item-subtitle class="font-weight-bold">{{this.houseName}}</v-list-item-subtitle>
+        <v-list-item-subtitle class="font-weight-normal mb-2 text-decoration-underline">
+          House Name
+        </v-list-item-subtitle>
+        <v-list-item-title class="font-weight-bold ml-3">{{this.houseName}}</v-list-item-title>
+
+        <v-list-item-subtitle class="font-weight-normal mt-4 text-decoration-underline">
+          Invite people to your home!
+        </v-list-item-subtitle>
+        <v-btn
+            label="House Code"
+            class="mt-3"
+            @click="copyText"
+            color="orange lighten-2"
+          > Copy House Key</v-btn>
       </v-list-item-content>
+
+      <v-snackbar v-model="snackbar" timeout="2000">
+      Copied to Clipboard!
+      </v-snackbar>
 
       
 
@@ -49,19 +63,23 @@
     </v-list-item>
   
     <v-list-item class="d-flex justify-center mb-2 mt-1">
-    <v-card-actions>
-      <v-btn
+    <UpdatePhoto class="button" />
+
+    </v-list-item>
+    <v-divider></v-divider>
+    <v-card class="d-flex justify-center mt-3 mb-2" elevation="0" color="orange lighten-4">
+     <v-btn
         outlined
         rounded
         text
-        class="button"
+        class="pa-4 red "
+        elevation="3"
+        block
         @click="logout"
       >
         Logout
       </v-btn>
-    <UpdatePhoto class="button" />
-    </v-card-actions>
-    </v-list-item>
+    </v-card>
   </v-card>
     
     <!-- <button @click="logout">Logout</button> -->
@@ -78,6 +96,8 @@ export default {
       username: "",
       email: "",
       houseName: "",
+      text1: this.$store.state.user.house_keys[0],
+      snackbar: false,
     };
   },
   components: {
@@ -100,13 +120,14 @@ export default {
       this.username = username;
       this.$store.dispatch("changeUsername", { email: this.email, newUsername: username})
     },
+    copyText() {
+      this.snackbar = true
+          navigator.clipboard.writeText(this.text1)
+        }
   },
 };
 </script>
 
 
 <style scoped>
-  .button{
-    padding: 20px
-  }
 </style>
