@@ -191,7 +191,7 @@ export default {
   },
   watch: {
     countNotifications(newCount) {
-      this.items[1].notifications = newCount;
+      this.items[2].notifications = newCount;
       this.allNotifications = 0;
       for (let item of this.items) {
         this.allNotifications += item.notifications;
