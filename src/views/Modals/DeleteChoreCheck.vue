@@ -7,7 +7,7 @@
       >
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="green lighten-0" text @click="$emit('closeModalPlease')">
+        <v-btn color="green lighten-0" text @click="$emit('closeDeleteModalPlease')">
           CANCEL
         </v-btn>
         <v-btn @click="deleteChoreEmitter" color="green lighten-0" text>

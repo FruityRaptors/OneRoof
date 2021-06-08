@@ -182,7 +182,7 @@ export default {
       }
     }
     console.timeEnd("app mounting");
-    this.loading = false;
+    this.loading = false;  
   },
   computed: {
     countNotifications() {

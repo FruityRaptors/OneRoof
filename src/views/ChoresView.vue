@@ -7,28 +7,31 @@
         id="chore-container"
         class="orange lighten-4"
         v-for="chore in chores"
-        :key="chore.chore"
+        :key="chore.id"
       >
-        <!-- THIS KEY NEEDS TO BE UPDATED! -->
         <v-list-item>
           <!-- Chore list text -->
           <v-list-item-content>
             <v-list-item-title>
               {{ chore.chore }}
             </v-list-item-title>
-            <v-list-item-subtitle>
-              {{ chore.victimid }}
+            <v-list-item-subtitle v-if="chore.asignee">
+              {{ chore.asignee }}
             </v-list-item-subtitle>
-            <v-list-item-action class="">
-              <v-icon
-                icon
-                @click.stop="showChoreInfo(chore)"
-                color="orange accent-3"
-                >mdi-clipboard-edit</v-icon
-              >
-            </v-list-item-action>
+            <v-list-item-subtitle v-else>
+              this chore is currently unassigned
+            </v-list-item-subtitle>
           </v-list-item-content>
+          <v-list-item-action>
+            <v-icon
+              icon
+              @click.stop="showChoreInfo(chore)"
+              color="orange accent-3"
+              >mdi-clipboard-edit</v-icon
+            >
+          </v-list-item-action>
         </v-list-item>
+
         <!-- Border Between Todos -->
         <v-divider :key="chore.id"></v-divider>
       </div>
@@ -37,6 +40,7 @@
         v-if="modals.ChoreInfo"
         @closeModalPlease="modals.ChoreInfo = false"
         @deleteChorePlease="deleteChore"
+        @assignChorePlease="assignChore"
         :chore="this.clickedChore"
       />
       <AddChore @addThisChorePlease="setChore" />
@@ -78,10 +82,10 @@ export default {
     },
 
     async updateChores() {
-      if(this.choreToAdd.chore) {
-        await this.addChoreAndGetChore()
+      if (this.choreToAdd.chore) {
+        await this.addChoreAndGetChore();
       }
-      this.chores = this.$store.state.chores
+      this.chores = this.$store.state.chores;
     },
 
     async addChoreAndGetChore() {
@@ -93,7 +97,7 @@ export default {
         creatorid: this.currentUser.id,
         house_key: this.currentUser.house_keys[0],
       };
-      await this.$store.dispatch("addNewChore", newChore)
+      await this.$store.dispatch("addNewChore", newChore);
       await this.$store.dispatch("getChores", newChore.house_key);
     },
 
@@ -111,6 +115,14 @@ export default {
       await this.$store.dispatch("deleteChore", choreID);
       this.chores = this.$store.state.chores;
       this.modals.ChoreInfo = false;
+    },
+
+    async assignChore(choreInfo) {
+      this.modals.ChoreInfo = false; // this might should come at the end
+      const choreID = choreInfo.choreID;
+      const asignee = choreInfo.asignee;
+      console.log(`Changing chore number ${choreID}'s asignee to ${asignee}`)
+      // here's where the logic I'll add this afternoon comes in
     },
 
     //for dev purposes only
