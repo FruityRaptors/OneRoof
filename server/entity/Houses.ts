@@ -19,4 +19,8 @@ export class Houses extends BaseEntity {
     @Column()
     house_key: string;
 
+    @Field(() => String)
+    @Column()
+    modules: string;
+
 }

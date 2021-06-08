@@ -35,22 +35,22 @@
       <v-divider></v-divider>
 
       <!-- Navigation bar start -->
-      <v-list dense nav>
-        <v-list-item v-for="item in items" :key="item.title" :to="item.to" link>
+      <v-list v-for="value in items" :key="value.title" :to="value.to" dense nav>
+        <v-list-item v-if="value.purchased" link>
           <v-badge
-            :content="item.notifications"
-            :value="item.notifications"
+            :content="value.notifications"
+            :value="value.notifications"
             color="orange darken-4"
             offset-x="40"
             offset-y="40"
             overlap
           >
             <v-list-item-icon>
-              <v-icon color="brown lighten-1">{{ item.icon }}</v-icon>
+              <v-icon color="brown lighten-1">{{ value.icon }}</v-icon>
             </v-list-item-icon>
           </v-badge>
           <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+            <v-list-item-title>{{ value.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -112,92 +112,81 @@ import Login from "./views/Login.vue";
 import Register from "./views/Register";
 
 export default {
+
   data: () => ({
     drawer: null,
     houseName: "",
-    items: [
-      {
-        title: "Chat",
-        icon: "mdi-chat",
-        to: "/yourhome",
-        notifications: 0,
-      }, //Use to: to link views
-      {
-        title: "Direct Messages",
-        icon: "mdi-message-text",
-        to: "/dm",
-        notifications: 0,
-      },
-      {
-        title: "To-do",
-        icon: "mdi-format-list-checks",
-        to: "/todo",
-        notifications: 0,
-      },
-      {
-        title: "Chores",
-        icon: "mdi-clipboard-edit",
-        to: "/chores",
-        notifications: 0,
-      },
-    ],
+    items: '', 
     allNotifications: 0,
     loggedInFlag: false,
     login: true,
     loading: true,
-  }),
-  name: "App",
+  }), // data ends
+
+  name: "App", //Name Ends
+
   components: {
     Login,
     Register,
-  },
+  }, // components ends
+
   methods: {
     toggleRegLog() {
       this.login = !this.login;
     },
-  },
+    async appSetUp(){
+
+      let loggedInFlag = await this.$store.dispatch("checkIfLoggedInUser")
+
+      if (loggedInFlag !== false){
+        let house_key = this.$store.state.user.house_keys[0]
+
+        await this.$store.dispatch("getTodos", house_key);
+        await this.$store.dispatch("populateVictimList", house_key);
+        await this.$store.dispatch("getChores", house_key);
+
+        this.items = this.$store.state.currentHouseModules
+      }
+    },
+  }, //Method ends
+
   async mounted() {
+
     console.time("app mounting");
+
     this.loading = true;
-    let loggedInFlag = await this.$store.dispatch("checkIfLoggedInUser");
-    if (loggedInFlag !== false) {
-      console.log("MOUNTING USER:", this.$store.state.user);
-      let username = this.$store.state.user.username;
-      let house_key = this.$store.state.user.house_keys[0];
-      if (username) {
-        await this.$store.dispatch("calculateUserRGB", username);
-      }
-      await this.$store.dispatch("getTodos", house_key);
-      await this.$store.dispatch("populateVictimList", house_key);
-      console.log("MOUNTING TODOS AND VICTIMS:", this.$store.state.todos);
-      await this.$store.dispatch("getChores", house_key);
-      console.log("MOUNTING CHORES:", this.$store.state.chores);
-      // await this.$store.dispatch("getHouseName", this.$store.state.user.house_keys[0]);
-      // this.houseName = this.$store.user.houseName;
-      //await get all messages for general chat
-      this.allNotifications = 0;
-      this.items[1].notifications = this.$store.state.userTodoNotifications;
-      for (let item of this.items) {
-        this.allNotifications += item.notifications;
-      }
-    }
+
+    await this.appSetUp()
+
+    //Setting notifications
+    this.items.todo.notifications = this.$store.state.userTodoNotifications;
+        for (let item in this.items) {
+            this.allNotifications += this.items[item].notifications;
+        }
+    //Setting notifications
+
     console.timeEnd("app mounting");
     this.loading = false;
-  },
+
+     
+  }, //mounted ends
+
   computed: {
     countNotifications() {
       return this.$store.state.userTodoNotifications;
     },
-  },
+  }, //computed ends
+
   watch: {
     countNotifications(newCount) {
-      this.items[2].notifications = newCount;
+      this.items['todo'].notifications = newCount;
       this.allNotifications = 0;
-      for (let item of this.items) {
-        this.allNotifications += item.notifications;
+      for (let item in this.items) {
+        this.allNotifications += this.items[item].notifications;
       }
     },
-  },
+  }, //watch ends
+
 };
 </script>
 
