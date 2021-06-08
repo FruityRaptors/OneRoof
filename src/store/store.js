@@ -22,6 +22,7 @@ export default new Vuex.Store({
     houseName: '',
     currentTodo: {},
     currentTodoMessage: '',
+    currentHouseModules: '',
     // areTodosLoaded: false, // add a way to change it to false
   },
 
@@ -84,6 +85,10 @@ export default new Vuex.Store({
     setCurrentTodoMessage(state, message) {
       state.currentTodoMessage = message
     },
+    setCurrentHouseModules(state, modules) {
+      console.log('setting House modules with..', modules)
+      state.currentHouseModules = modules
+    }
   },
 
   actions: {
@@ -112,16 +117,21 @@ export default new Vuex.Store({
               }`
           }
         }).then((response) => {
-          context.commit("toggleLoginBool", "true")
+          
           context.commit("setUser", response.data.data.getUserByEmail)
           //If fetched user belonged to a house, set user normally
           if (response.data.data.getUserByEmail.house_keys) {
             let housekey = JSON.parse(response.data.data.getUserByEmail.house_keys)
+            
+            context.dispatch('getHouseName', housekey[0])
+           
+            context.commit("toggleLoginBool", "true")
             response.data.data.getUserByEmail.house_keys = housekey
             console.log(`User already belonged to chat room(s)... going to home page`)
             router.push('/yourhome')
           } else {
             console.log(`User doesn't have a home... going to join a home page`)
+            context.commit("toggleLoginBool", "true")
             //Should route to Join a house page, THE FOLLOWING LINE SHOULD BE DELETED!
             router.push('/joinhouse')
           }
@@ -273,12 +283,18 @@ export default new Vuex.Store({
           {
             getHouseName(house_key:"${payload}"){
               house_name
+              modules
             }
           }
           `
         }
       }).then((response) => {
         context.commit('setHouseName', response.data.data.getHouseName.house_name)
+        return JSON.parse(response.data.data.getHouseName.modules)
+        
+      }).then((response) => {
+        console.log('made it passed the then', response)
+        context.commit('setCurrentHouseModules', response)
       })
     },
 
