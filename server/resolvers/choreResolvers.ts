@@ -19,12 +19,12 @@ export class choreResolvers {
     createChore(
         @Arg('chore') chore: string,
         @Arg('description') description: string,
-        @Arg('asignee') asignee: string,
+        @Arg('assignee') assignee: string,
         @Arg('creatorid') creatorid: string,
         @Arg('house_key') house_key: string,
     ) {
 
-        Chores.insert({ chore, house_key, description, asignee, creatorid, })
+        Chores.insert({ chore, house_key, description, assignee, creatorid, })
         return "New chore Added!"
     }
 
@@ -34,5 +34,20 @@ export class choreResolvers {
     ) {
         await Chores.delete(id)
         return "Chore deleted!"
+    }
+
+    @Mutation(() => String)
+    async updateChoreAssignee(
+        @Arg('id') id: number,
+        @Arg('newAssignee') newAssignee: string,
+    ) {
+        let choreToBeUpdated = await Chores.findOne({ where: { id } })
+        if (!choreToBeUpdated) {
+            console.log('Error!')
+            return
+        }
+        choreToBeUpdated.assignee = newAssignee
+        Chores.save(choreToBeUpdated)
+        return "Saved!"
     }
 }

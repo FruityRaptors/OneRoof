@@ -31,8 +31,8 @@
               <v-col cols="12" sm="6">
                 <v-select
                   :items="victims"
-                  label="Asignee"
-                  v-model="chore.asignee"
+                  label="Assignee"
+                  v-model="chore.assignee"
                 ></v-select>
               </v-col>
             </v-row>
@@ -60,7 +60,7 @@ export default {
     chore: {
       chore: "",
       description: "",
-      asignee: "",
+      assignee: "",
     },
   }),
   mounted() {
