@@ -557,7 +557,7 @@ export default new Vuex.Store({
           data: {
             query: `
             {
-              getChoresByHouse(house_key:"1Ubwo8IMWZqrT9Yb2jb8wq4bgPZUg7GQ"){
+              getChoresByHouse(house_key:"${house_key}"){
                 id
                 creatorid
                 assignee
