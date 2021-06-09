@@ -53,7 +53,8 @@
           <v-card
             rounded
             max-width="250"
-            class="mb-2 mr-4 pa-2"
+            class="mb-2 mr-4 pa-2" 
+            elevation="0"
             :color="
               message.username == username ? 'orange accent-2 font-weight-light text-justify' : 'orange accent-1 font-weight-light'
             "
