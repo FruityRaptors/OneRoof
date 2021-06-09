@@ -30,6 +30,14 @@
               >mdi-clipboard-edit</v-icon
             >
           </v-list-item-action>
+          <v-list-item-action>
+            <v-icon
+              icon
+              @click.stop="showAddTodoModal(chore)"
+              color="orange accent-3"
+              >mdi-format-list-checks</v-icon
+            >
+          </v-list-item-action>
         </v-list-item>
 
         <!-- Border Between Todos -->
@@ -38,9 +46,15 @@
       <ChoreInfo
         persistent
         v-if="modals.ChoreInfo"
-        @closeModalPlease="modals.ChoreInfo = false"
+        @closeInfoModalPlease="modals.ChoreInfo = false"
         @deleteChorePlease="deleteChore"
         @assignChorePlease="assignChoreAndGetChores"
+        :chore="this.clickedChore"
+      />
+      <TodoFromChoreCheck
+        @closeTodoModalPlease="modals.AddTodo = false"
+        @makeATodoPlease="addTodoFromChore"
+        v-if="modals.AddTodo"
         :chore="this.clickedChore"
       />
       <AddChore @addThisChorePlease="setChore" />
@@ -52,12 +66,14 @@
 <script>
 import AddChore from "../components/AddChore.vue";
 import ChoreInfo from "../components/ChoreInfo.vue";
+import TodoFromChoreCheck from "./Modals/TodoFromChoreCheck.vue";
 
 export default {
   name: "Home",
   components: {
     AddChore,
     ChoreInfo,
+    TodoFromChoreCheck,
   },
   data() {
     return {
@@ -67,6 +83,7 @@ export default {
       choreToAdd: {},
       modals: {
         ChoreInfo: false,
+        AddTodo: false,
       },
       users: this.$store.state.usersInSameHouse,
     };
@@ -106,6 +123,11 @@ export default {
       this.modals.ChoreInfo = true;
     },
 
+    showAddTodoModal(chore) {
+      this.clickedChore = chore;
+      this.modals.AddTodo = true;
+    },
+
     async deleteChore(choreID) {
       this.$store.state.chores = this.$store.state.chores.filter(
         (chore) => chore.id !== choreID
@@ -121,9 +143,29 @@ export default {
       this.modals.ChoreInfo = false;
       await this.$store.dispatch("updateChore", choreInfo);
       await this.$store.dispatch("getChores", this.currentUser.house_keys[0]);
-      this.updateChores()
+      this.updateChores();
     },
 
+    addTodoFromChore(chore) {
+      console.log(chore);
+      this.modals.AddTodo = false;
+      let victim = "Anyone";
+      if (chore.assignee) {
+        victim = chore.assignee;
+      }
+      console.log("here is the victim:", victim)
+      let newTodo = {
+        todo: chore.chore,
+        date: Date.now(),
+        victimid: victim,
+        creatorid: chore.id,
+        complete: false,
+        house_key: chore.house_key,
+      };
+      console.log(newTodo);
+      try {this.$store.dispatch("addTodo", newTodo)}
+      catch{alert("Something went wrong!")}
+    },
   },
 };
 </script>
