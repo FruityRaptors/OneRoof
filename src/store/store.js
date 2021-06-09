@@ -23,7 +23,55 @@ export default new Vuex.Store({
     currentTodo: {},
     currentTodoMessage: '',
     currentHouseModules: '',
-    // areTodosLoaded: false, // add a way to change it to false
+    currentHouseModulesTest: {
+
+      "chat": {
+          "id": 1,
+          "title": "Chat",
+          "icon": "mdi-chat",
+          "to": "/yourhome",
+          "notifications": 0,
+          "purchased": true,
+          "purchasable": false
+      }, 
+      "directmessage": {
+          "id": 2,
+          "title": "Direct Messages",
+          "icon": "mdi-message-text",
+          "to": "/dm",
+          "notifications": 0,
+          "purchased": true,
+          "purchasable": false
+      },
+      "todo": {
+          "id": 3,
+          "title": "To-do",
+          "icon": "mdi-format-list-checks",
+          "to": "/todo",
+          "notifications": 0,
+          "purchased": true,
+          "purchasable": false
+      },
+      "chores": {
+          "id": 4,
+          "title": "Chores",
+          "icon": "mdi-clipboard-edit",
+          "to": "/chores",
+          "notifications": 0,
+          "purchased": false,
+          "purchasable": true
+      },
+      "modules": {
+          "id": 5,
+          "title": "Modules",
+          "icon": "mdi-cog",
+          "to": "/modules",
+          "notifications": 0,
+          "purchased": true,
+          "purchasable": false
+      }
+  }
+  
   },
 
   mutations: {
@@ -307,6 +355,23 @@ export default new Vuex.Store({
       })
     },
 
+    async updateModules(context, payload){
+      let stringModules = await JSON.stringify(payload.modules).replace(/"/g, '\\"')
+      axios({
+        method: "POST",
+        url: "/graphql",
+        data: {
+          query:`
+          mutation{
+            updateModules(house_key:"${payload.house_key}", modules:"${stringModules}")
+          }
+          `
+        }
+      }).then(() => {
+        context.dispatch('getHouseName', payload.house_key)
+      })
+    },
+
     ///////
     //House related actions ends
     ///////
@@ -550,7 +615,7 @@ export default new Vuex.Store({
           data: {
             query: `
             {
-              getChoresByHouse(house_key:"1Ubwo8IMWZqrT9Yb2jb8wq4bgPZUg7GQ"){
+              getChoresByHouse(house_key:"${house_key}"){
                 id
                 creatorid
                 assignee

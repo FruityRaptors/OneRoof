@@ -97,6 +97,7 @@ export default {
         creatorid: this.currentUser.id,
         house_key: this.currentUser.house_keys[0],
       };
+      console.log('logging new chore', newChore)
       await this.$store.dispatch("addNewChore", newChore);
       await this.$store.dispatch("getChores", newChore.house_key);
     },
