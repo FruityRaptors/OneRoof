@@ -40,6 +40,9 @@
                 <v-list-item-subtitle>
                 {{ todo.victimid }}
                 </v-list-item-subtitle>
+                <v-list-item-subtitle>
+                {{ todo.date }}
+                </v-list-item-subtitle>
               </v-list-item-content>
 <!-- Todo list text ends -->
               
