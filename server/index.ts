@@ -9,6 +9,7 @@ import { todoResolvers } from "./resolvers/todoResolvers";
 import { houseResolvers } from "./resolvers/houseResolvers";
 import { dmResolvers } from "./resolvers/dmResolvers"
 import { choreResolvers } from "./resolvers/choreResolvers"
+import { modulesResolvers } from "./resolvers/modulesResolvers"
 
 
 (async () => {
@@ -24,7 +25,7 @@ import { choreResolvers } from "./resolvers/choreResolvers"
   console.log('Starting Apollo Server')
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [userResolvers, todoResolvers, houseResolvers, choreResolvers, dmResolvers],
+      resolvers: [userResolvers, todoResolvers, houseResolvers, choreResolvers, dmResolvers, modulesResolvers],
       validate: true
     }),
     context: ({ req, res }) => ({ req, res })

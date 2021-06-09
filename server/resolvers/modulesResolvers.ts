@@ -12,12 +12,10 @@ export class modulesResolvers {
         @Arg("modules") modules: string,
     ){
         let houseToBeUpdated = await Houses.findOne({ where: { house_key }})
-        let parsedData = JSON.parse(houseToBeUpdated.modules)
-        parsedData.modules = modules
-        houseToBeUpdated.modules = JSON.stringify(parsedData)
+        houseToBeUpdated.modules = modules
 
         Houses.save(houseToBeUpdated)
 
-        return "House Modules Up"
+        return "House Modules Updated"
     }
 }

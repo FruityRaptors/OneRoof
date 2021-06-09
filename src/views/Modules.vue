@@ -1,0 +1,72 @@
+<template>
+    <v-card class="mx-auto mt-5 orange lighten-5" elevation="0" max-width="95%">
+        <v-card class="d-flex justify-center orange lighten-5" elevation="0" >
+            <v-card-title class="font-weight-bold"> Modules Settings </v-card-title>
+        </v-card>
+
+        <v-list v-for="(module, key) in modules" :key="module.id" >
+            <v-list-item @click="updateModule(key)" :class="{ 'red' : module.purchased }" >
+            
+                <v-list-item-action>
+                    <v-checkbox :input-value="module.purchased"  color="light-green darken-4"></v-checkbox>
+                </v-list-item-action>
+                {{module.title}}
+            </v-list-item>
+        </v-list>
+
+        <div class="text-center">
+            <v-btn rounded color="primary" dark @click="submitUpdate">
+                SUBMIT
+            </v-btn>
+        </div>
+   
+    </v-card>
+</template>
+
+<script>
+export default {
+    name: "Modules",
+    
+    data(){
+        return{
+            moduleState: this.$store.state.currentHouseModules
+        }
+    },
+    methods: {
+
+        updateModule(module){
+
+            this.moduleState[module].purchased = !this.moduleState[module].purchased
+        },
+
+        async submitUpdate(){
+            let payload = {
+                house_key: this.$store.state.user.house_keys[0],
+                modules: this.moduleState
+            }
+           await this.$store.dispatch('updateModules', payload)
+
+        }
+
+    },
+    computed: {
+        modules: function(){
+
+            let result = {}
+
+            let moduleList = this.$store.state.currentHouseModules
+
+            for(let module in moduleList){
+                if(moduleList[module].purchasable)
+                result[module] = moduleList[module]
+            }
+
+            return result
+        }
+    }, 
+}
+</script>
+
+<style scoped>
+
+</style>
