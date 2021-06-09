@@ -146,14 +146,14 @@ export default {
       this.updateChores();
     },
 
-    addTodoFromChore(chore) {
+    async addTodoFromChore(chore) {
       console.log(chore);
       this.modals.AddTodo = false;
       let victim = "Anyone";
       if (chore.assignee) {
         victim = chore.assignee;
       }
-      console.log("here is the victim:", victim)
+      console.log("here is the victim:", victim);
       let newTodo = {
         todo: chore.chore,
         date: Date.now(),
@@ -163,8 +163,15 @@ export default {
         house_key: chore.house_key,
       };
       console.log(newTodo);
-      try {this.$store.dispatch("addTodo", newTodo)}
-      catch{alert("Something went wrong!")}
+      try {
+        await this.$store.dispatch("addTodo", newTodo);
+        await this.$store.dispatch(
+          "getTodos",
+          this.$store.state.user.house_keys[0]
+        );
+      } catch {
+        alert("Something went wrong!");
+      }
     },
   },
 };
