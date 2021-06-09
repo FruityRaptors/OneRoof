@@ -129,12 +129,13 @@ export default new Vuex.Store({
               }`
           }
         }).then((response) => {
-          
+
           context.commit("setUser", response.data.data.getUserByEmail)
           router.push('/yourhome')
           //If fetched user belonged to a house, set user normally
           if (response.data.data.getUserByEmail.house_keys) {
             let housekey = JSON.parse(response.data.data.getUserByEmail.house_keys)
+            console.log("housekey:", housekey)
             context.dispatch('getHouseName', housekey[0])
             context.commit("toggleLoginBool", "true")
             response.data.data.getUserByEmail.house_keys = housekey
@@ -151,7 +152,7 @@ export default new Vuex.Store({
         console.log(error)
         return
       }
-      
+
     },
 
     //Adds user to the database after they have registered
@@ -285,26 +286,31 @@ export default new Vuex.Store({
       })
     },
 
-    async getHouseName(context, payload) {
-      await axios({
-        method: "POST",
-        url: "/graphql",
-        data: {
-          query: `
-          {
-            getHouseName(house_key:"${payload}"){
-              house_name
-              modules
+    async getHouseName(context, housename) {
+      console.log("getting house name:", housename)
+      try {
+        await axios({
+          method: "POST",
+          url: "/graphql",
+          data: {
+            query: `
+            {
+              getHouseName(house_key:"${housename}"){
+                house_name
+                modules
+              }
             }
+            `
           }
-          `
-        }
-      }).then((response) => {
-        return JSON.parse(response.data.data.getHouseName.modules)
-        
-      }).then((response) => {
-        context.commit('setCurrentHouseModules', response)
-      })
+        }).then((response) => {
+          console.log("HERE", response.data.data.getHouseName)
+          return JSON.parse(response.data.data.getHouseName.modules)
+        }).then((response) => {
+          context.commit('setCurrentHouseModules', response)
+        })
+      } catch(error) {
+        console.log(error)
+      }
     },
 
     ///////
@@ -340,20 +346,20 @@ export default new Vuex.Store({
             let todosByHouse = response.data.data.getTodosByHouse
             context.commit("addTodosToList", todosByHouse)
             return todosByHouse
-            }).then((todosByHouse) => {
+          }).then((todosByHouse) => {
 
-                context.commit("resetTodoNotifications")
-                return todosByHouse
-                    }).then((todosByHouse) => {
+            context.commit("resetTodoNotifications")
+            return todosByHouse
+          }).then((todosByHouse) => {
 
-                        let notifications = 0
-                        for (let todo of todosByHouse) {
-                          if (todo.victimid === this.state.user.username) {
-                            notifications++
-                          }
-                        }
-                         context.commit("setTodoNotifications", notifications)
-                        })
+            let notifications = 0
+            for (let todo of todosByHouse) {
+              if (todo.victimid === this.state.user.username) {
+                notifications++
+              }
+            }
+            context.commit("setTodoNotifications", notifications)
+          })
       } catch (error) {
         console.log("No user is logged in")
         return
@@ -474,7 +480,7 @@ export default new Vuex.Store({
     ///////
     //DM related actions start
     ///////
-    async checkDmTarget(context, users){
+    async checkDmTarget(context, users) {
       let checkIfAlreadyChatted = await axios({
         method: "POST",
         url: "/graphql",
@@ -492,11 +498,11 @@ export default new Vuex.Store({
         }
       })
 
-      if (checkIfAlreadyChatted.data.data){
+      if (checkIfAlreadyChatted.data.data) {
         return checkIfAlreadyChatted.data.data.checkIfInSameDm.dm_key
-      } 
-      
-      else  {
+      }
+
+      else {
         let roomkey = keygen._()
         await axios({
           method: "POST",
@@ -509,14 +515,15 @@ export default new Vuex.Store({
                     userid2:"${users.username_2}",
                     dm_key:"${roomkey}")
                     }`
-                }})
-      
-         
+          }
+        })
+
+
         let result = await axios({
-            method: "POST",
-            url: "/graphql",
-            data: {
-              query: `
+          method: "POST",
+          url: "/graphql",
+          data: {
+            query: `
               {
                 checkIfInSameDm(
                   userid1:"${users.username_1}",
@@ -526,21 +533,21 @@ export default new Vuex.Store({
                 }
               }
               `
-            }
-          })
-          return result.data.data.checkIfInSameDm.dm_key
+          }
+        })
+        return result.data.data.checkIfInSameDm.dm_key
 
-        }
-      },
+      }
+    },
     ///////
     //DM related actions end
     ///////
 
 
 
-//////
-//Chores related actions start
-//////
+    //////
+    //Chores related actions start
+    //////
     async getChores(context, house_key) {
       console.log(`Getting Chores By House...`, house_key)
       try {
@@ -591,7 +598,7 @@ export default new Vuex.Store({
           }`
           }
         })
-        .then(() => {})
+          .then(() => { })
       } catch (error) {
         console.log("This is your error", error)
       }
@@ -643,7 +650,7 @@ export default new Vuex.Store({
     //Chores related actions end
     ///////
 
-    
+
 
     ///////
     //Firebase related actions start
@@ -686,11 +693,11 @@ export default new Vuex.Store({
         .signOut()
         .then(() => {
           console.log("logging out user")
-          }).then(() => {
-            context.commit("resetUser")
-            context.commit("toggleLoginBool")
-            router.push('/');
-          })
+        }).then(() => {
+          context.commit("resetUser")
+          context.commit("toggleLoginBool")
+          router.push('/');
+        })
         .catch(error => {
           alert(error.message);
           router.push('/');
