@@ -126,7 +126,7 @@ export default {
         let newTodo = {
             // id:
             todo: this.newTodoMessage,
-            date: Date.now(),
+            date: new Date(),
             victimid: "Everyone",
             creatorid: this.$store.state.user.username,
             complete: false,
@@ -184,7 +184,6 @@ export default {
     checkTodo: function(){
      return this.$store.state.todos
     },
-  
   }
   
 };
