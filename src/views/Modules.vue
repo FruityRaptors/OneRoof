@@ -4,13 +4,17 @@
             <v-card-title class="font-weight-bold"> Modules Settings </v-card-title>
         </v-card>
 
-        <v-list v-for="(module, key) in modules" :key="module.id" >
-            <v-list-item @click="updateModule(key)" :class="{ 'red' : module.purchased }" >
+        <v-list v-for="(module, key) in modules" :key="module.id" elevation="0" >
+            <v-list-item @click="updateModule(key)">
             
                 <v-list-item-action>
                     <v-checkbox :input-value="module.purchased"  color="light-green darken-4"></v-checkbox>
                 </v-list-item-action>
+
+                <v-list-item-title> 
                 {{module.title}}
+                </v-list-item-title>
+               
             </v-list-item>
         </v-list>
 
