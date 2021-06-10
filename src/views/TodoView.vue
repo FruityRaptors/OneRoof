@@ -119,7 +119,7 @@ export default {
             // id:
             todo: this.newTodoMessage,
             date: Date.now(),
-            victimid: "Everyone",
+            victimid: "Unassigned",
             creatorid: this.$store.state.user.username,
             complete: false,
             house_key: this.$store.state.user.house_keys[0] 

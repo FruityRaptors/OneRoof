@@ -1,22 +1,23 @@
  <template>
- <v-dialog persistent max-width="290" :value = "true" >   
-      <v-card class="brown lighten-5">
+ <v-dialog persistent max-width="95%" :value = "true" >   
+      <v-card class="brown lighten-4">
         <v-card-title class="headline">
           Delete Todo
         </v-card-title> 
 
         <v-card-text>
-          Would you like to delete this todo?
+          Would you like to delete this todo? <br>
+          Deleting is <i>permanent</i>.
         </v-card-text>
 
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn color="green lighten-0" text @click="$emit('closeModal')">
+          <v-btn color="brown lighten-1" text @click="$emit('closeModal')">
             CANCEL
           </v-btn>
 
-          <v-btn @click="onClickDeleteButton" color="green lighten-0" text>
+          <v-btn @click="onClickDeleteButton" color="brown lighten-0" text>
             DELETE
           </v-btn>
 
