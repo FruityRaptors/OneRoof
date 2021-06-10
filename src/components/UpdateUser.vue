@@ -6,6 +6,8 @@
           Update Info
         </v-btn>
       </template>
+
+      
       <v-card>
         <v-card-title>
           <span class="headline">User Profile</span>

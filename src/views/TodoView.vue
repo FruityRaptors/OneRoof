@@ -79,7 +79,7 @@
 
 <!-- No Todos if todo list is empty -->
       <div v-else class="no-todo-bg">
-        <v-icon size="100" color="green darken-2" id="icon-todo">mdi-help-box</v-icon>
+        <v-icon size="100" color="orange darken-1" id="icon-todo">mdi-help-box</v-icon>
         <div class="text-h5" >
           Add a Todo!
         </div>
@@ -119,7 +119,7 @@ export default {
             // id:
             todo: this.newTodoMessage,
             date: Date.now(),
-            victimid: "Everyone",
+            victimid: "Unassigned",
             creatorid: this.$store.state.user.username,
             complete: false,
             house_key: this.$store.state.user.house_keys[0] 

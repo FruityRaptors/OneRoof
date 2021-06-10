@@ -1,15 +1,22 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="center mt-5">
     <v-dialog v-model="dialog" persistent max-width="600px">
+
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on">
+        <v-btn color="orange lighten-1" dark v-bind="attrs" v-on="on">
           Add a Chore
         </v-btn>
       </template>
-      <v-card>
-        <v-card-title>
-          <span class="text-h5">Chore info</span>
-        </v-card-title>
+
+
+      <v-card class="orange lighten-5">
+
+         <v-card class="d-flex justify-center orange lighten-5" elevation="0">
+             <v-card-title>
+              Chore info
+             </v-card-title>
+         </v-card>
+       
         <v-card-text>
           <v-container>
             <v-row>
@@ -41,10 +48,10 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="dialog = false">
+          <v-btn color="orange darken-4" text @click="dialog = false">
             Close
           </v-btn>
-          <v-btn color="blue darken-1" text @click="pushChore"> Save </v-btn>
+          <v-btn color="orange darken-4" text @click="pushChore"> Save </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
