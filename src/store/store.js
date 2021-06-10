@@ -23,7 +23,7 @@ export default new Vuex.Store({
     currentTodo: {},
     currentTodoMessage: '',
     currentHouseModules: '',
-    // areTodosLoaded: false, // add a way to change it to false
+  
   },
 
   mutations: {
@@ -311,6 +311,23 @@ export default new Vuex.Store({
       } catch(error) {
         console.log(error)
       }
+    },
+
+    async updateModules(context, payload){
+      let stringModules = await JSON.stringify(payload.modules).replace(/"/g, '\\"')
+      axios({
+        method: "POST",
+        url: "/graphql",
+        data: {
+          query:`
+          mutation{
+            updateModules(house_key:"${payload.house_key}", modules:"${stringModules}")
+          }
+          `
+        }
+      }).then(() => {
+        context.dispatch('getHouseName', payload.house_key)
+      })
     },
 
     ///////
