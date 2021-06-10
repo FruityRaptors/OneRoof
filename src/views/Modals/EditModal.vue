@@ -14,11 +14,11 @@
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn color="green lighten-0" text @click="$emit('closeModal')">
+          <v-btn color="brown lighten-1" text @click="$emit('closeModal')">
             CANCEL
           </v-btn>
 
-          <v-btn @click="onClickEditButton" color="green lighten-0" text>
+          <v-btn @click="onClickEditButton" color="brown lighten-0" text>
             SAVE
           </v-btn>
           

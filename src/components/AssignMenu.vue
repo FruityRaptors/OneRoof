@@ -1,22 +1,24 @@
 <template>
 <div>
 
-  <v-dialog max-width="290" :value = "true" >
-  
+  <v-dialog persistent max-width="290" :value = "true" >  
+   <v-card class="brown lighten-5">
+
+         <v-card-title class="headline">
+          Assign Todo
+        </v-card-title>
     
-     <v-list>
-      <v-list-item 
-          v-for="user in users"
-          :key="user.id"
-          :value="user"
-        >
+     <v-list class="brown lighten-5">
+      <div id="name-container" class="brown lighten-5">
+        <v-list-item v-for="user in users" :key="user.id" :value="user">
           <v-list-item-title @click="assignUser(user.username)">
-          {{ user.username }}
+            {{ user.username }}
           </v-list-item-title>
         </v-list-item>
 
-
+      </div>
     </v-list>
+   </v-card>
   </v-dialog>
 
 </div>
