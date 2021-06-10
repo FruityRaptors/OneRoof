@@ -48,14 +48,6 @@
           
 <!-- Assignee Dropdown Starts -->
     <v-menu offset-y>
-      <template v-slot:activator="{ on, attrs }">
-          <v-icon 
-          class="pt-2 pr-1"
-          color="orange accent-3"
-          v-bind="attrs"
-          v-on="on"
-          >mdi-account-plus</v-icon>
-      </template>
       
       <v-list>
         <v-list-item 
@@ -139,44 +131,26 @@ export default {
         this.newTodoMessage = ''
     },
     completeTodo(id) {
-        let todo = this.todos.filter(todo => todo.id === id)[0]
+        let todo = this.checkTodo.filter(todo => todo.id === id)[0]
         todo.complete = !todo.complete
-    },
-    async deleteTodo(id) {
-        console.log("THIS IS THE ID",id)
-        this.$store.state.todos = this.$store.state.todos.filter(todo => todo.id !== id)
-        await this.$store.dispatch("deleteTodo", id)
     },
 
     async setState(todo){
-      console.log('abracadabra...', todo.id) //remove later (before due date added)
-      console.log("HERE IS THE CURRENT TODO", todo) //remove later (before due date added)
       this.$store.commit('setCurrentTodo', todo)
       this.currentTodo = todo  //remove later? (before due date added)
       this.currentId = todo.id
     },
-    deleteFromModal(){
-      
-      this.$store.dispatch('deleteTodo', this.currentId).then(() => {
-      console.log("getting updated to do list...")
-      this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0])
-      })
-       
+
+    async deleteFromModal(){
+      await this.$store.dispatch('deleteTodo', this.currentId)  
     },
     async editFromModal() {
       this.$store.state.currentTodo.todo = this.$store.state.currentTodoMessage
       await this.$store.dispatch('updateTodo', this.$store.state.currentTodo)
     },
     async setAssignee(value){
-      // let todoToUpdate = {
-      //   id: todo.id,
-      //   victimid: user.username,
-      //   house_key: todo.house_key
-      // }
       this.currentTodo.victimid = value
-      console.log(this.currentTodo)
       await this.$store.dispatch("updateTodoVictim", this.currentTodo)
-      // this.todos = this.$store.state.todos; 
     },
   }, // method ends
 

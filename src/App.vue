@@ -16,7 +16,7 @@
     <v-navigation-drawer
       v-model="drawer"
       color="orange lighten-4"
-      width="185"
+      width="210"
       app
     >
       <!-- Navbar title start -->
@@ -44,8 +44,9 @@
             offset-x="40"
             offset-y="40"
             overlap
+            
           >
-            <v-list-item-icon>
+          <v-list-item-icon>
               <v-icon color="brown lighten-1">{{ value.icon }}</v-icon>
             </v-list-item-icon>
           </v-badge>
@@ -53,7 +54,8 @@
             <v-list-item-title>{{ value.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-      </v-list>
+      </v-list> 
+  
       <!-- Navigation bar ends -->
     </v-navigation-drawer>
     <!-- Nav drawer ends -->
@@ -181,7 +183,16 @@ export default {
     },
 
     items: function(){
-      return this.$store.state.currentHouseModules
+
+      let resultList = {};
+      let moduleList = this.$store.state.currentHouseModules
+
+      for(let module in moduleList){
+        if(moduleList[module].purchased) {
+          resultList[module] = moduleList[module]
+        }
+      }
+      return resultList
     }
   }, //computed ends
 

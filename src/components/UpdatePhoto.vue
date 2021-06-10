@@ -2,8 +2,8 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="orange lighten-2 black--text" rounded dark v-bind="attrs" v-on="on">
-          Upload a Photo
+        <v-btn color="orange lighten-2 black--text mb-5" rounded dark v-bind="attrs" v-on="on">
+          Upload Photo
         </v-btn>
       </template>
       <v-card>
