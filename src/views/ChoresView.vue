@@ -1,29 +1,32 @@
 <template>
-  <div class="chore-page orange lighten-5" id="chore-page-container">
-    <!-- chore list platform -->
-    <v-list class="pa-0 orange lighten-5" two-line flat>
+  <div>
       <!-- Each Chore in Chore list -->
-      <div
-        id="chore-container"
-        class="orange lighten-4"
+      <v-list
+        class="orange lighten-4 pb-0"
         v-for="chore in chores"
         :key="chore.id"
       >
+
         <v-list-item>
           <!-- Chore list text -->
-          <v-list-item-content>
+          <v-list-item-content class="pl-4">
+
             <v-list-item-title>
               {{ chore.chore }}
             </v-list-item-title>
+
             <v-list-item-subtitle v-if="chore.assignee">
               {{ chore.assignee }}
             </v-list-item-subtitle>
+
             <v-list-item-subtitle v-else>
               this chore is currently unassigned
             </v-list-item-subtitle>
+
           </v-list-item-content>
           <v-list-item-action>
             <v-icon
+            class="pr-2"
               icon
               @click.stop="showChoreInfo(chore)"
               color="orange accent-3"
@@ -41,24 +44,27 @@
         </v-list-item>
 
         <!-- Border Between Todos -->
-        <v-divider :key="chore.id"></v-divider>
-      </div>
+      <v-divider></v-divider>
+    </v-list>
+
+    <AddChore @addThisChorePlease="setChore" />
+
+     <TodoFromChoreCheck
+        @closeTodoModalPlease="addTodo = false"
+        @makeATodoPlease="addTodoFromChore"
+        v-if="addTodo"
+        :chore="this.clickedChore"
+      />
+
+
       <ChoreInfo
         persistent
-        v-if="modals.ChoreInfo"
-        @closeInfoModalPlease="modals.ChoreInfo = false"
+        v-if="modals"
+        @closeModalPlease="modalToggle"
         @deleteChorePlease="deleteChore"
         @assignChorePlease="assignChoreAndGetChores"
         :chore="this.clickedChore"
       />
-      <TodoFromChoreCheck
-        @closeTodoModalPlease="modals.AddTodo = false"
-        @makeATodoPlease="addTodoFromChore"
-        v-if="modals.AddTodo"
-        :chore="this.clickedChore"
-      />
-      <AddChore @addThisChorePlease="setChore" />
-    </v-list>
     <!-- todo list platform ends-->
   </div>
 </template>
@@ -81,10 +87,8 @@ export default {
       chores: [],
       clickedChore: {},
       choreToAdd: {},
-      modals: {
-        ChoreInfo: false,
-        AddTodo: false,
-      },
+      modals: false,
+      addTodo: false,
       users: this.$store.state.usersInSameHouse,
     };
   },
@@ -121,12 +125,16 @@ export default {
 
     showChoreInfo(chore) {
       this.clickedChore = chore;
-      this.modals.ChoreInfo = true;
+      this.modals = !this.modals;
     },
 
-    showAddTodoModal(chore) {
-      this.clickedChore = chore;
-      this.modals.AddTodo = true;
+    modalToggle(){
+      this.modals = !this.modals
+      console.log(this.modals)
+    },
+
+    showAddTodoModal() {
+      this.addTodo = !this.addTodo;
     },
 
     async deleteChore(choreID) {
@@ -137,24 +145,26 @@ export default {
 
       await this.$store.dispatch("deleteChore", choreID);
       this.chores = this.$store.state.chores;
-      this.modals.ChoreInfo = false;
+      this.modals = false;
     },
 
     async assignChoreAndGetChores(choreInfo) {
-      this.modals.ChoreInfo = false;
+      this.modals = false;
       await this.$store.dispatch("updateChore", choreInfo);
       await this.$store.dispatch("getChores", this.currentUser.house_keys[0]);
       this.updateChores();
     },
 
     addTodoFromChore(chore) {
-      console.log(chore);
-      this.modals.AddTodo = false;
+
+      this.addTodo = false;
+
       let victim = "Anyone";
+
       if (chore.assignee) {
         victim = chore.assignee;
       }
-      console.log("here is the victim:", victim)
+
       let newTodo = {
         todo: chore.chore,
         date: Date.now(),
@@ -163,9 +173,9 @@ export default {
         complete: false,
         house_key: chore.house_key,
       };
-      console.log(newTodo);
-      try {this.$store.dispatch("addTodo", newTodo)}
-      catch{alert("Something went wrong!")}
+
+      this.$store.dispatch("addTodo", newTodo)
+      
     },
   },
 };

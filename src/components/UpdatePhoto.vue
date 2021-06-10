@@ -6,35 +6,34 @@
           Upload Photo
         </v-btn>
       </template>
-      <v-card>
-        <v-card-title>
-          <span class="headline">Upload a photo</span>
+      <v-card class="orange lighten-5">
+        <v-card-title class="headline">
+          Upload a Photo
         </v-card-title>
         <v-card-text>
           <v-container>
-            <div>
-              <input type="file" @change="previewImage" accept="image/*" />
-            </div>
-            <div>
-              <p>
+            
+            <v-btn color="orange lighten-1" @click="$refs.inputUpload.click()">Select Photo</v-btn>
+              <input v-show="false"  ref="inputUpload" type="file" @change="previewImage" accept="image/*" />
+            <div v-if="imageData != null">
                 Progress: {{ uploadValue.toFixed() + "%" }}
                 <progress
                   id="progress"
                   :value="uploadValue"
                   max="100"
+                  color="orange" 
                 ></progress>
-              </p>
             </div>
             <div v-if="imageData != null">
-              <img class="preview" :src="picture" />
+              <img class="preview" :src="this.picture" />
               <br />
-              <button @click="onUpload">Upload</button>
+              <v-btn class="orange lighten-1" v-bind="attrs" v-on="on" @click="onUpload">Upload</v-btn>
             </div>
           </v-container>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="dialog = false">
+          <v-btn color="orange darken-3" text @click="dialog = false">
             Close
           </v-btn>
         </v-card-actions>
@@ -94,4 +93,5 @@ export default {
 .preview {
   height: 100px;
 }
+
 </style>
