@@ -49,6 +49,13 @@
 
     <AddChore @addThisChorePlease="setChore" />
 
+     <TodoFromChoreCheck
+        @closeTodoModalPlease="addTodo = false"
+        @makeATodoPlease="addTodoFromChore"
+        v-if="addTodo"
+        :chore="this.clickedChore"
+      />
+
 
       <ChoreInfo
         persistent
@@ -65,14 +72,14 @@
 <script>
 import AddChore from "../components/AddChore.vue";
 import ChoreInfo from "../components/ChoreInfo.vue";
-// import TodoFromChoreCheck from "./Modals/TodoFromChoreCheck.vue";
+import TodoFromChoreCheck from "./Modals/TodoFromChoreCheck.vue";
 
 export default {
   name: "Home",
   components: {
     AddChore,
     ChoreInfo,
-    // TodoFromChoreCheck,
+    TodoFromChoreCheck,
   },
   data() {
     return {
@@ -81,6 +88,7 @@ export default {
       clickedChore: {},
       choreToAdd: {},
       modals: false,
+      addTodo: false,
       users: this.$store.state.usersInSameHouse,
     };
   },
@@ -125,9 +133,8 @@ export default {
       console.log(this.modals)
     },
 
-    showAddTodoModal(chore) {
-      this.clickedChore = chore;
-      this.modals.AddTodo = true;
+    showAddTodoModal() {
+      this.addTodo = !this.addTodo;
     },
 
     async deleteChore(choreID) {
@@ -149,13 +156,15 @@ export default {
     },
 
     addTodoFromChore(chore) {
-      console.log(chore);
-      this.modals.AddTodo = false;
+
+      this.addTodo = false;
+
       let victim = "Anyone";
+
       if (chore.assignee) {
         victim = chore.assignee;
       }
-      console.log("here is the victim:", victim)
+
       let newTodo = {
         todo: chore.chore,
         date: Date.now(),
@@ -164,9 +173,9 @@ export default {
         complete: false,
         house_key: chore.house_key,
       };
-      console.log(newTodo);
-      try {this.$store.dispatch("addTodo", newTodo)}
-      catch{alert("Something went wrong!")}
+
+      this.$store.dispatch("addTodo", newTodo)
+      
     },
   },
 };
