@@ -118,7 +118,7 @@ export default {
     },
 
     closeModalEmitter() {
-      this.$emit("closeModalPlease");
+      this.$emit("closeInfoModalPlease");
     },
 
     passChoreAndCloseDelete(choreID) {

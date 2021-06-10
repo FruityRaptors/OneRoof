@@ -3,7 +3,7 @@
     <v-card class="brown lighten-5">
       <v-card-title class="headline"> Delete Chore </v-card-title>
       <v-card-text
-        >Are you sure you would like to delete {{ this.choreID }}</v-card-text
+        >Are you sure you would like to delete {{ this.choreID }}?</v-card-text
       >
       <v-card-actions>
         <v-spacer></v-spacer>
