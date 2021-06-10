@@ -7,13 +7,13 @@
           <v-card-title v-if="this.assignee"
             >Currently assigned to: {{ this.assignee }}</v-card-title
           >
-          <v-card-title v-else class="text-h5"
+          <v-card-title v-else
             >This chore is not currently assigned</v-card-title
           >
         </v-card>
 
         <v-container>
-          <v-card elevation="0">
+          <v-card elevation="0" class="orange lighten-5">
             <v-card-text class="text--primary" v-if="this.assignee">Assign Manually</v-card-text>
             <v-card-text class="text--primary" v-else>Reassign Manually</v-card-text>
             <v-select
@@ -34,7 +34,7 @@
 
           <v-divider></v-divider>
 
-          <v-card elevation="0">
+          <v-card elevation="0" class="orange lighten-5">
 
             <v-card-text 
             v-if="this.assignee"
@@ -53,7 +53,7 @@
               >
             </v-container>
             <v-list-item-subtitle class="text-center">The lucky winner is...</v-list-item-subtitle>
-            <v-divider class="mb-3 mt-3"></v-divider>
+         
             <div v-if="this.newAssigneeRandom" class="scroller">
 
               <VScrollin> {{ this.newAssigneeRandom }} </VScrollin>
@@ -65,6 +65,8 @@
             </div>
 
           </v-card>
+
+          
         </v-container>
         <v-card-actions>
           <v-spacer></v-spacer>
