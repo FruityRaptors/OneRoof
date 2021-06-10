@@ -1,6 +1,6 @@
  <template>
- <v-dialog persistent max-width="95%" :value = "true" >   
-      <v-card class="brown lighten-4">
+ <v-dialog persistent max-width="75%" :value = "true" >   
+      <v-card class="orange lighten-5">
         <v-card-title class="headline">
           Delete Todo
         </v-card-title> 
@@ -13,11 +13,11 @@
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn color="brown lighten-1" text @click="$emit('closeModal')">
+          <v-btn color="orange darken-3" text @click="$emit('closeModal')">
             CANCEL
           </v-btn>
 
-          <v-btn @click="onClickDeleteButton" color="brown lighten-0" text>
+          <v-btn @click="onClickDeleteButton" color="orange darken-3" text>
             DELETE
           </v-btn>
 

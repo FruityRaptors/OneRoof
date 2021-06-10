@@ -1,6 +1,6 @@
  <template>
- <v-dialog persistent max-width="290" :value = "true">   
-      <v-card class="brown lighten-5">
+ <v-dialog persistent max-width="75%" :value="true">   
+      <v-card class="orange lighten-5">
 
         <v-card-title class="headline">
           Edit Todo
@@ -14,11 +14,11 @@
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn color="brown lighten-1" text @click="$emit('closeModal')">
+          <v-btn color="orange darken-3" text @click="$emit('closeModal')">
             CANCEL
           </v-btn>
 
-          <v-btn @click="onClickEditButton" color="brown lighten-0" text>
+          <v-btn @click="onClickEditButton" color="orange darken-3" text>
             SAVE
           </v-btn>
           

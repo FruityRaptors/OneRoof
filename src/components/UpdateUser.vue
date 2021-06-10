@@ -6,7 +6,9 @@
           Update Info
         </v-btn>
       </template>
-      <v-card>
+
+      
+      <v-card class="orange lighten-5">
         <v-card-title>
           <span class="headline">User Profile</span>
         </v-card-title>
@@ -38,10 +40,10 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="dialog = false">
+          <v-btn color="orange darken-3" text @click="dialog = false">
             Close
           </v-btn>
-          <v-btn color="blue darken-1" text @click="updateUsername">
+          <v-btn color="orange darken-3" text @click="updateUsername">
             Save Changes
           </v-btn>
         </v-card-actions>

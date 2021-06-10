@@ -1,15 +1,15 @@
 <template>
 <div>
 
-  <v-dialog persistent max-width="290" :value = "true" >  
-   <v-card class="brown lighten-5">
+  <v-dialog persistent max-width="50%" :value="true" >  
+   <v-card class="orange lighten-5">
 
          <v-card-title class="headline">
           Assign Todo
         </v-card-title>
     
-     <v-list class="brown lighten-5">
-      <div id="name-container" class="brown lighten-5">
+     <v-list class="orange lighten-5">
+      <div id="name-container" class="orange lighten-5">
         <v-list-item v-for="user in users" :key="user.id" :value="user">
           <v-list-item-title @click="assignUser(user.username)">
             {{ user.username }}
