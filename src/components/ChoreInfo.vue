@@ -1,52 +1,72 @@
  <template>
-  <v-dialog max-width="344" :value="true">
-    <v-card class="mx-auto brown lighten-5" max-width="344">
-      <v-card-text>
-        <p class="display-1 text--primary">{{ this.chore.chore }}</p>
-        <div class="text--primary">
+
+  <v-dialog :value="true">
+
+    <v-card class="mx-auto orange lighten-5 text-center" >
+
+      
+        <v-card-text class="display-1 text--primary pt-4">{{ this.chore.chore }}</v-card-text>
+
+        <v-card-text class="pl-3">
           {{ this.chore.description }}
-        </div>
-        <div v-if="this.chore.assignee">
-          <Avatar
+        </v-card-text>
+
+        <v-container class="ml-5" v-if="this.chore.assignee">
+
+        <v-avatar size="80" class="mr-10">
+        <Avatar
             :src="this.$store.state.user.photo_url"
             :username="this.chore.assignee"
             :size="80"
           />
-          <p>
+        </v-avatar>
+          
+          <v-card-subtitle class="mr-10">
             This chore is currently assigned to:
-            <strong>{{ this.chore.assignee }}</strong>
-          </p>
-        </div>
-        <div v-else>
-          <Avatar :username="this.unknown" />
-          <p>This chore is currently <strong>unassigned!</strong></p>
-        </div>
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
+            <v-card-text>{{ this.chore.assignee }}</v-card-text>
+          </v-card-subtitle>
+
+        </v-container>
+
+        <v-container v-else>
+          <v-avatar>
+             <Avatar :username="this.unknown" />
+          </v-avatar>
+
+          <v-card-text>This chore is currently unassigned</v-card-text>
+        </v-container>
+     
+
+      <v-card-actions class="d-flex justify-space-around">
+
         <v-btn
           v-if="this.chore.assignee"
           @click="openAssignModal"
           text
-          color="deep-purple accent-4"
+          color="orange darken-4"
         >
           Reassign
         </v-btn>
+
         <v-btn
           v-else
           @click="openAssignModal"
           text
-          color="deep-purple accent-4"
+          color="orange darken-3"
         >
           Assign
         </v-btn>
-        <v-btn text color="deep-purple accent-4" @click="openDeleteModal">
+
+        <v-btn text color="orange darken-3" @click="openDeleteModal">
           Delete
         </v-btn>
-        <v-btn text color="deep-purple accent-4" @click="closeModalEmitter">
+
+        <v-btn text color="orange darken-3" @click="closeModalEmitter">
           Close
         </v-btn>
+
       </v-card-actions>
+
     </v-card>
     <DeleteChoreCheck
       @deleteChorePlease="passChoreAndCloseDelete"
@@ -61,6 +81,7 @@
     :chore="this.chore"
     />
   </v-dialog>
+
 </template>
 
 <script>
