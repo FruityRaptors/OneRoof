@@ -49,7 +49,8 @@
             <v-list-item-subtitle>
               {{ todo.victimid }}
             </v-list-item-subtitle>
-            <v-list-item-subtitle>
+            <v-list-item-subtitle >
+              <!-- THIS IS THE RELATIVE CLASS: :class="{ 'red-text-class': !todo.date.contains('days')} " -->
               {{ todo.date }}
             </v-list-item-subtitle>
           </v-list-item-content>
@@ -107,7 +108,8 @@
 
 <script>
 import TodoMenu from "../components/TodoMenu.vue";
-import moment from "moment";
+/* import moment from "moment"; */
+import { DateTime } from "luxon";
 
 export default {
   name: "Home",
@@ -140,7 +142,7 @@ export default {
       let newTodo = {
         // id:
         todo: this.newTodoMessage,
-        date: moment(),
+        date: DateTime.now().toISO(),
         victimid: "Everyone",
         creatorid: this.$store.state.user.username,
         complete: false,
@@ -200,12 +202,11 @@ export default {
   computed: {
     checkTodos: function () {
       let todos = this.$store.state.todos;
-      let now = moment()
-      console.log(now)
       for (let todo of todos) {
-        todo.date = moment(todo.date).format('dddd')
+        let timestamp = todo.date
+        let timeFromThen = DateTime.fromISO(timestamp).toRelative({days: 1})
+        todo.date = timeFromThen
       }
-      console.log("here's what we're returning:", todos)
       return todos;
     },
   },
@@ -219,6 +220,10 @@ export default {
   top: 50%;
   transform: translate(-50%, -50%);
   opacity: 0.5;
+}
+
+.red-text-class {
+  border: 2px solid red
 }
 
 #icon-todo {
