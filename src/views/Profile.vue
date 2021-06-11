@@ -24,7 +24,8 @@
 
 
         <v-avatar size="83" class="mb-3" >
-                <Avatar :src="this.$store.state.user.photo_url" :username="this.$store.state.user.username" :size="83"></Avatar>
+                <Avatar v-if="!this.$store.state.user.photo_url" :username="this.$store.state.user.username" :size="83"></Avatar>
+                <v-img v-else :src="this.$store.state.user.photo_url"></v-img>
         </v-avatar>
   
     </v-list-item>
