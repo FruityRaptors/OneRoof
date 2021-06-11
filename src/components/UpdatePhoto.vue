@@ -41,7 +41,7 @@
             Close
           </v-btn>
 
-          <v-btn v-if="imageData != null" color="orange darken-3" text @click="onUpload ; selectPhoto=true ; progressBar=true" >
+          <v-btn v-if="imageData != null" color="orange darken-3" text @click="onUpload" >
             Upload
           </v-btn>
         </v-card-actions>
@@ -61,7 +61,7 @@ export default {
     picture: null,
     uploadValue: 0,
     selectPhoto: true,
-    progressBar: true,
+    progressBar: false,
   }),
   methods: {
     previewImage(event) {
@@ -73,6 +73,7 @@ export default {
     },
 
     onUpload() {
+      this.progressBar=true;
       this.picture = null;
       console.log(this.imageData)
       const storageRef = firebase
@@ -95,6 +96,7 @@ export default {
             this.picture = url;
             this.$store.dispatch("updateUserPhoto", { url: url, email: email})
           });
+          this.selectPhoto=true;
         }
       );
     },
