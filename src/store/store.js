@@ -463,6 +463,7 @@ export default new Vuex.Store({
         getUsersByHousekey(house_keys:"${house_key}"){
           username
           id
+          photo_url
         }
       }
       `
