@@ -16,7 +16,12 @@
     <!-- Add todo input field ends-->
 
     <!-- todo list platform -->
-    <v-list v-if="checkTodos.length" class="pa-0 orange lighten-5" two-line flat>
+    <v-list
+      v-if="checkTodos.length"
+      class="pa-0 orange lighten-5"
+      two-line
+      flat
+    >
       <!-- Each Todo in Todo list -->
       <div
         id="todo-container"
@@ -49,6 +54,8 @@
             <v-list-item-subtitle>
               {{ todo.victimid }}
             </v-list-item-subtitle>
+
+            <v-list-item-subtitle> {{ todo.date }} </v-list-item-subtitle>
           </v-list-item-content>
           <!-- Todo list text ends -->
 
@@ -66,24 +73,6 @@
                     </v-checkbox>
                   </v-list-item-action>
                   <!-- Todo tick box ends -->
-
-                  <!-- Todo list text -->
-                  <v-list-item-content>
-                    <v-list-item-title
-                      :class="{ 'text-decoration-line-through': todo.complete }"
-                    >
-                      {{ todo.todo }}
-                    </v-list-item-title>
-
-                    <v-list-item-subtitle>
-                      {{ todo.victimid }}
-                    </v-list-item-subtitle>
-                    <v-list-item-subtitle>
-                      <!-- THIS IS THE RELATIVE CLASS: :class="{ 'red-text-class': !todo.date.contains('days')} " -->
-                      {{ todo.date }}
-                    </v-list-item-subtitle>
-                  </v-list-item-content>
-                  <!-- Todo list text ends -->
 
                   <v-list-item-action>
                     <!-- Assignee Dropdown Starts -->
@@ -199,7 +188,10 @@ export default {
       };
 
       await this.$store.dispatch("addTodo", newTodo);
-      await this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0]);
+      await this.$store.dispatch(
+        "getTodos",
+        this.$store.state.user.house_keys[0]
+      );
 
       this.newTodoMessage = "";
     },
