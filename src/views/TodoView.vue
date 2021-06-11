@@ -16,12 +16,12 @@
     <!-- Add todo input field ends-->
 
     <!-- todo list platform -->
-    <v-list v-if="checkTodo.length" class="pa-0 orange lighten-5" two-line flat>
+    <v-list v-if="checkTodos.length" class="pa-0 orange lighten-5" two-line flat>
       <!-- Each Todo in Todo list -->
       <div
         id="todo-container"
         class="orange lighten-4"
-        v-for="todo in checkTodo"
+        v-for="todo in checkTodos"
         :key="todo.id"
       >
         <v-list-item

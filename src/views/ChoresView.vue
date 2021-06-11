@@ -128,15 +128,18 @@ export default {
       this.clickedChore = chore;
       this.modals = !this.modals;
     },
+    
+    showAddTodoModal(chore) {
+      this.clickedChore = chore;
+      this.addTodo = !this.addTodo;
+    },
 
     modalToggle(){
       this.modals = !this.modals
       console.log(this.modals)
     },
 
-    showAddTodoModal() {
-      this.addTodo = !this.addTodo;
-    },
+    
 
     async deleteChore(choreID) {
       this.$store.state.chores = this.$store.state.chores.filter(
@@ -160,7 +163,7 @@ export default {
 
       this.addTodo = false;
 
-      let victim = "Anyone";
+      let victim = "Everyone";
 
       if (chore.assignee) {
         victim = chore.assignee;
