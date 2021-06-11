@@ -73,6 +73,7 @@
 import AddChore from "../components/AddChore.vue";
 import ChoreInfo from "../components/ChoreInfo.vue";
 import TodoFromChoreCheck from "./Modals/TodoFromChoreCheck.vue";
+import { DateTime } from "luxon"
 
 export default {
   name: "Home",
@@ -155,7 +156,7 @@ export default {
       this.updateChores();
     },
 
-    addTodoFromChore(chore) {
+    async addTodoFromChore(chore) {
 
       this.addTodo = false;
 
@@ -164,18 +165,24 @@ export default {
       if (chore.assignee) {
         victim = chore.assignee;
       }
-
       let newTodo = {
         todo: chore.chore,
-        date: Date.now(),
+        date: DateTime.now().toISO(),
         victimid: victim,
         creatorid: chore.id,
         complete: false,
         house_key: chore.house_key,
       };
-
-      this.$store.dispatch("addTodo", newTodo)
-      
+      console.log(newTodo);
+      try {
+        await this.$store.dispatch("addTodo", newTodo);
+        await this.$store.dispatch(
+          "getTodos",
+          this.$store.state.user.house_keys[0]
+        );
+      } catch {
+        alert("Something went wrong!");
+      }
     },
   },
 };
