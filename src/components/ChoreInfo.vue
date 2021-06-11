@@ -1,4 +1,4 @@
- <template>
+<template>
 
   <v-dialog :value="true">
 
@@ -11,7 +11,7 @@
           {{ this.chore.description }}
         </v-card-text>
 
-        <v-container class="ml-5" v-if="this.chore.assignee">
+        <v-container class="ml-5" v-if="this.chore.assignee != 'Everyone'">
 
         <v-avatar size="80" class="mr-10">
         <Avatar
@@ -40,7 +40,7 @@
       <v-card-actions class="d-flex justify-space-around">
 
         <v-btn
-          v-if="this.chore.assignee"
+          v-if="this.chore.assignee != 'Everyone'"
           @click="openAssignModal"
           text
           color="orange darken-4"

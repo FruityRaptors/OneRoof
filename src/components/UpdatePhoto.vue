@@ -13,7 +13,7 @@
         <v-card-text>
           <v-container>
             
-            <v-btn color="orange lighten-1" @click="$refs.inputUpload.click()">Select Photo</v-btn>
+            <v-btn v-if="selectPhoto" color="orange lighten-1" @click="$refs.inputUpload.click()">Select Photo</v-btn>
               <input v-show="false"  ref="inputUpload" type="file" @change="previewImage" accept="image/*" />
             <div v-if="imageData != null">
                 Progress: {{ uploadValue.toFixed() + "%" }}
@@ -24,17 +24,21 @@
                   color="orange" 
                 ></progress>
             </div>
-            <div v-if="imageData != null">
+            <div v-if="imageData != null" class="d-flex justify-center " >
               <img class="preview" :src="this.picture" />
-              <br />
-              <v-btn class="orange lighten-1" v-bind="attrs" v-on="on" @click="onUpload">Upload</v-btn>
             </div>
+      
           </v-container>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="orange darken-3" text @click="dialog = false">
+
+          <v-btn color="orange darken-3" text @click="dialog=false ; selectPhoto=true ; picture=null ; imageData=null">
             Close
+          </v-btn>
+
+          <v-btn v-if="imageData != null" color="orange darken-3" text @click="onUpload ; selectPhoto=true" >
+            Upload
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -52,16 +56,20 @@ export default {
     imageData: null,
     picture: null,
     uploadValue: 0,
+    selectPhoto: true,
   }),
   methods: {
     previewImage(event) {
+      this.selectPhoto = false;
       this.uploadValue = 0;
       this.picture = null;
+      this.picture = URL.createObjectURL(event.target.files[0])
       this.imageData = event.target.files[0];
     },
 
     onUpload() {
       this.picture = null;
+      console.log(this.imageData)
       const storageRef = firebase
         .storage()
         .ref(`${this.imageData.name}`)

@@ -5,10 +5,10 @@
   >
     <v-list-item three-line>
       <v-list-item-content>
-        <v-list-item-title class="title mt-6 text-decoration-underline font-weight-bold">
+        <v-list-item-title class="title mt-6  font-weight-bold">
           {{ this.username }}'s Profile 
         </v-list-item-title>
-        <v-list-item-subtitle class="font-weight-normal mb-2 text-decoration-underline">
+        <v-list-item-subtitle class="font-weight-normal mb-2 ">
           {{ this.houseName }}
         </v-list-item-subtitle>
         <v-list-item-title class="font-weight-bold ml-3">{{this.houseName}}</v-list-item-title>
@@ -22,17 +22,17 @@
 
       
 
-      <v-list-item-avatar
-        rounded="circle"
-        size="83">
-        <Avatar :src="this.$store.state.user.photo_url" :username="this.$store.state.user.username" :size="83"></Avatar>
-      </v-list-item-avatar>
+
+        <v-avatar size="83" class="mb-3" >
+                <Avatar :src="this.$store.state.user.photo_url" :username="this.$store.state.user.username" :size="83"></Avatar>
+        </v-avatar>
+  
     </v-list-item>
 
        <v-divider></v-divider>
       
       <v-card class="text-center orange lighten-4 pa-3 mb-3" elevation="0">
-       <v-list-item-subtitle class="font-weight-bold mt-4 text-decoration-underline d-flex justify-center ">
+       <v-list-item-subtitle class="font-weight-bold mt-4  d-flex justify-center title ">
           Invite people to your home!
         </v-list-item-subtitle>
         <v-btn
@@ -49,7 +49,7 @@
          <v-divider></v-divider>
 
     <v-card class="d-flex justify-center orange lighten-4" elevation="0">
-        <v-list-item-subtitle class="font-weight-bold mt-4 text-decoration-underline d-flex justify-center">
+        <v-list-item-subtitle class="font-weight-bold mt-4  d-flex justify-center">
           Personal Info
         </v-list-item-subtitle>
     </v-card>
@@ -57,20 +57,20 @@
 
     <v-list-item two-line>
       <v-list-item-content>
-        <v-list-item-subtitle class=" text-decoration-underline font-weight-bold mb-2">
+        <v-list-item-subtitle class="font-weight-bold mb-2 text--primary">
           Username
         </v-list-item-subtitle>
-        <v-list-item-subtitle class="font-weight-normal pl-4">{{this.username}}</v-list-item-subtitle>
+        <v-list-item-subtitle class="font-weight-normal pl-4 text--primary">{{this.username}}</v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
 
     <v-list-item two-line>
       <v-list-item-content>
 
-        <v-list-item-subtitle class="text-decoration-underline font-weight-bold mb-2">
+        <v-list-item-subtitle class=" font-weight-bold mb-2 text--primary">
           Email
         </v-list-item-subtitle>
-        <v-list-item-subtitle class="font-weight-normal pl-4">{{this.email}}</v-list-item-subtitle>
+        <v-list-item-subtitle class="font-weight-normal pl-4 text--primary">{{this.email}}</v-list-item-subtitle>
 
       </v-list-item-content>
     </v-list-item>

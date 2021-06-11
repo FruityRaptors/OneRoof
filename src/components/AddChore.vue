@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center mt-5">
+  <v-row justify="center" class="mt-5">
     <v-dialog v-model="dialog" persistent max-width="600px">
 
       <template v-slot:activator="{ on, attrs }">
@@ -67,7 +67,7 @@ export default {
     chore: {
       chore: "",
       description: "",
-      assignee: "",
+      assignee: "Everyone",
     },
   }),
   mounted() {
