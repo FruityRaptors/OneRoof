@@ -53,7 +53,7 @@
     <v-footer
       class=""
       rounded
-      max-height="100"
+      max-height="65"
       color="orange lighten-4"
       padless
       fixed
@@ -63,15 +63,19 @@
           type="text"
           v-model="inputMessage"
           placeholder="Write your message..."
-          @keyup.enter="sendMessage(); $vuetify.goTo(99999)"
+          dense
+          rounded
+          filled
+          @keyup.enter="sendMessage(); ; $vuetify.goTo(99999)"
         />
         <v-btn 
-        class="mr-2 orange lighten-4"
+        class="mr-2 mb-3 orange lighten-4"
         fab
         @click.prevent="sendMessage(); ; $vuetify.goTo(99999)"
         elevation="0"
         >
           <v-icon
+          size="30"
           color="orange darken-1"
           >
         mdi-send
