@@ -67,6 +67,7 @@
 import AddChore from "../components/AddChore.vue";
 import ChoreInfo from "../components/ChoreInfo.vue";
 import TodoFromChoreCheck from "./Modals/TodoFromChoreCheck.vue";
+import { DateTime } from "luxon"
 
 export default {
   name: "Home",
@@ -156,7 +157,7 @@ export default {
       console.log("here is the victim:", victim);
       let newTodo = {
         todo: chore.chore,
-        date: Date.now(),
+        date: DateTime.now().toISO(),
         victimid: victim,
         creatorid: chore.id,
         complete: false,
