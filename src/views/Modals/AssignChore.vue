@@ -109,11 +109,16 @@ export default {
       this.$emit("closeAssignModalPlease");
     },
     assignChoreAndClose() {
-      let newAssignee = "";
+      let newAssignee= {}
       if (this.newAssignee) {
-        newAssignee = this.newAssignee;
+        newAssignee.username = this.newAssignee;
       } else if (this.newAssigneeRandom) {
-        newAssignee = this.newAssigneeRandom;
+        newAssignee.username = this.newAssigneeRandom;
+      }
+      for (let user of this.users) {
+        if (user.username === newAssignee.username) {
+          newAssignee.photo_url = user.photo_url
+        }
       }
       this.$emit("assignChorePlease", newAssignee);
     },
