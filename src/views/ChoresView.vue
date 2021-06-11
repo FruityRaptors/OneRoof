@@ -84,7 +84,6 @@ export default {
   data() {
     return {
       currentUser: {},
-      chores: [],
       clickedChore: {},
       choreToAdd: {},
       modals: false,
@@ -106,7 +105,6 @@ export default {
       if (this.choreToAdd.chore) {
         await this.addChoreAndGetChore();
       }
-      this.chores = this.$store.state.chores;
     },
 
     async addChoreAndGetChore() {
@@ -118,7 +116,7 @@ export default {
         creatorid: this.currentUser.id,
         house_key: this.currentUser.house_keys[0],
       };
-      console.log('logging new chore', newChore)
+      
       await this.$store.dispatch("addNewChore", newChore);
       await this.$store.dispatch("getChores", newChore.house_key);
     },
@@ -130,7 +128,6 @@ export default {
 
     modalToggle(){
       this.modals = !this.modals
-      console.log(this.modals)
     },
 
     showAddTodoModal() {
@@ -141,10 +138,7 @@ export default {
       this.$store.state.chores = this.$store.state.chores.filter(
         (chore) => chore.id !== choreID
       );
-      this.chores = this.$store.state.chores;
-
       await this.$store.dispatch("deleteChore", choreID);
-      this.chores = this.$store.state.chores;
       this.modals = false;
     },
     // let's wrap this in a async wrapper
@@ -152,7 +146,7 @@ export default {
       this.modals = false;
       await this.$store.dispatch("updateChore", choreInfo);
       await this.$store.dispatch("getChores", this.currentUser.house_keys[0]);
-      this.updateChores();
+   
     },
 
     addTodoFromChore(chore) {
@@ -175,9 +169,14 @@ export default {
       };
 
       this.$store.dispatch("addTodo", newTodo)
-      
+
     },
   },
+  computed: {
+    chores: function(){
+      return this.$store.state.chores
+    }
+  }
 };
 </script>
 

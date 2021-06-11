@@ -1,9 +1,9 @@
 <template>
-<v-container>
+<v-card elevation="0 fill-height">
 
 <!-- Name list view -->
 
-<v-card v-if="dming === false">
+<v-card v-if="dming === false" elevation="0">
     <v-card v-for="user in users" :key="user.id" class="d-flex orange lighten-4" elevation="0" @click="checkDmTarget(user)">
          <v-avatar size="30" class="ml-3 mt-5">
              <Avatar :src="user.photo_url" :username="user.username" :size="30"></Avatar>
@@ -23,7 +23,7 @@
 
 <!-- Chat View -->
 
-</v-container>
+</v-card>
 </template>
 
 <script>

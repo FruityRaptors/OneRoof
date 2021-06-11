@@ -1,4 +1,6 @@
- <template>
+ 
+<template>
+
   <v-dialog persistent max-width="290" :value="true">
     <v-card class="orange lighten-5">
       <v-card-title class="headline"> Delete Chore </v-card-title>
@@ -16,7 +18,9 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
+
 </template>
+
 
 <script>
 export default {

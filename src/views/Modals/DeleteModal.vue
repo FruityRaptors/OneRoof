@@ -1,4 +1,4 @@
- <template>
+<template>
  <v-dialog persistent max-width="75%" :value = "true" >   
       <v-card class="orange lighten-5">
         <v-card-title class="headline">
@@ -24,7 +24,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
- </template>
+</template>
 
 <script>
  export default {
