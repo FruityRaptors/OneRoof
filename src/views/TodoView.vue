@@ -199,10 +199,7 @@ export default {
       };
 
       await this.$store.dispatch("addTodo", newTodo);
-      await this.$store.dispatch(
-        "getTodos",
-        this.$store.state.user.house_keys[0]
-      );
+      await this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0]);
 
       this.newTodoMessage = "";
     },

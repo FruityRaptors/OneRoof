@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="orange lighten-2 black--text mb-5" rounded dark v-bind="attrs" v-on="on">
+        <v-btn color="orange lighten-2 black--text mb-5" rounded dark v-bind="attrs" v-on="on" @click="progressBar=false">
           Upload Photo
         </v-btn>
       </template>
@@ -15,7 +15,7 @@
             
             <v-btn v-if="selectPhoto" color="orange lighten-1" @click="$refs.inputUpload.click()">Select Photo</v-btn>
               <input v-show="false"  ref="inputUpload" type="file" @change="previewImage" accept="image/*" />
-            <div v-if="imageData != null">
+            <div v-if="progressBar">
                 Progress: {{ uploadValue.toFixed() + "%" }}
                 <progress
                   id="progress"
@@ -33,7 +33,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn v-if="imageData != null" color="orange darken-3" text @click="onUpload">
+          <v-btn v-if="imageData != null" color="orange darken-3" text @click="$refs.inputUpload.click()">
             Reselect
           </v-btn>
 
@@ -41,7 +41,7 @@
             Close
           </v-btn>
 
-          <v-btn v-if="imageData != null" color="orange darken-3" text @click="onUpload ; selectPhoto=true" >
+          <v-btn v-if="imageData != null" color="orange darken-3" text @click="onUpload ; selectPhoto=true ; progressBar=true" >
             Upload
           </v-btn>
         </v-card-actions>
@@ -61,6 +61,7 @@ export default {
     picture: null,
     uploadValue: 0,
     selectPhoto: true,
+    progressBar: true,
   }),
   methods: {
     previewImage(event) {
