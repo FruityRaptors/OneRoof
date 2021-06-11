@@ -354,6 +354,7 @@ export default new Vuex.Store({
                 date
                 complete
                 house_key
+                assigneeURL
               }
             }`
           }
@@ -583,6 +584,7 @@ export default new Vuex.Store({
                 chore
                 description
                 house_key
+                assigneeURL
               }
             }`
           }
