@@ -171,7 +171,8 @@ export default {
         house_key: chore.house_key,
       };
 
-      this.$store.dispatch("addTodo", newTodo)
+      await this.$store.dispatch("addTodo", newTodo);
+      await this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0]);
 
     },
   },
