@@ -15,9 +15,12 @@ export class Todos extends BaseEntity {
     })
     todo: string;
 
-    // @Field(() => Number)
-    // @Column()
-    // category: number;
+    @Field(() => String)
+    @Column({
+        nullable: true
+    }
+    )
+    assigneeURL: string;
 
     @Field(() => String)
     @Column({

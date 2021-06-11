@@ -43,4 +43,11 @@ export class Chores extends BaseEntity {
     @Column()
     creatorid: string;
 
+    @Field(() => String)
+    @Column({
+        nullable: true
+    }
+    )
+    assigneeURL: string;
+
 } 
