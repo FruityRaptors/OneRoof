@@ -359,8 +359,9 @@ export default new Vuex.Store({
           }
         })
           .then((response) => {
-            console.log("Received todos from server...")
+            
             let todosByHouse = response.data.data.getTodosByHouse
+            console.log("Received todos from server...", todosByHouse)
             context.commit("addTodosToList", todosByHouse)
             return todosByHouse
           }).then((todosByHouse) => {
@@ -462,6 +463,7 @@ export default new Vuex.Store({
         getUsersByHousekey(house_keys:"${house_key}"){
           username
           id
+          photo_url
         }
       }
       `

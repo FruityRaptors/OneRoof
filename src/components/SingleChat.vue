@@ -1,8 +1,8 @@
 <template>
-    <v-container>
+    <v-card class="orange lighten-5 fill-height">
 
 <!-- Top bar for going back  -->
-    <v-chip color="orange lighten-3" class="mb-4 d-flex">
+    <v-chip color="orange lighten-3" class="ma-4 mt-7 d-flex">
        <v-avatar color="orange lighten-4" @click="$emit('back')">
          <v-icon >
              mdi-arrow-left
@@ -10,11 +10,9 @@
        </v-avatar>
        
 
-         <v-card-subtitle class="d-flex">
-         Messaging... {{user}}
-        </v-card-subtitle>
-
-
+          <v-card-subtitle class="d-flex">
+              Messaging... {{user}}
+          </v-card-subtitle>
     </v-chip>
 <!-- Top bar for going back  -->
    
@@ -102,7 +100,7 @@
     </v-footer>
    
 <!-- input and send section start -->
-    </v-container>
+    </v-card>
 </template>
 
 <script>
