@@ -31,9 +31,9 @@
 
     </v-list>
    </v-menu>
-   <AssignMenu v-if="modals.assignTodo" :todo="todo" @closeModal="modals.assignTodo = false" @console="consolelogger"       />
-   <DeleteModal v-if="modals.deleteTodo" :todo="todo" @closeModal="modals.deleteTodo = false" @console="consolelogger" />
-   <EditModal v-if="modals.editTodo" :todo="todo" @closeModal="modals.editTodo = false" @console="consolelogger" />
+   <AssignMenu v-if="modals.assignTodo" :todo="todo" @closeModal="modals.assignTodo = false"       />
+   <DeleteModal v-if="modals.deleteTodo" :todo="todo" @closeModal="modals.deleteTodo = false" />
+   <EditModal v-if="modals.editTodo" :todo="todo" @closeModal="modals.editTodo = false" />
 
 </div>
 </template>
@@ -61,13 +61,11 @@ export default {
         users: this.$store.state.usersInSameHouse, 
         features: [
           { name: 'Assign', icon:'mdi-account-plus', click() { 
-              console.log("Assign")
               this.$emit('optionClicked')
               this.modals.assignTodo = true
               } 
         },
           { name: 'Edit', icon:'mdi-square-edit-outline', click() { 
-            console.log("Edit Clicked")
             this.$emit('optionClicked')
             this.modals.editTodo = true
             } 
@@ -84,9 +82,6 @@ export default {
     methods: {
         onClick(idx) {
             this.features[idx].click.call(this)
-        },
-        consolelogger(){
-            console.log("consolelogger", this.$store.state.currentTodoMessage)
         },
     }
   }
