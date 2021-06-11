@@ -1,10 +1,11 @@
 <template>
     <v-card class="mx-auto mt-5 orange lighten-5" elevation="0" max-width="95%">
+
         <v-card class="d-flex justify-center orange lighten-5" elevation="0" >
             <v-card-title class="font-weight-bold"> Modules Settings </v-card-title>
         </v-card>
 
-        <v-list v-for="(module, key) in modules" :key="module.id" elevation="0" >
+        <v-list v-for="(module, key) in modules" :key="module.id" elevation="0">
             <v-list-item @click="updateModule(key)">
             
                 <v-list-item-action>
@@ -19,7 +20,7 @@
         </v-list>
 
         <div class="text-center">
-            <v-btn rounded color="primary" dark @click="submitUpdate">
+            <v-btn class="mt-5" color="orange lighten-1" dark @click="submitUpdate">
                 SUBMIT
             </v-btn>
         </div>
@@ -49,6 +50,8 @@ export default {
                 modules: this.moduleState
             }
            await this.$store.dispatch('updateModules', payload)
+
+           this.$router.push('/yourhome')
 
         }
 
