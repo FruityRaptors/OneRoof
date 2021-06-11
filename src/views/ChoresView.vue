@@ -139,7 +139,7 @@ export default {
       this.chores = this.$store.state.chores;
       this.modals.ChoreInfo = false;
     },
-
+    // let's wrap this in a async wrapper
     async assignChoreAndGetChores(choreInfo) {
       this.modals.ChoreInfo = false;
       await this.$store.dispatch("updateChore", choreInfo);
