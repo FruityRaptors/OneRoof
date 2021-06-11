@@ -55,7 +55,11 @@
               {{ todo.victimid }}
             </v-list-item-subtitle>
 
-            <v-list-item-subtitle> {{ todo.date }} </v-list-item-subtitle>
+            <v-list-item-subtitle
+              :class="{ 'redtext': todo.date.includes('minutes') }"
+            >
+              {{ todo.date }}
+            </v-list-item-subtitle>
           </v-list-item-content>
           <!-- Todo list text ends -->
 
@@ -251,8 +255,8 @@ export default {
   opacity: 0.5;
 }
 
-.red-text-class {
-  border: 2px solid red;
+.redtext {
+  color: red !important;
 }
 
 #icon-todo {
