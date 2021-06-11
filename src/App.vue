@@ -172,9 +172,6 @@ export default {
     }
 
     console.timeEnd("app mounting");
-    
-
-     
   }, //mounted ends
 
   computed: {

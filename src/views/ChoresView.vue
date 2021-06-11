@@ -73,6 +73,7 @@
 import AddChore from "../components/AddChore.vue";
 import ChoreInfo from "../components/ChoreInfo.vue";
 import TodoFromChoreCheck from "./Modals/TodoFromChoreCheck.vue";
+import { DateTime } from "luxon"
 
 export default {
   name: "Home",
@@ -125,14 +126,17 @@ export default {
       this.clickedChore = chore;
       this.modals = !this.modals;
     },
+    
+    showAddTodoModal(chore) {
+      this.clickedChore = chore;
+      this.addTodo = !this.addTodo;
+    },
 
     modalToggle(){
       this.modals = !this.modals
     },
 
-    showAddTodoModal() {
-      this.addTodo = !this.addTodo;
-    },
+    
 
     async deleteChore(choreID) {
       this.$store.state.chores = this.$store.state.chores.filter(
@@ -149,19 +153,18 @@ export default {
    
     },
 
-    addTodoFromChore(chore) {
+    async addTodoFromChore(chore) {
 
       this.addTodo = false;
 
-      let victim = "Anyone";
+      let victim = "Everyone";
 
       if (chore.assignee) {
         victim = chore.assignee;
       }
-
       let newTodo = {
         todo: chore.chore,
-        date: Date.now(),
+        date: DateTime.now().toISO(),
         victimid: victim,
         creatorid: chore.id,
         complete: false,

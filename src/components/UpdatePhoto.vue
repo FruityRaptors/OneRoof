@@ -33,6 +33,10 @@
         <v-card-actions>
           <v-spacer></v-spacer>
 
+          <v-btn v-if="imageData != null" color="orange darken-3" text @click="onUpload">
+            Reselect
+          </v-btn>
+
           <v-btn color="orange darken-3" text @click="dialog=false ; selectPhoto=true ; picture=null ; imageData=null">
             Close
           </v-btn>
