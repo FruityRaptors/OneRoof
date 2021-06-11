@@ -15,7 +15,7 @@
 
         <v-avatar size="80" class="mr-10">
         <Avatar
-            :src="this.$store.state.user.photo_url"
+            :src="this.assigneeURL"
             :username="this.chore.assignee"
             :size="80"
           />
@@ -101,6 +101,7 @@ export default {
   data() {
     return {
       choreID: this.chore.id,
+      assigneeURL: "",
       unknown: "???",
       modals: {
         deleteModalCheck: false,
@@ -128,8 +129,8 @@ export default {
 
     assignChoreAndCloseAssign(assignee) {
       const choreInfo = {
-        newAssignee: assignee,
-        id: this.choreID
+        newAssignee: assignee.username,
+        id: this.choreID,
       }
       this.$emit("assignChorePlease", choreInfo);
       this.modals.assignModalCheck = false;
