@@ -1,5 +1,5 @@
 “This was developed during our time as students at Code Chrysalis”
-<p align="left">
+<p align="center">
     
 <img src="https://user-images.githubusercontent.com/27636896/121767038-ddb09b00-cb90-11eb-8d68-bd371d89602f.png" width=50% height=50%>
     
@@ -7,11 +7,14 @@
 
 # OneRoof - a messaging and organizational app that helps households connect, function, and thrive.
 
-<p align="left">
+<p align="center">
 
-<img  src="https://user-images.githubusercontent.com/27636896/121768098-25d2bc00-cb97-11eb-94ec-c7885551924e.png" width=50% height=50%>
+<img  src="https://user-images.githubusercontent.com/27636896/121768561-bdd1a500-cb99-11eb-80df-76a8a89a9da0.png" width=20% height=20%>
 
+    
+<img  src="https://user-images.githubusercontent.com/27636896/121768456-47cd3e00-cb99-11eb-8e81-200b20f136b8.png" width=20% height=20%>
 </p>
+
 
 **OneRoof** is a fullstack group project application with a fully functional chat system at its core. The application also includes               modules with independent functionality but an interoperable ecosystem.
 
