@@ -1,6 +1,6 @@
 “This was developed during our time as students at Code Chrysalis”
 
-![OneRoof](https://user-images.githubusercontent.com/27636896/121767038-ddb09b00-cb90-11eb-8d68-bd371d89602f.png width=50% height=50%)
+<img src="https://user-images.githubusercontent.com/27636896/121767038-ddb09b00-cb90-11eb-8d68-bd371d89602f.png" width=50% height=50%>
 
 # OneRoof - a messaging and organizational app that helps households connect, function, and thrive.
 
