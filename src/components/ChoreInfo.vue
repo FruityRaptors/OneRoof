@@ -15,11 +15,11 @@
 
         <v-avatar size="150" class="mr-10">
         <Avatar
-            v-if="!this.$store.state.user.photo_url"
+            v-if="this.chore.assigneeURL === 'null'"
             :username="this.chore.assignee"
             :size="80"
           />
-          <v-img v-else :src="this.$store.state.user.photo_url" ></v-img>
+          <v-img v-else :src="this.chore.assigneeURL" ></v-img>
         </v-avatar>
           
           <v-card-subtitle class="mr-10">
@@ -29,9 +29,12 @@
 
         </v-container>
 
-        <v-container v-else>
-          <v-avatar>
-             <Avatar :username="this.unknown" />
+        <v-container v-else >
+          <v-avatar size="150" class="mr-10">
+             <Avatar
+            :username="this.unknown"
+            :size="80"
+          />
           </v-avatar>
 
           <v-card-text>This chore is currently unassigned</v-card-text>
@@ -132,6 +135,7 @@ export default {
       const choreInfo = {
         newAssignee: assignee.username,
         id: this.choreID,
+        assigneeURL: assignee.photo_url
       }
       this.$emit("assignChorePlease", choreInfo);
       this.modals.assignModalCheck = false;

@@ -120,7 +120,7 @@ export default {
           newAssignee.photo_url = user.photo_url
         }
       }
-      this.$emit("assignChorePlease", {newAssignee});
+      this.$emit("assignChorePlease", newAssignee);
     },
 
     randomizeAssignee() {

@@ -41,6 +41,7 @@ export class choreResolvers {
     async updateChoreAssignee(
         @Arg('id') id: number,
         @Arg('newAssignee') newAssignee: string,
+        @Arg('assigneeURL') assigneeURL: string,
     ) {
         let choreToBeUpdated = await Chores.findOne({ where: { id } })
         if (!choreToBeUpdated) {
@@ -48,6 +49,7 @@ export class choreResolvers {
             return
         }
         choreToBeUpdated.assignee = newAssignee
+        choreToBeUpdated.assigneeURL = assigneeURL
         Chores.save(choreToBeUpdated)
         return "Saved!"
     }

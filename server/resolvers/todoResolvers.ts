@@ -45,6 +45,7 @@ export class todoResolvers {
     async updateTodoVictim(
         @Arg('id') id: number,
         @Arg('victimid') victimid: string,
+        @Arg('assigneeURL') assigneeURL: string,
     ){
         let todoToBeUpdated = await Todos.findOne( { where: { id } })
         if(!todoToBeUpdated){
@@ -53,6 +54,7 @@ export class todoResolvers {
         }
 
         todoToBeUpdated.victimid = victimid
+        todoToBeUpdated.assigneeURL = assigneeURL
 
         Todos.save(todoToBeUpdated)
 
