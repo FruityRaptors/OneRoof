@@ -189,6 +189,7 @@ export default {
         creatorid: this.$store.state.user.username,
         complete: false,
         house_key: this.$store.state.user.house_keys[0],
+        assigneeURL: ""
       };
 
       await this.$store.dispatch("addTodo", newTodo);

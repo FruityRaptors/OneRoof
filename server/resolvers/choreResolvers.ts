@@ -22,9 +22,10 @@ export class choreResolvers {
         @Arg('assignee') assignee: string,
         @Arg('creatorid') creatorid: string,
         @Arg('house_key') house_key: string,
+        @Arg('assigneeURL') assigneeURL: string,
     ) {
 
-        Chores.insert({ chore, house_key, description, assignee, creatorid, })
+        Chores.insert({ chore, house_key, description, assignee, creatorid, assigneeURL })
         return "New chore Added!"
     }
 

@@ -443,6 +443,7 @@ export default new Vuex.Store({
               creatorid: "${newTodo.creatorid}",
               complete: ${newTodo.complete},
               house_key: "${newTodo.house_key}",
+              assigneeURL: "${newTodo.assigneeURL}",
             )
           }`
           }
@@ -615,6 +616,7 @@ export default new Vuex.Store({
               assignee: "${newChore.assignee}",
               creatorid: "${newChore.creatorid}",
               house_key: "${newChore.house_key}",
+              assigneeURL: "${newChore.assigneeURL}",
             )
           }`
           }

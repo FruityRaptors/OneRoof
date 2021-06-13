@@ -98,6 +98,7 @@ export default {
   },
   methods: {
     setChore(chore) {
+      console.log("HERE IS THE CHORE TO ADD", chore)
       this.choreToAdd = chore;
       this.updateChores();
     },
@@ -169,6 +170,7 @@ export default {
         creatorid: chore.id,
         complete: false,
         house_key: chore.house_key,
+        assigneeURL: ""
       };
 
       await this.$store.dispatch("addTodo", newTodo);
