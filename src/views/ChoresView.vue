@@ -7,22 +7,20 @@
       :key="chore.id"
     >
       <v-list-item>
-        <v-avatar size="50">
-            <Avatar
-              v-if="chore.assigneeURL === 'null'"
-              :username="chore.assignee"
-              :size="50"
-            ></Avatar>
-             <v-img v-else :src="chore.assigneeURL"></v-img>
-          </v-avatar>
+        <v-avatar v-if="chore.assignee" size="50">
+          <Avatar
+            v-if="chore.assigneeURL === 'null'"
+            :username="chore.assignee"
+            :size="50"
+          ></Avatar>
+          <v-img v-else :src="chore.assigneeURL"></v-img>
+        </v-avatar>
         <!-- Chore list text -->
         <v-list-item-content class="pl-4">
-          
-
           <v-list-item-title>
             {{ chore.chore }}
           </v-list-item-title>
- 
+
           <v-list-item-subtitle v-if="chore.assignee">
             {{ chore.assignee }}
           </v-list-item-subtitle>
@@ -124,7 +122,7 @@ export default {
         assignee: this.choreToAdd.assignee,
         creatorid: this.currentUser.id,
         house_key: this.currentUser.house_keys[0],
-        assigneeURL:this.choreToAdd.assigneeURL
+        assigneeURL: this.choreToAdd.assigneeURL,
       };
 
       await this.$store.dispatch("addNewChore", newChore);
@@ -152,10 +150,10 @@ export default {
       await this.$store.dispatch("deleteChore", choreID);
       this.modals = false;
     },
-    // let's wrap this in a async wrapper
-    async assignChoreAndGetChores(choreInfo) {
+
+    async assignChoreAndGetChores(newAssignee) {
       this.modals = false;
-      await this.$store.dispatch("updateChore", choreInfo);
+      await this.$store.dispatch("updateChore", newAssignee);
       await this.$store.dispatch("getChores", this.currentUser.house_keys[0]);
     },
 
@@ -174,7 +172,7 @@ export default {
         creatorid: chore.id,
         complete: false,
         house_key: chore.house_key,
-        assigneeURL: "",
+        assigneeURL: chore.assigneeURL,
       };
 
       await this.$store.dispatch("addTodo", newTodo);

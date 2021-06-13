@@ -33,6 +33,14 @@
           @click="completeTodo(todo.id)"
           :class="{ 'light-green accent-1': todo.complete }"
         >
+        <v-avatar v-if="todo.victimid" size="50">
+            <Avatar
+              v-if="todo.assigneeURL === 'null'"
+              :username="todo.victimid"
+              :size="50"
+            ></Avatar>
+             <v-img v-else :src="todo.assigneeURL"></v-img>
+          </v-avatar>
           <!-- Todo tick box     -->
           <v-list-item-action>
             <v-checkbox
@@ -56,7 +64,7 @@
             </v-list-item-subtitle>
 
             <v-list-item-subtitle
-              :class="{ 'redtext': todo.date.includes('minutes') }"
+              :class="{ 'redtext': todo.date.includes('day') || todo.date.includes('days') }"
             >
               {{ todo.date }}
             </v-list-item-subtitle>
@@ -150,13 +158,14 @@
 
 <script>
 import TodoMenu from "../components/TodoMenu.vue";
-/* import moment from "moment"; */
+import Avatar from "vue-avatar"
 import { DateTime } from "luxon";
 
 export default {
   name: "Home",
   components: {
     TodoMenu,
+    Avatar,
   },
   data() {
     return {
@@ -229,6 +238,12 @@ export default {
     },
     async setAssignee(value) {
       this.currentTodo.victimid = value;
+      for (let user of this.users) {
+        if (user.username === this.currentTodo.victimid) {
+          this.currentTodo.assigneeURL = user.photo_url
+        }
+      }
+      console.log(this.currentTodo)
       await this.$store.dispatch("updateTodoVictim", this.currentTodo);
     },
   }, // method ends

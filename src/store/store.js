@@ -352,6 +352,7 @@ export default new Vuex.Store({
           .then((response) => {
             
             let todosByHouse = response.data.data.getTodosByHouse
+            console.log("here are all the todos:", todosByHouse)
            
             context.commit("addTodosToList", todosByHouse)
             return todosByHouse
@@ -471,7 +472,8 @@ export default new Vuex.Store({
         mutation{
           updateTodoVictim(
             id: ${selectedTodo.id},
-            victimid: "${selectedTodo.victimid}"
+            victimid: "${selectedTodo.victimid}",
+            assigneeURL: "${selectedTodo.assigneeURL}"
           )
         }`
         }
@@ -612,6 +614,7 @@ export default new Vuex.Store({
     },
 
     async updateChore(context, chore) {
+      console.log("🌈", chore)
       try {
         await axios({
           method: "POST",
@@ -619,7 +622,7 @@ export default new Vuex.Store({
           data: {
             query: `
             mutation {
-              updateChoreAssignee(id:${chore.id}, newAssignee:"${chore.newAssignee}")
+              updateChoreAssignee(id:${chore.id}, newAssignee:"${chore.newAssignee}", assigneeURL:${chore.assigneeURL})
             }`
           }
         }).then(() => {
