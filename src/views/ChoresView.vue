@@ -1,70 +1,76 @@
 <template>
   <div>
-      <!-- Each Chore in Chore list -->
-      <v-list
-        class="orange lighten-4 pb-0"
-        v-for="chore in chores"
-        :key="chore.id"
-      >
+    <!-- Each Chore in Chore list -->
+    <v-list
+      class="orange lighten-4 pb-0"
+      v-for="chore in chores"
+      :key="chore.id"
+    >
+      <v-list-item>
+        <v-avatar size="50">
+            <Avatar
+              v-if="chore.assigneeURL === 'null'"
+              :username="chore.assignee"
+              :size="50"
+            ></Avatar>
+             <v-img v-else :src="chore.assigneeURL"></v-img>
+          </v-avatar>
+        <!-- Chore list text -->
+        <v-list-item-content class="pl-4">
+          
 
-        <v-list-item>
-          <!-- Chore list text -->
-          <v-list-item-content class="pl-4">
+          <v-list-item-title>
+            {{ chore.chore }}
+          </v-list-item-title>
+ 
+          <v-list-item-subtitle v-if="chore.assignee">
+            {{ chore.assignee }}
+          </v-list-item-subtitle>
 
-            <v-list-item-title>
-              {{ chore.chore }}
-            </v-list-item-title>
-
-            <v-list-item-subtitle v-if="chore.assignee">
-              {{ chore.assignee }}
-            </v-list-item-subtitle>
-
-            <v-list-item-subtitle v-else>
-              this chore is currently unassigned
-            </v-list-item-subtitle>
-
-          </v-list-item-content>
-          <v-list-item-action>
-            <v-icon
+          <v-list-item-subtitle v-else>
+            this chore is currently unassigned
+          </v-list-item-subtitle>
+        </v-list-item-content>
+        <v-list-item-action>
+          <v-icon
             class="pr-2"
-              icon
-              @click.stop="showChoreInfo(chore)"
-              color="orange accent-3"
-              >mdi-clipboard-edit</v-icon
-            >
-          </v-list-item-action>
-          <v-list-item-action>
-            <v-icon
-              icon
-              @click.stop="showAddTodoModal(chore)"
-              color="orange accent-3"
-              >mdi-format-list-checks</v-icon
-            >
-          </v-list-item-action>
-        </v-list-item>
+            icon
+            @click.stop="showChoreInfo(chore)"
+            color="orange accent-3"
+            >mdi-clipboard-edit</v-icon
+          >
+        </v-list-item-action>
+        <v-list-item-action>
+          <v-icon
+            icon
+            @click.stop="showAddTodoModal(chore)"
+            color="orange accent-3"
+            >mdi-format-list-checks</v-icon
+          >
+        </v-list-item-action>
+      </v-list-item>
 
-        <!-- Border Between Todos -->
+      <!-- Border Between Todos -->
       <v-divider></v-divider>
     </v-list>
 
     <AddChore @addThisChorePlease="setChore" />
 
-     <TodoFromChoreCheck
-        @closeTodoModalPlease="addTodo = false"
-        @makeATodoPlease="addTodoFromChore"
-        v-if="addTodo"
-        :chore="this.clickedChore"
-      />
+    <TodoFromChoreCheck
+      @closeTodoModalPlease="addTodo = false"
+      @makeATodoPlease="addTodoFromChore"
+      v-if="addTodo"
+      :chore="this.clickedChore"
+    />
 
-
-      <ChoreInfo
-        persistent
-        v-if="modals"
-        @closeModalPlease="modalToggle"
-        @deleteChorePlease="deleteChore"
-        @assignChorePlease="assignChoreAndGetChores"
-        :chore="this.clickedChore"
-      />
+    <ChoreInfo
+      persistent
+      v-if="modals"
+      @closeModalPlease="modalToggle"
+      @deleteChorePlease="deleteChore"
+      @assignChorePlease="assignChoreAndGetChores"
+      :chore="this.clickedChore"
+    />
     <!-- todo list platform ends-->
   </div>
 </template>
@@ -73,7 +79,8 @@
 import AddChore from "../components/AddChore.vue";
 import ChoreInfo from "../components/ChoreInfo.vue";
 import TodoFromChoreCheck from "./Modals/TodoFromChoreCheck.vue";
-import { DateTime } from "luxon"
+import { DateTime } from "luxon";
+import Avatar from "vue-avatar";
 
 export default {
   name: "Home",
@@ -81,6 +88,7 @@ export default {
     AddChore,
     ChoreInfo,
     TodoFromChoreCheck,
+    Avatar,
   },
   data() {
     return {
@@ -98,7 +106,6 @@ export default {
   },
   methods: {
     setChore(chore) {
-      console.log("HERE IS THE CHORE TO ADD", chore)
       this.choreToAdd = chore;
       this.updateChores();
     },
@@ -117,8 +124,9 @@ export default {
         assignee: this.choreToAdd.assignee,
         creatorid: this.currentUser.id,
         house_key: this.currentUser.house_keys[0],
+        assigneeURL:this.choreToAdd.assigneeURL
       };
-      
+
       await this.$store.dispatch("addNewChore", newChore);
       await this.$store.dispatch("getChores", newChore.house_key);
     },
@@ -127,17 +135,15 @@ export default {
       this.clickedChore = chore;
       this.modals = !this.modals;
     },
-    
+
     showAddTodoModal(chore) {
       this.clickedChore = chore;
       this.addTodo = !this.addTodo;
     },
 
-    modalToggle(){
-      this.modals = !this.modals
+    modalToggle() {
+      this.modals = !this.modals;
     },
-
-    
 
     async deleteChore(choreID) {
       this.$store.state.chores = this.$store.state.chores.filter(
@@ -151,11 +157,9 @@ export default {
       this.modals = false;
       await this.$store.dispatch("updateChore", choreInfo);
       await this.$store.dispatch("getChores", this.currentUser.house_keys[0]);
-   
     },
 
     async addTodoFromChore(chore) {
-
       this.addTodo = false;
 
       let victim = "Everyone";
@@ -170,19 +174,21 @@ export default {
         creatorid: chore.id,
         complete: false,
         house_key: chore.house_key,
-        assigneeURL: ""
+        assigneeURL: "",
       };
 
       await this.$store.dispatch("addTodo", newTodo);
-      await this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0]);
-
+      await this.$store.dispatch(
+        "getTodos",
+        this.$store.state.user.house_keys[0]
+      );
     },
   },
   computed: {
-    chores: function(){
-      return this.$store.state.chores
-    }
-  }
+    chores: function () {
+      return this.$store.state.chores;
+    },
+  },
 };
 </script>
 

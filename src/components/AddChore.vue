@@ -88,7 +88,6 @@ export default {
           }
         }
       }
-      // here is where I left off Saturday
       this.$emit("addThisChorePlease", this.chore);
       this.chore = {};
       this.dialog = false;
