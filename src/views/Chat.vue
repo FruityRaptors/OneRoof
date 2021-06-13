@@ -18,9 +18,12 @@
         
 <!-- Username and Avatar starts -->
         <v-subheader class="lighten-4 mb-0 pa-0" elevation="0" max-width="200" height="20">
-          <v-avatar size="20">
-            <Avatar :src="message.image" :username="message.username" :size="20"></Avatar>
+
+          <v-avatar size="30">
+            <Avatar v-if="!message.image" :username="message.username" :size="20"></Avatar>
+            <v-img v-else :src="message.image" ></v-img>
           </v-avatar>
+
           <v-card-subtitle class="d-inline-flex">
             {{message.username}}
           </v-card-subtitle>

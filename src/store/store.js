@@ -111,7 +111,6 @@ export default new Vuex.Store({
 
     //Fetches user and set user to front end state
     async getUser(context, email) {
-      console.log(`Getting User: ${email} from the database...`)
       try {
         await axios({
           method: "POST",
@@ -135,14 +134,10 @@ export default new Vuex.Store({
           //If fetched user belonged to a house, set user normally
           if (response.data.data.getUserByEmail.house_keys) {
             let housekey = JSON.parse(response.data.data.getUserByEmail.house_keys)
-            console.log("housekey:", housekey)
             context.dispatch('getHouseName', housekey[0])
             context.commit("toggleLoginBool", "true")
             response.data.data.getUserByEmail.house_keys = housekey
-            console.log(`User already belonged to chat room(s)... going to home page`)
-            // router.push('/yourhome')
           } else {
-            console.log(`User doesn't have a home... going to join a home page`)
             context.commit("toggleLoginBool", "true")
             //Should route to Join a house page, THE FOLLOWING LINE SHOULD BE DELETED!
             router.push('/joinhouse')
@@ -158,7 +153,6 @@ export default new Vuex.Store({
     //Adds user to the database after they have registered
     async addUserToSQLDatabase(context, user) {
       let email = user.email
-      console.log(`adding ${user.email} ${user.username} to database...`)
 
       await axios({
         method: "POST",
@@ -177,7 +171,6 @@ export default new Vuex.Store({
     async changeUsername(context, user) {
       let email = user.email
       let newUsername = user.newUsername
-      console.log(`changing user: ${email}'s username to ${newUsername}`)
       await axios({
         method: "POST",
         url: "/graphql",
@@ -194,7 +187,6 @@ export default new Vuex.Store({
     },
 
     async updateUserPhoto(context, data) {
-      console.log("here is the URL", data.url, "and here is the email", data.email)
       await axios({
         method: "POST",
         url: "/graphql",
@@ -221,7 +213,6 @@ export default new Vuex.Store({
     async createHouse(context, payload) {
       let roomkey = keygen._()
 
-      console.log(`Adding ${payload.homename} to database... with the key ${roomkey}`)
       await axios({
         method: "POST",
         url: "/graphql",
@@ -244,13 +235,12 @@ export default new Vuex.Store({
         })
 
       }).then(() => {
-        console.log(`User: ${payload.email} created and joined room... re-fetching user from database...`)
+  
         context.dispatch("getUser", payload.email)
       })
     },
 
     joinHouse(context, payload) {
-      console.log(`Joining ${payload.email} to room ${payload.roomkey}`)
 
       //Check if house exists in the database
       let checkExists = axios({
@@ -265,7 +255,7 @@ export default new Vuex.Store({
         }`
         }
       }).then(() => {
-        console.log('Adding to home!')
+       
         //If so, add to the user
         if (checkExists) {
           axios({
@@ -287,7 +277,7 @@ export default new Vuex.Store({
     },
 
     async getHouseName(context, housename) {
-      console.log("getting house name:", housename)
+     
       try {
         await axios({
           method: "POST",
@@ -303,7 +293,7 @@ export default new Vuex.Store({
             `
           }
         }).then((response) => {
-          console.log("HERE", response.data.data.getHouseName)
+       
           return JSON.parse(response.data.data.getHouseName.modules)
         }).then((response) => {
           context.commit('setCurrentHouseModules', response)
@@ -338,7 +328,7 @@ export default new Vuex.Store({
     //Todolist related actions starts
     ///////
     getTodos(context, house_key) {
-      console.log(`Getting Todos By House...`)
+      
       try {
         axios({
           method: "POST",
@@ -362,7 +352,7 @@ export default new Vuex.Store({
           .then((response) => {
             
             let todosByHouse = response.data.data.getTodosByHouse
-            console.log("Received todos from server...", todosByHouse)
+           
             context.commit("addTodosToList", todosByHouse)
             return todosByHouse
           }).then((todosByHouse) => {
@@ -386,7 +376,7 @@ export default new Vuex.Store({
     },
 
     async deleteTodo(context, id) {
-      console.log(`Deleting Todo with ${id}`)
+  
       try {
         await axios({
           method: "POST",
@@ -399,7 +389,6 @@ export default new Vuex.Store({
           }
         })
           .then(() => {
-            console.log('Todo deleted')
             context.dispatch('getTodos', this.state.user.house_keys[0])
           })
       } catch (error) {
@@ -408,7 +397,6 @@ export default new Vuex.Store({
     },
 
     async updateTodo(context, todo) {
-      console.log(`UPDATING TODO ${todo.id} & ${todo.todo}`)
       try {
         await axios({
           method: "POST",
@@ -428,7 +416,7 @@ export default new Vuex.Store({
     },
 
     async addTodo(context, newTodo) {
-      console.log('Adding a todo to database')
+
       try {
         await axios({
           method: "POST",
@@ -455,7 +443,6 @@ export default new Vuex.Store({
 
     // I changed this, maybe didn't need to. Jay didn't like it ;)
     populateVictimList(context, house_key) {
-      console.log(`Chasing victims in ${house_key}`)
       axios({
         method: "POST",
         url: "/graphql",
@@ -476,7 +463,6 @@ export default new Vuex.Store({
     },
 
     updateTodoVictim(context, selectedTodo) {
-      console.log('Attemping to update VictimID', selectedTodo)
       axios({
         method: "POST",
         url: "/graphql",
@@ -570,7 +556,6 @@ export default new Vuex.Store({
     //Chores related actions start
     //////
     async getChores(context, house_key) {
-      console.log(`Getting Chores By House...`, house_key)
       try {
         await axios({
           method: "POST",
@@ -592,7 +577,6 @@ export default new Vuex.Store({
         })
           .then((response) => {
             let choresByHouse = response.data.data.getChoresByHouse
-            console.log("Received chores from server...", choresByHouse)
             context.commit("setChores", choresByHouse)
           })
       } catch (error) {
@@ -602,7 +586,6 @@ export default new Vuex.Store({
     },
 
     async addNewChore(context, newChore) {
-      console.log('Adding a chore to database:', newChore)
       try {
         await axios({
           method: "POST",
@@ -628,7 +611,6 @@ export default new Vuex.Store({
     },
 
     async updateChore(context, chore) {
-      console.log(`Updating chore number ${chore.id}'s assignee to ${chore.newAssignee}`)
       try {
         await axios({
           method: "POST",
@@ -648,7 +630,6 @@ export default new Vuex.Store({
     },
 
     async deleteChore(context, id) {
-      console.log(`Deleting Chore with ID: ${id}`)
       try {
         await axios({
           method: "POST",
@@ -661,7 +642,6 @@ export default new Vuex.Store({
           }
         })
           .then(() => {
-            console.log('Chore deleted')
             context.dispatch('getChores', this.state.user.house_keys[0])
           })
       } catch (error) {
@@ -701,7 +681,6 @@ export default new Vuex.Store({
         .auth()
         .createUserWithEmailAndPassword(user.email, user.password)
         .then(() => {
-          console.log('Adding user to the database...')
           //Add user to Database
           context.dispatch("addUserToSQLDatabase", { email: user.email, username: user.username })
         })
@@ -733,7 +712,6 @@ export default new Vuex.Store({
         await context.dispatch("getUser", user.email)
         return true
       } else {
-        console.log("no user, pushing to login")
         router.push('/login')
         return false
       }

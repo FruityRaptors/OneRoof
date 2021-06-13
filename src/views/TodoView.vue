@@ -178,7 +178,7 @@ export default {
   methods: {
     async addTodo() {
       if (this.newTodoMessage.length <= 0) {
-        return console.log("Please insert a Todo");
+        return
       }
 
       let newTodo = {
@@ -200,12 +200,13 @@ export default {
 
       this.newTodoMessage = "";
     },
+
     completeTodo(id) {
       let todo = this.checkTodos.filter((todo) => todo.id === id)[0];
       todo.complete = !todo.complete;
     },
+
     async deleteTodo(id) {
-      console.log("THIS IS THE ID", id);
       this.$store.state.todos = this.$store.state.todos.filter(
         (todo) => todo.id !== id
       );
@@ -213,15 +214,12 @@ export default {
     },
 
     async setState(todo) {
-      console.log("abracadabra...", todo.id); //remove later (before due date added)
-      console.log("HERE IS THE CURRENT TODO", todo); //remove later (before due date added)
       this.$store.commit("setCurrentTodo", todo);
-      this.currentTodo = todo; //remove later? (before due date added)
+      this.currentTodo = todo; 
       this.currentId = todo.id;
     },
     deleteFromModal() {
       this.$store.dispatch("deleteTodo", this.currentId).then(() => {
-        console.log("getting updated to do list...");
         this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0]);
       });
     },

@@ -154,7 +154,6 @@ export default {
   async created() {
 
     console.time("app mounting");
-    console.log('mounting...')
 
     this.loading = true;
 
