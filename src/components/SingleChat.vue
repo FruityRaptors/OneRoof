@@ -39,7 +39,8 @@
 <!-- Username and Avatar starts -->
         <v-subheader class="lighten-4 mb-0 pa-0" elevation="0" max-width="200" height="20">
           <v-avatar size="20">
-            <Avatar :src="message.image" :username="message.username" :size="20"></Avatar>
+            <Avatar v-if="!message.image" :username="message.username" :size="20"></Avatar>
+            <v-img v-else :src="message.image" ></v-img>
           </v-avatar>
           <v-card-subtitle class="d-inline-flex">
             {{message.username}}
@@ -73,25 +74,29 @@
     <v-footer
       class=""
       rounded
-      max-height="100"
+      max-height="65"
       color="orange lighten-4"
       padless
-      absolute
+      fixed
     >
         <v-text-field
           class="d-flex align-start mt-3 pl-5"
           type="text"
           v-model="inputMessage"
           placeholder="Write your message..."
-          @keyup.enter="sendMessage(); $vuetify.goTo(99999)"
+          dense
+          rounded
+          filled
+          @keyup.enter="sendMessage(); ; $vuetify.goTo(99999)"
         />
         <v-btn 
-        class="mr-2 orange lighten-4"
+        class="mr-2 mb-3 orange lighten-4"
         fab
         @click.prevent="sendMessage(); ; $vuetify.goTo(99999)"
         elevation="0"
         >
           <v-icon
+          size="30"
           color="orange darken-1"
           >
         mdi-send

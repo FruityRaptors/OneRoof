@@ -13,12 +13,13 @@
 
         <v-container class="ml-5" v-if="this.chore.assignee != 'Everyone'">
 
-        <v-avatar size="80" class="mr-10">
+        <v-avatar size="150" class="mr-10">
         <Avatar
-            :src="this.assigneeURL"
+            v-if="!this.$store.state.user.photo_url"
             :username="this.chore.assignee"
             :size="80"
           />
+          <v-img v-else :src="this.$store.state.user.photo_url" ></v-img>
         </v-avatar>
           
           <v-card-subtitle class="mr-10">
