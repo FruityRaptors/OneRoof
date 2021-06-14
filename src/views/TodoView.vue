@@ -33,13 +33,11 @@
           @click="completeTodo(todo.id)"
           :class="{ 'light-green accent-1': todo.complete }"
         >
-        <v-avatar v-if="todo.victimid" size="50">
-            <Avatar
-              v-if="todo.assigneeURL === 'null'"
-              :username="todo.victimid"
-              :size="50"
-            ></Avatar>
-             <v-img v-else :src="todo.assigneeURL"></v-img>
+        <v-avatar size="50" class="mr-2" >
+          <v-icon v-if="todo.assigneeURL === '' " size="55" color="brown lighten-1" id="todo-icon">
+            mdi-account-circle-outline
+          </v-icon>
+          <v-img v-if="todo.assigneeURL != '' " :src="todo.assigneeURL"></v-img>
           </v-avatar>
           <!-- Todo tick box     -->
           <v-list-item-action>
@@ -158,14 +156,14 @@
 
 <script>
 import TodoMenu from "../components/TodoMenu.vue";
-import Avatar from "vue-avatar"
+// import Avatar from "vue-avatar"
 import { DateTime } from "luxon";
 
 export default {
   name: "Home",
   components: {
     TodoMenu,
-    Avatar,
+    // Avatar,
   },
   data() {
     return {
@@ -243,7 +241,6 @@ export default {
           this.currentTodo.assigneeURL = user.photo_url
         }
       }
-      console.log(this.currentTodo)
       await this.$store.dispatch("updateTodoVictim", this.currentTodo);
     },
   }, // method ends
