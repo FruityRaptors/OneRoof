@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es5", /* Specify ECMAScript target version. */
+    "target": "es2016", /* Specify ECMAScript target version. */
     "module": "commonjs", /* Specify module code generation */
     "lib": [
       "es6",
       "ESNext.AsyncIterable"
     ], /* Specify library files to be included in the compilation. */
     "allowJs": true, /* Allow javascript files to be compiled. */
-    "outDir": "build", /* Redirect output structure to the directory. */
+    "outDir": "./dist", /* Redirect output structure to the directory. */
     "rootDir": "./", /* Specify the root directory of input files. 
      "strict": true,  /* Enable all strict type-checking options. */
     "noImplicitAny": true, /* Raise error on expressions and declarations with an implied 'any' type. */
@@ -16,9 +16,10 @@
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
     "emitDecoratorMetadata": true,
+    "skipLibCheck": true
   },
   "include": [
-    "server/**/*"
+    "./server/**/*.ts"
   ],
   "exclude": [
     "srd/**/*.spec.ts"
