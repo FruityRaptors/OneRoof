@@ -33,9 +33,6 @@ export default {
         }
       },
     methods: {
-        onChange() {
-            console.log("HI");
-        },
         assignUser(userName) {
             this.$parent.$emit('setAssignee', userName)
             this.$emit('closeModal')

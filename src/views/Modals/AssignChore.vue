@@ -109,13 +109,13 @@ export default {
       this.$emit("closeAssignModalPlease");
     },
     assignChoreAndClose() {
-      let newAssignee = "";
+      let newAssignee = ""; 
       if (this.newAssignee) {
         newAssignee = this.newAssignee;
       } else if (this.newAssigneeRandom) {
         newAssignee = this.newAssigneeRandom;
       }
-      this.$emit("assignChorePlease", newAssignee);
+      this.$emit("assignChorePlease", {newAssignee});
     },
 
     randomizeAssignee() {
