@@ -7,8 +7,9 @@
     "server": "ts-node server/index.ts",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "tsc && node build/server/index.js",
+    "start": "node build/server/index.js",
     "migrate": "typeorm migration:run",
+    "postinstall": "tsc",
     "build:server": "tsc"
   },
   "dependencies": {
