@@ -1,10 +1,11 @@
 module.exports = {
    "type": "postgres",
    "host": "localhost",
-   "port": process.env.DB_PORT || 5432,
+   "port": process.env.DB_PORT || "5432",
    "extra": {
       "socketPath": process.env.CLOUD_SQL_CONNECTION_NAME
- },
+   },
+   "url": process.env.DATABASE_URL,
    "username": process.env.DB_USER,
    "password": process.env.DB_PASS,
    "database": process.env.DB_NAME,
