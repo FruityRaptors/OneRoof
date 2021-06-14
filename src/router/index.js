@@ -63,7 +63,7 @@ const routes = [
     path: '/joinhouse',
     name: 'JoinHouse',
     component: () =>
-      import('../views/JoinHouse.vue'),
+      import('../views/JoinHouse'),
     meta: {
       authRequired: true,
     }
