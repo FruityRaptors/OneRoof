@@ -25,9 +25,10 @@ export class todoResolvers {
         @Arg('creatorid') creatorid: string,   //Automatic from user who created todo?
         @Arg('complete') complete: boolean,    //For strikethrough/highglights
         @Arg('house_key') house_key: string,   //
+        @Arg('assigneeURL') assigneeURL: string,
         ){
 
-        await Todos.insert({ todo, house_key, date, victimid, creatorid, complete })
+        await Todos.insert({ todo, house_key, date, victimid, creatorid, complete, assigneeURL })
         return "New Todo Added!"
       }
 
@@ -44,6 +45,7 @@ export class todoResolvers {
     async updateTodoVictim(
         @Arg('id') id: number,
         @Arg('victimid') victimid: string,
+        @Arg('assigneeURL') assigneeURL: string,
     ){
         let todoToBeUpdated = await Todos.findOne( { where: { id } })
         if(!todoToBeUpdated){
@@ -52,6 +54,7 @@ export class todoResolvers {
         }
 
         todoToBeUpdated.victimid = victimid
+        todoToBeUpdated.assigneeURL = assigneeURL
 
         Todos.save(todoToBeUpdated)
 
