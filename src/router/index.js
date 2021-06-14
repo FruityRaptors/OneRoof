@@ -59,7 +59,7 @@ const routes = [
       authRequired: true,
     }
   },
-  /* {
+  {
     path: '/joinhouse',
     name: 'JoinHouse',
     component: () =>
@@ -67,7 +67,7 @@ const routes = [
     meta: {
       authRequired: true,
     }
-  }, */
+  },
   {
     path: '/dm',
     name: 'DM',
