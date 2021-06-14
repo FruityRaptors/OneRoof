@@ -1,0 +1,36 @@
+version: '3'
+services:
+
+    
+  oneroof-frontend:
+    image: oneroof-frontend:latest
+    environment:
+      PORT: 3000
+      PROXY_API: http://oneroof-backend:8080/
+    ports:
+      - 3000:3000 
+    
+
+  oneroof-backend:
+    image: oneroof-backend:latest
+    environment:
+      CLOUD_SQL_CONNECTION_NAME: oneroofapp:asia-northeast1:oneroof2
+      DB_USER: oneroof2       
+      DB_NAME: oneroof2
+      DB_PASS: oneroof2
+    ports:
+      - 8080:8080
+
+
+
+  # oneroof-postgres:
+  #    image: "postgres:9.6-alpine"
+  #    container_name: oneroof-postgres
+  #    volumes:
+  #       - oneroof-data:/var/lib/postgresql/data
+  #    ports:
+  #       - 5432:5432
+  #    environment:
+  #       - POSTGRES_DB:oneroof
+  #       - POSTGRES_USER:oneroof
+  #       - POSTGRES_PASSWORD:oneroof

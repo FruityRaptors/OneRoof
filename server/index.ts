@@ -10,14 +10,18 @@ import { houseResolvers } from "./resolvers/houseResolvers";
 import { dmResolvers } from "./resolvers/dmResolvers"
 import { choreResolvers } from "./resolvers/choreResolvers"
 import { modulesResolvers } from "./resolvers/modulesResolvers"
-
+import path from "path"
 
 (async () => {
-  console.log("spinning up express")
+  console.log("setting up express")
   const app = express();
-  console.log("connecting to SQL database")
+  app.use(express.static(path.resolve(__dirname,"..", "..", "dist")))
+  app.set('view engine', 'pug');
+  app.enable('trust proxy');
+  console.log('set up express successful!')
   try {
     await connectDB()
+    console.log("connecting to SQL database")
   } catch (err) {
     console.log(err)
   }
@@ -30,9 +34,11 @@ import { modulesResolvers } from "./resolvers/modulesResolvers"
     }),
     context: ({ req, res }) => ({ req, res })
   });
-
+  app.get("*", (req,res)=>{
+    res.sendFile(path.resolve(__dirname,"..", "..", "dist"))
+  })
   apolloServer.applyMiddleware({ app, cors: false });
-  const port = process.env.PORT || 4000;
+  const port = process.env.PORT || 8080;
 
   console.log('launching server...')
   app.listen(port, () => {
