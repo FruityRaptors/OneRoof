@@ -33,12 +33,7 @@
           @click="completeTodo(todo.id)"
           :class="{ 'light-green accent-1': todo.complete }"
         >
-        <v-avatar size="50" class="mr-2" >
-          <v-icon v-if="todo.assigneeURL === '' " size="55" color="brown lighten-1" id="todo-icon">
-            mdi-account-circle-outline
-          </v-icon>
-          <v-img v-if="todo.assigneeURL != '' " :src="todo.assigneeURL"></v-img>
-          </v-avatar>
+        
           <!-- Todo tick box     -->
           <v-list-item-action>
             <v-checkbox
@@ -156,14 +151,12 @@
 
 <script>
 import TodoMenu from "../components/TodoMenu.vue";
-// import Avatar from "vue-avatar"
 import { DateTime } from "luxon";
 
 export default {
   name: "Home",
   components: {
     TodoMenu,
-    // Avatar,
   },
   data() {
     return {
