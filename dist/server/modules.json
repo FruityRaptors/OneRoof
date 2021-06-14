@@ -37,11 +37,29 @@
     },
     "modules": {
         "id": 5,
-        "title": "Modules",
+        "title": "Add Modules",
         "icon": "mdi-cog",
         "to": "/modules",
         "notifications": 0,
         "purchased": true,
         "purchasable": false
+    },
+    "calendar": {
+        "id": 6,
+        "title": "Calendar",
+        "icon": "mdi-cog",
+        "to": "/modules",
+        "notifications": 0,
+        "purchased": false,
+        "purchasable": true
+    },
+    "Shopping List": {
+        "id": 7,
+        "title": "Shopping List",
+        "icon": "mdi-cog",
+        "to": "/modules",
+        "notifications": 0,
+        "purchased": false,
+        "purchasable": true
     }
 }

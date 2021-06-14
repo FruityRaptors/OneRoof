@@ -31,8 +31,8 @@ let choreResolvers = class choreResolvers {
     getChoresByHouse(house_key) {
         return Chores_1.Chores.find({ where: { house_key } });
     }
-    createChore(chore, description, assignee, creatorid, house_key) {
-        Chores_1.Chores.insert({ chore, house_key, description, assignee, creatorid, });
+    createChore(chore, description, assignee, creatorid, house_key, assigneeURL) {
+        Chores_1.Chores.insert({ chore, house_key, description, assignee, creatorid, assigneeURL });
         return "New chore Added!";
     }
     deleteChore(id) {
@@ -41,7 +41,7 @@ let choreResolvers = class choreResolvers {
             return "Chore deleted!";
         });
     }
-    updateChoreAssignee(id, newAssignee) {
+    updateChoreAssignee(id, newAssignee, assigneeURL) {
         return __awaiter(this, void 0, void 0, function* () {
             let choreToBeUpdated = yield Chores_1.Chores.findOne({ where: { id } });
             if (!choreToBeUpdated) {
@@ -49,6 +49,7 @@ let choreResolvers = class choreResolvers {
                 return;
             }
             choreToBeUpdated.assignee = newAssignee;
+            choreToBeUpdated.assigneeURL = assigneeURL;
             Chores_1.Chores.save(choreToBeUpdated);
             return "Saved!";
         });
@@ -74,8 +75,9 @@ __decorate([
     __param(2, type_graphql_1.Arg('assignee')),
     __param(3, type_graphql_1.Arg('creatorid')),
     __param(4, type_graphql_1.Arg('house_key')),
+    __param(5, type_graphql_1.Arg('assigneeURL')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, String, String, String]),
+    __metadata("design:paramtypes", [String, String, String, String, String, String]),
     __metadata("design:returntype", void 0)
 ], choreResolvers.prototype, "createChore", null);
 __decorate([
@@ -89,8 +91,9 @@ __decorate([
     type_graphql_1.Mutation(() => String),
     __param(0, type_graphql_1.Arg('id')),
     __param(1, type_graphql_1.Arg('newAssignee')),
+    __param(2, type_graphql_1.Arg('assigneeURL')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, String]),
+    __metadata("design:paramtypes", [Number, String, String]),
     __metadata("design:returntype", Promise)
 ], choreResolvers.prototype, "updateChoreAssignee", null);
 choreResolvers = __decorate([

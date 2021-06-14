@@ -68,6 +68,7 @@ export default {
       chore: "",
       description: "",
       assignee: "Everyone",
+      assigneeURL:""
     },
   }),
   mounted() {
@@ -79,6 +80,14 @@ export default {
   },
   methods: {
     pushChore() {
+      if(this.chore.assignee !== "Everyone") {
+        const assignee =this.chore.assignee
+        for (let user of this.users) {
+          if (user.username === assignee) {
+            this.chore.assigneeURL = user.photo_url
+          }
+        }
+      }
       this.$emit("addThisChorePlease", this.chore);
       this.chore = {};
       this.dialog = false;

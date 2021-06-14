@@ -28,10 +28,6 @@ export class Chores extends BaseEntity {
     })
     house_key: string;
 
-   /*  @Field(() => String)
-    @Column()
-    date: string; */
-
     @Field(() => String)
     @Column({
         nullable: true
@@ -42,5 +38,12 @@ export class Chores extends BaseEntity {
     @Field(() => String)
     @Column()
     creatorid: string;
+
+    @Field(() => String)
+    @Column({
+        nullable: true
+    }
+    )
+    assigneeURL: string;
 
 } 

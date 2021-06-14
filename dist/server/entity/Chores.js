@@ -53,6 +53,13 @@ __decorate([
     typeorm_1.Column(),
     __metadata("design:type", String)
 ], Chores.prototype, "creatorid", void 0);
+__decorate([
+    type_graphql_1.Field(() => String),
+    typeorm_1.Column({
+        nullable: true
+    }),
+    __metadata("design:type", String)
+], Chores.prototype, "assigneeURL", void 0);
 Chores = __decorate([
     typeorm_1.Entity(),
     type_graphql_1.ObjectType()

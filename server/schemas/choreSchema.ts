@@ -19,4 +19,7 @@ import { Field, ObjectType } from 'type-graphql';
 
         @Field()
         creatorid: string
+
+        @Field()
+        assigneeURL: string
     }

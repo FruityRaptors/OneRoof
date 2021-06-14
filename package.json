@@ -19,6 +19,7 @@
     "axios": "^0.21.1",
     "class-validator": "^0.13.1",
     "concurrently": "^6.2.0",
+    "connect-history-api-fallback": "^1.6.0",
     "core-js": "^3.6.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",

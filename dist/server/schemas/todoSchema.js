@@ -41,6 +41,10 @@ __decorate([
     type_graphql_1.Field(),
     __metadata("design:type", String)
 ], Todo.prototype, "creatorid", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    __metadata("design:type", String)
+], Todo.prototype, "assigneeURL", void 0);
 Todo = __decorate([
     type_graphql_1.ObjectType()
 ], Todo);

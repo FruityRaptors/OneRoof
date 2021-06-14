@@ -11,14 +11,26 @@ import { dmResolvers } from "./resolvers/dmResolvers"
 import { choreResolvers } from "./resolvers/choreResolvers"
 import { modulesResolvers } from "./resolvers/modulesResolvers"
 import path from "path"
+import history from 'connect-history-api-fallback'
 
 (async () => {
   console.log("setting up express")
+
   const app = express();
+
   app.use(express.static(path.resolve(__dirname,"..", "..", "dist")))
+
+  app.use(history({
+    disableDotRule: true,
+    verbose: true
+  }))
+
+  app.use(express.static(path.resolve(__dirname,"..", "..", "dist")))
+
   app.set('view engine', 'pug');
+
   app.enable('trust proxy');
-  console.log('set up express successful!')
+
   try {
     await connectDB()
     console.log("connecting to SQL database")

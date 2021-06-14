@@ -33,6 +33,7 @@
           @click="completeTodo(todo.id)"
           :class="{ 'light-green accent-1': todo.complete }"
         >
+        
           <!-- Todo tick box     -->
           <v-list-item-action>
             <v-checkbox
@@ -56,7 +57,7 @@
             </v-list-item-subtitle>
 
             <v-list-item-subtitle
-              :class="{ 'redtext': todo.date.includes('minutes') }"
+              :class="{ 'redtext': todo.date.includes('day') || todo.date.includes('days') }"
             >
               {{ todo.date }}
             </v-list-item-subtitle>
@@ -150,7 +151,6 @@
 
 <script>
 import TodoMenu from "../components/TodoMenu.vue";
-/* import moment from "moment"; */
 import { DateTime } from "luxon";
 
 export default {
@@ -189,6 +189,7 @@ export default {
         creatorid: this.$store.state.user.username,
         complete: false,
         house_key: this.$store.state.user.house_keys[0],
+        assigneeURL: ""
       };
 
       await this.$store.dispatch("addTodo", newTodo);
@@ -228,6 +229,12 @@ export default {
     },
     async setAssignee(value) {
       this.currentTodo.victimid = value;
+      for (let user of this.users) {
+        if (user.username === this.currentTodo.victimid) {
+          this.currentTodo.assigneeURL = user.photo_url
+        }
+      }
+      console.log(this.currentTodo)
       await this.$store.dispatch("updateTodoVictim", this.currentTodo);
     },
   }, // method ends

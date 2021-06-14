@@ -38,9 +38,10 @@ let todoResolvers = class todoResolvers {
     victimid, //From Assignee dropdown(?)
     creatorid, //Automatic from user who created todo?
     complete, //For strikethrough/highglights
-    house_key) {
+    house_key, //
+    assigneeURL) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield Todos_1.Todos.insert({ todo, house_key, date, victimid, creatorid, complete });
+            yield Todos_1.Todos.insert({ todo, house_key, date, victimid, creatorid, complete, assigneeURL });
             return "New Todo Added!";
         });
     }
@@ -52,7 +53,7 @@ let todoResolvers = class todoResolvers {
         });
     }
     //Update a todo by it's ID
-    updateTodoVictim(id, victimid) {
+    updateTodoVictim(id, victimid, assigneeURL) {
         return __awaiter(this, void 0, void 0, function* () {
             let todoToBeUpdated = yield Todos_1.Todos.findOne({ where: { id } });
             if (!todoToBeUpdated) {
@@ -60,6 +61,7 @@ let todoResolvers = class todoResolvers {
                 return;
             }
             todoToBeUpdated.victimid = victimid;
+            todoToBeUpdated.assigneeURL = assigneeURL;
             Todos_1.Todos.save(todoToBeUpdated);
             return "Saved!";
         });
@@ -99,8 +101,9 @@ __decorate([
     __param(3, type_graphql_1.Arg('creatorid')),
     __param(4, type_graphql_1.Arg('complete')),
     __param(5, type_graphql_1.Arg('house_key')),
+    __param(6, type_graphql_1.Arg('assigneeURL')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, String, String, Boolean, String]),
+    __metadata("design:paramtypes", [String, String, String, String, Boolean, String, String]),
     __metadata("design:returntype", Promise)
 ], todoResolvers.prototype, "createTodo", null);
 __decorate([
@@ -114,8 +117,9 @@ __decorate([
     type_graphql_1.Mutation(() => String),
     __param(0, type_graphql_1.Arg('id')),
     __param(1, type_graphql_1.Arg('victimid')),
+    __param(2, type_graphql_1.Arg('assigneeURL')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, String]),
+    __metadata("design:paramtypes", [Number, String, String]),
     __metadata("design:returntype", Promise)
 ], todoResolvers.prototype, "updateTodoVictim", null);
 __decorate([

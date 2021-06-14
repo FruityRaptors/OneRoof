@@ -130,13 +130,16 @@ export default new Vuex.Store({
         }).then((response) => {
 
           context.commit("setUser", response.data.data.getUserByEmail)
-          router.push('/yourhome')
+          // router.push('/yourhome')
           //If fetched user belonged to a house, set user normally
           if (response.data.data.getUserByEmail.house_keys) {
             let housekey = JSON.parse(response.data.data.getUserByEmail.house_keys)
+
             context.dispatch('getHouseName', housekey[0])
+
             context.commit("toggleLoginBool", "true")
-            response.data.data.getUserByEmail.house_keys = housekey
+
+            // response.data.data.getUserByEmail.house_keys = housekey
           } else {
             context.commit("toggleLoginBool", "true")
             //Should route to Join a house page, THE FOLLOWING LINE SHOULD BE DELETED!
@@ -344,6 +347,7 @@ export default new Vuex.Store({
                 date
                 complete
                 house_key
+                assigneeURL
               }
             }`
           }
@@ -430,6 +434,7 @@ export default new Vuex.Store({
               creatorid: "${newTodo.creatorid}",
               complete: ${newTodo.complete},
               house_key: "${newTodo.house_key}",
+              assigneeURL: "${newTodo.assigneeURL}",
             )
           }`
           }
@@ -469,7 +474,8 @@ export default new Vuex.Store({
         mutation{
           updateTodoVictim(
             id: ${selectedTodo.id},
-            victimid: "${selectedTodo.victimid}"
+            victimid: "${selectedTodo.victimid}",
+            assigneeURL: "${selectedTodo.assigneeURL}"
           )
         }`
         }
@@ -568,12 +574,14 @@ export default new Vuex.Store({
                 chore
                 description
                 house_key
+                assigneeURL
               }
             }`
           }
         })
           .then((response) => {
             let choresByHouse = response.data.data.getChoresByHouse
+            console.log(choresByHouse)
             context.commit("setChores", choresByHouse)
           })
       } catch (error) {
@@ -596,6 +604,7 @@ export default new Vuex.Store({
               assignee: "${newChore.assignee}",
               creatorid: "${newChore.creatorid}",
               house_key: "${newChore.house_key}",
+              assigneeURL: "${newChore.assigneeURL}",
             )
           }`
           }
@@ -614,7 +623,7 @@ export default new Vuex.Store({
           data: {
             query: `
             mutation {
-              updateChoreAssignee(id:${chore.id}, newAssignee:"${chore.newAssignee}")
+              updateChoreAssignee(id:${chore.id}, newAssignee:"${chore.newAssignee}", assigneeURL:"${chore.assigneeURL}")
             }`
           }
         }).then(() => {

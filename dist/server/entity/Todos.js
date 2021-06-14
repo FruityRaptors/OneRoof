@@ -29,6 +29,13 @@ __decorate([
 __decorate([
     type_graphql_1.Field(() => String),
     typeorm_1.Column({
+        nullable: true
+    }),
+    __metadata("design:type", String)
+], Todos.prototype, "assigneeURL", void 0);
+__decorate([
+    type_graphql_1.Field(() => String),
+    typeorm_1.Column({
         length: 50
     }),
     __metadata("design:type", String)
