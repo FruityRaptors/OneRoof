@@ -22,6 +22,7 @@
     "express": "^4.17.1",
     "firebase": "^8.6.2",
     "graphql": "^15.5.0",
+    "heroku": "^7.54.1",
     "keygenerator": "^1.0.4",
     "luxon": "^1.27.0",
     "mysql": "^2.14.1",
