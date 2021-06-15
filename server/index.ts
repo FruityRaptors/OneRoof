@@ -3,6 +3,7 @@ import "reflect-metadata";
 import { ApolloServer } from 'apollo-server-express'
 import { connectDB } from "./database";
 import express from "express";
+import path from "path";
 import { buildSchema } from 'type-graphql'
 import { userResolvers } from "./resolvers/userResolvers"
 import { todoResolvers } from "./resolvers/todoResolvers";
@@ -15,6 +16,9 @@ import { modulesResolvers } from "./resolvers/modulesResolvers"
 (async () => {
   console.log("spinning up express")
   const app = express();
+  
+  app.use(express.static(path.resolve(__dirname,"..", "..", "dist")))
+  
   console.log("connecting to SQL database")
   try {
     await connectDB()
@@ -33,6 +37,10 @@ import { modulesResolvers } from "./resolvers/modulesResolvers"
 
   apolloServer.applyMiddleware({ app, cors: false });
   const port = process.env.PORT || 4000;
+
+  app.get("*", (req,res)=>{
+    res.sendFile(path.resolve(__dirname,"..", "..", "dist"))
+  })
 
   console.log('launching server...')
   app.listen(port, () => {
