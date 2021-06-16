@@ -241,6 +241,7 @@ export default new Vuex.Store({
     },
 
     joinHouse(context, payload) {
+      console.log("joining house")
 
       //Check if house exists in the database
       let checkExists = axios({
@@ -255,9 +256,10 @@ export default new Vuex.Store({
         }`
         }
       }).then(() => {
-       
+        
         //If so, add to the user
         if (checkExists) {
+          console.log("house exists!")
           axios({
             method: "POST",
             url: "/graphql",

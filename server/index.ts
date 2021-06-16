@@ -34,10 +34,11 @@ import { modulesResolvers } from "./resolvers/modulesResolvers"
     }),
     context: ({ req, res }) => ({ req, res })
   });
-
+  
+  
   apolloServer.applyMiddleware({ app, cors: false });
   const port = process.env.PORT || 4000;
-
+  
   app.get("*", (req,res)=>{
     res.sendFile(path.resolve(__dirname,"..", "..", "dist"))
   })
