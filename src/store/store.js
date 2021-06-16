@@ -110,9 +110,9 @@ export default new Vuex.Store({
     ///////
 
     //Fetches user and set user to front end state
-    async getUser(context, email) {
+    getUsers(context, email) {
       try {
-        await axios({
+        axios({
           method: "POST",
           url: "/graphql",
           data: {
@@ -129,26 +129,60 @@ export default new Vuex.Store({
           }
         }).then((response) => {
 
-          context.commit("setUser", response.data.data.getUserByEmail)
-          // router.push('/yourhome')
           //If fetched user belonged to a house, set user normally
           if (response.data.data.getUserByEmail.house_keys) {
+            
             let housekey = JSON.parse(response.data.data.getUserByEmail.house_keys)
-
+            response.data.data.getUserByEmail.house_keys = housekey
+            context.commit("setUser", response.data.data.getUserByEmail)
+            console.log('user has a home..', housekey)
             context.dispatch('getHouseName', housekey[0])
-
             context.commit("toggleLoginBool", "true")
-
-            // response.data.data.getUserByEmail.house_keys = housekey
+            router.push('/yourhome')
+            
           } else {
+            console.log('User is homeless, going to join home...')
+            context.commit("setUser", response.data.data.getUserByEmail)
             context.commit("toggleLoginBool", "true")
-            //Should route to Join a house page, THE FOLLOWING LINE SHOULD BE DELETED!
             router.push('/joinhouse')
           }
         });
       } catch (error) {
         console.log(error)
         return
+      }
+    },
+
+    async getUser(context, email){
+      let fetchedUser = await axios({
+        method: "POST",
+        url: "/graphql",
+        data: {
+          query: `
+            {
+            getUserByEmail(email:"${email}"){
+              id
+              username
+              house_keys
+              email
+              photo_url
+             }
+            }`
+        }
+      })
+    
+      if(fetchedUser.data.data.getUserByEmail.house_keys){
+        let housekey = await JSON.parse(fetchedUser.data.data.getUserByEmail.house_keys)
+        fetchedUser.data.data.getUserByEmail.house_keys = housekey
+        await context.dispatch('getHouseName', housekey[0])
+        await context.commit("setUser", fetchedUser.data.data.getUserByEmail)
+        await context.commit("toggleLoginBool", "true")
+        router.push('/yourhome')
+      } else {
+        console.log('User is homeless, going to join home...')
+        await context.commit("setUser", fetchedUser.data.data.getUserByEmail)
+        await context.commit("toggleLoginBool", "true")
+        router.push('/joinhouse')
       }
 
     },
@@ -213,10 +247,10 @@ export default new Vuex.Store({
     ///////
 
     //Creating a new chat room + pushes it to the database + assigning it to the front end state
-    async createHouse(context, payload) {
+   createHouse(context, payload) {
       let roomkey = keygen._()
 
-      await axios({
+      axios({
         method: "POST",
         url: "/graphql",
         data: {
@@ -259,7 +293,7 @@ export default new Vuex.Store({
         }
       }).then(() => {
        
-        //If so, add to the user
+        //If so, add to the user  
         if (checkExists) {
           axios({
             method: "POST",
@@ -279,10 +313,10 @@ export default new Vuex.Store({
       })
     },
 
-    async getHouseName(context, housename) {
+    getHouseName(context, housename) {
      
       try {
-        await axios({
+        axios({
           method: "POST",
           url: "/graphql",
           data: {
@@ -296,7 +330,7 @@ export default new Vuex.Store({
             `
           }
         }).then((response) => {
-       
+          context.commit('setHouseName', response.data.data.getHouseName.house_name)
           return JSON.parse(response.data.data.getHouseName.modules)
         }).then((response) => {
           context.commit('setCurrentHouseModules', response)
