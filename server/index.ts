@@ -46,9 +46,11 @@ import history from 'connect-history-api-fallback'
     }),
     context: ({ req, res }) => ({ req, res })
   });
+
   app.get("*", (req,res)=>{
     res.sendFile(path.resolve(__dirname,"..", "..", "dist"))
   })
+
   apolloServer.applyMiddleware({ app, cors: false });
   const port = process.env.PORT || 8080;
 

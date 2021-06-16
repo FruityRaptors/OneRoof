@@ -130,6 +130,7 @@ export default {
 
       this.messages = messages;
 
+    this.$store.dispatch("getHouseName", this.$store.state.user.house_keys[0])
 
       this.scrollBottom()
     });

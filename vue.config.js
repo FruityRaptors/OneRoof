@@ -9,11 +9,6 @@ module.exports = {
     },
   },
 
-  configureWebpack: {
-    devServer: {
-      historyApiFallback: true,
-    },
-  },
 
   // THIS IS THE PWA MANIFEST. DETAILS HERE: https://web.dev/add-manifest/
   // We might need to make sure we have a valid apple touch icon, below

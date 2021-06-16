@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.854b96de26085e6cceaf176e3bd788e1.js"
+  "/precache-manifest.00fd58522cc211bd62c81a1fea699a3c.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "oneroof"});
