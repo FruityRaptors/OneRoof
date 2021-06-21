@@ -29,7 +29,8 @@ module.exports = {
    "cli": {
       "entitiesDir": `${__dirname}/dist/server/entity`,
       "migrationsDir": `${__dirname}/dist/server/migration`,
-   }
+   },
+   "connectionDisplay": connectionOptions
 }
 
 //`/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}` || 
