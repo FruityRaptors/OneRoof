@@ -1,4 +1,5 @@
 const pgconnection = require("pg-connection-string")
+require('dotenv').config()
 
 const databaseUrl = process.env.DATABASE_URL
 const connectionOptions = pgconnection.parse(databaseUrl)
