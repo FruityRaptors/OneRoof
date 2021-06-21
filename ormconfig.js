@@ -1,7 +1,7 @@
 module.exports = {
    "name": "default",
    "type": "postgres",
-   "host": `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}` || "127.0.0.1",
+   "host": "127.0.0.1",
    "extra": {
       "socketPath": `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`
  },
@@ -25,4 +25,6 @@ module.exports = {
       "subscribersDir": "server/subscriber"
    }
 }
+
+//`/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}` || 
 
