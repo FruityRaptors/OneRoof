@@ -9,6 +9,7 @@ module.exports = {
    "type": "postgres",
    "host": connectionOptions.host,
    "port": connectionOptions.port,
+   "ssl": { rejectUnauthorized: false },
    "extra": {
       ssl: true
  },
