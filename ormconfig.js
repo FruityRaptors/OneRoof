@@ -17,13 +17,13 @@ module.exports = {
    "synchronize": true,
    "logging": false,
    "entities": [
-      "./dist/server/entity/**/*.js"
+      `${__dirname}/dist/server/entity/**/*.js`
    ],
    "migrations": [
-      "./dist/server/migration/**/*.js"
+      `${__dirname}/dist/server/migration/**/*.js`
    ],
    "subscribers": [
-      "./dist/server/subscriber/**/*.js"
+      `${__dirname}/dist/server/subscriber/**/*.js`
    ],
    "cli": {
       "entitiesDir": `${__dirname}/dist/server/entity`,
