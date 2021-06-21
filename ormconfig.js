@@ -1,16 +1,21 @@
+const pgconnection = require("pg-connection-string")
+
+const databaseUrl = process.env.DATABASE_URL
+const connectionOptions = pgconnection.parse(databaseUrl)
+
 module.exports = {
-   "name": "default",
+   "name": connectionOptions.name,
    "type": "postgres",
-   "host": `${process.env.DATABASE_URL}` || "127.0.0.1",
+   "host": connectionOptions.host,
+   "port": connectionOptions.port,
    "extra": {
-      "socketPath": `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`
+      ssl: true
  },
-   "username": process.env.DB_USER,
-   "password": process.env.DB_PASS,
-   "database": process.env.DB_NAME,
+   "username": connectionOptions.username,
+   "password": pconnectionOptions.password,
+   "database": connectionOptions.database,
    "synchronize": true,
    "logging": false,
-   "ssl":  { rejectUnauthorized: false },
    "entities": [
       "./dist/server/entity/**/*.js"
    ],
