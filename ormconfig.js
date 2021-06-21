@@ -12,7 +12,7 @@ module.exports = {
       ssl: true
  },
    "username": connectionOptions.username,
-   "password": pconnectionOptions.password,
+   "password": connectionOptions.password,
    "database": connectionOptions.database,
    "synchronize": true,
    "logging": false,
