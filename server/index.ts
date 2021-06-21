@@ -12,9 +12,20 @@ import { choreResolvers } from "./resolvers/choreResolvers"
 import { modulesResolvers } from "./resolvers/modulesResolvers"
 import path from "path"
 import history from 'connect-history-api-fallback'
+import sqlConfig from '../ormconfig'
+
+
+const pgconnection = require("pg-connection-string")
+const databaseUrl = process.env.DATABASE_URL
+const connectionOptions = pgconnection.parse(databaseUrl)
 
 (async () => {
   console.log("setting up express")
+
+  console.log('this is improted sql config', sqlConfig)
+
+  console.log('this is connection options', connectionOptions)
+  
 
   const app = express();
 
