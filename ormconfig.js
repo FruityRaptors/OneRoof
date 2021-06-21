@@ -5,7 +5,7 @@ const databaseUrl = process.env.DATABASE_URL
 const connectionOptions = pgconnection.parse(databaseUrl)
 
 module.exports = {
-   "name": connectionOptions.user,
+   "name": 'default',
    "type": "postgres",
    "host": connectionOptions.host,
    "port": connectionOptions.port,
@@ -18,13 +18,13 @@ module.exports = {
    "synchronize": true,
    "logging": false,
    "entities": [
-      `${__dirname}/dist/server/entity/*.js`
+      `${__dirname}/dist/server/entity/**/*.js`
    ],
    "migrations": [
-      `${__dirname}/dist/server/migration/*.js`
+      `${__dirname}/dist/server/migration/**/*.js`
    ],
    "subscribers": [
-      `${__dirname}/dist/server/subscriber/*.js`
+      `${__dirname}/dist/server/subscriber/**/*.js`
    ],
    "cli": {
       "entitiesDir": `${__dirname}/dist/server/entity`,
