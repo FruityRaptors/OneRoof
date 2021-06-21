@@ -9,9 +9,8 @@ module.exports = {
    "type": "postgres",
    "host": connectionOptions.host,
    "port": connectionOptions.port,
-   "ssl": { rejectUnauthorized: false },
    "extra": {
-      ssl: true
+      ssl: { rejectUnauthorized: false }
  },
    "username": connectionOptions.username,
    "password": connectionOptions.password,
@@ -19,13 +18,13 @@ module.exports = {
    "synchronize": true,
    "logging": false,
    "entities": [
-      `${__dirname}/dist/server/entity/**/*.js`
+      `${__dirname}/dist/server/entity/*.js`
    ],
    "migrations": [
-      `${__dirname}/dist/server/migration/**/*.js`
+      `${__dirname}/dist/server/migration/*.js`
    ],
    "subscribers": [
-      `${__dirname}/dist/server/subscriber/**/*.js`
+      `${__dirname}/dist/server/subscriber/*.js`
    ],
    "cli": {
       "entitiesDir": `${__dirname}/dist/server/entity`,

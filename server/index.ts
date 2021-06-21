@@ -31,11 +31,12 @@ import history from 'connect-history-api-fallback'
 
   app.enable('trust proxy');
 
+  console.log("About to connect SQL Database...")
   try {
     await connectDB()
     console.log("connecting to SQL database")
   } catch (err) {
-    console.log(err)
+    console.log("err log when connecting to SQL", err)
   }
 
   console.log('Starting Apollo Server')
