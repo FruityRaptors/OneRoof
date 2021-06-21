@@ -1,7 +1,7 @@
 module.exports = {
    "name": "default",
    "type": "postgres",
-   "host": "127.0.0.1",
+   "host": `${process.env.DATABASE_URL}` || "127.0.0.1",
    "extra": {
       "socketPath": `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`
  },
@@ -10,6 +10,7 @@ module.exports = {
    "database": process.env.DB_NAME,
    "synchronize": true,
    "logging": false,
+   "ssl":  { rejectUnauthorized: false },
    "entities": [
       "./dist/server/entity/**/*.js"
    ],
@@ -20,9 +21,8 @@ module.exports = {
       "./dist/server/subscriber/**/*.js"
    ],
    "cli": {
-      "entitiesDir": "server/entity",
-      "migrationsDir": "server/migration",
-      "subscribersDir": "server/subscriber"
+      "entitiesDir": `${__dirname}/dist/server/entity`,
+      "migrationsDir": `${__dirname}/dist/server/migration`,
    }
 }
 
