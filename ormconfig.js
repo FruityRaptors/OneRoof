@@ -5,14 +5,14 @@ const databaseUrl = process.env.DATABASE_URL
 const connectionOptions = pgconnection.parse(databaseUrl)
 
 module.exports = {
-   "name": connectionOptions.name,
+   "name": connectionOptions.user,
    "type": "postgres",
    "host": connectionOptions.host,
    "port": connectionOptions.port,
    "extra": {
       ssl: { rejectUnauthorized: false }
  },
-   "username": connectionOptions.username,
+   "username": connectionOptions.user,
    "password": connectionOptions.password,
    "database": connectionOptions.database,
    "synchronize": true,
