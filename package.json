@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "server": "ts-node server/index.ts",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build && tsc",
     "lint": "vue-cli-service lint",
     "start": "node ./dist/server/index.js",
     "migrate": "typeorm migration:run",
