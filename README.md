@@ -16,7 +16,7 @@
 </p>
 
 
-**OneRoof** is a fullstack group project application with a fully functional chat system at its core. The application also includes               modules with independent functionality but an interoperable ecosystem.
+**OneRoof** is a fullstack group project application with a fully functional chat system at its core. The application also includes modules with independent functionality but an interoperable ecosystem.
 
     ## Technologies used
 * [Vue](https://vuejs.org/) for the UI
