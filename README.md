@@ -18,7 +18,7 @@
 
 **OneRoof** is a fullstack group project application with a fully functional chat system at its core. The application also includes modules with independent functionality but an interoperable ecosystem.
 
-    ## Technologies used
+## Technologies used
 * [Vue](https://vuejs.org/) for the UI
 * [TypeORM](https://typeorm.io/#/) Query Builder
 * [TypeGraphQL](https://typegraphql.com/) Modern framework for GraphQL
