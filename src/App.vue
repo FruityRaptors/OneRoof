@@ -26,7 +26,7 @@
             OneRoof
           </v-list-item-title>
           <v-list-item-subtitle>
-            {{this.$store.state.houseName}}
+            {{this.houseName}}
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -117,11 +117,11 @@ export default {
 
   data: () => ({
     drawer: null,
-    houseName: "", 
     allNotifications: 0,
     loggedInFlag: false,
     login: true,
     loading: true,
+    houseName: '',
   }), // data ends
 
   name: "App", //Name Ends
@@ -142,9 +142,10 @@ export default {
       if (loggedInFlag !== false){
         let house_key = this.$store.state.user.house_keys[0]
 
-        await this.$store.dispatch("populateVictimList", this.$store.state.user.house_keys[0]);
+        await this.$store.dispatch("getHouseName", house_key);
+        await this.$store.dispatch("populateVictimList", house_key);
         await this.$store.dispatch("getChores", house_key);
-        await this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0]);
+        await this.$store.dispatch("getTodos", house_key);
 
         return loggedInFlag
       }
@@ -160,6 +161,8 @@ export default {
     let checkLogin = await this.appSetUp()
 
     this.loading = false;
+
+    this.houseName = this.$store.state.houseName;
 
     if (checkLogin){
     //Setting notifications

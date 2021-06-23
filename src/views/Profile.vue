@@ -8,10 +8,7 @@
         <v-list-item-title class="title mt-6  font-weight-bold">
           {{ this.username }}'s Profile 
         </v-list-item-title>
-        <v-list-item-subtitle class="font-weight-normal mb-2 ">
-          {{ this.houseName }}
-        </v-list-item-subtitle>
-        <v-list-item-title class="font-weight-bold ml-3">{{this.houseName}}</v-list-item-title>
+        <v-list-item-title >{{this.houseName}}</v-list-item-title>
 
    
       </v-list-item-content>
@@ -115,7 +112,6 @@ export default {
       username: "",
       email: "",
       houseName: "",
-      text1: this.$store.state.user.house_keys[0],
       snackbar: false,
     };
   },
@@ -137,11 +133,11 @@ export default {
     },
     changeUsername(username) {
       this.username = username;
-      this.$store.dispatch("changeUsername", { email: this.email, newUsername: username})
+      this.$store.dispatch("changeUsername", { email: this.email, newUsername: username })
     },
     copyText() {
       this.snackbar = true
-          navigator.clipboard.writeText(this.text1)
+      navigator.clipboard.writeText(this.$store.state.user.house_keys[0])
         }
   },
 };
