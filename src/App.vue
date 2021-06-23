@@ -35,7 +35,7 @@
       <v-divider></v-divider>
 
       <!-- Navigation bar start -->
-      <v-list v-for="value in items" :key="value.title" >
+      <v-list v-for="value in moduleList" :key="value.title" >
         <v-list-item v-if="value.purchased" :to="value.to" dense nav link>
           <v-badge
             :content="value.notifications"
@@ -165,23 +165,22 @@ export default {
     this.houseName = this.$store.state.houseName;
 
     if (checkLogin){
-    //Setting notifications
-    this.items.todo.notifications = this.$store.state.userTodoNotifications;
-        for (let item in this.items) {
-            this.allNotifications += this.items[item].notifications;
+    //Setting all notifications from todoNotifications etc.
+    this.moduleList.todo.notifications = this.$store.state.userTodoNotifications;
+        for (let module in this.moduleList) {
+            this.allNotifications += this.moduleList[module].notifications;
         }
-    //Setting notifications
     }
 
     console.timeEnd("app mounting");
   }, //mounted ends
 
   computed: {
-    countNotifications() {
+    countTodoNotifications() {
       return this.$store.state.userTodoNotifications;
     },
 
-    items: function(){
+    moduleList: function(){
 
       let resultList = {};
       let moduleList = this.$store.state.currentHouseModules
@@ -196,11 +195,11 @@ export default {
   }, //computed ends
 
   watch: {
-    countNotifications(newCount) {
-      this.items['todo'].notifications = newCount;
+    countTodoNotifications(newCount) {
+      this.moduleList['todo'].notifications = newCount;
       this.allNotifications = 0;
-      for (let item in this.items) {
-        this.allNotifications += this.items[item].notifications;
+      for (let module in this.moduleList) {
+        this.allNotifications += this.moduleList[module].notifications;
       }
     },
   }, //watch ends
