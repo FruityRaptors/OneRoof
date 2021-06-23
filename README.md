@@ -35,10 +35,10 @@ npm install
 
 **Create .env file in root of the project and set env variables for local connection**
 ```
-CLOUD_SQL_CONNECTION_NAME=LOCAL CONNECTION TO DATABASE
-DB_USER=USERNAME
-DB_PASS=USER PASSWORD
-DB_NAME=DATABASE NAME
+DB_PORT=5432
+DB_USER="_your postgres username_"
+DB_PASS="_your postgres password_"
+DB_NAME="_your db name_"
 ```
 
 
