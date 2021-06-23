@@ -5,7 +5,7 @@
     
 <h1>
     oneroof.dev
-</h1>
+</h1 align="center">
     
 </p>
 
