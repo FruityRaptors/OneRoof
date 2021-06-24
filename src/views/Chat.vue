@@ -41,6 +41,9 @@
             "
             >{{ message.content }}
           </v-card>
+          <v-card-subtitle class="d-inline-flex">
+            {{message.timestamp}}
+          </v-card-subtitle>
 <!-- Message box ends -->
 
 
@@ -93,6 +96,7 @@
 <script>
 import firebase from "firebase";
 import Avatar from "vue-avatar";
+import { DateTime } from "luxon";
 
 export default {
   name: "Chat",
@@ -124,7 +128,8 @@ export default {
           id: key,
           username: data[key].username,
           content: data[key].content,
-          image: data[key].image
+          image: data[key].image,
+          timestamp: data[key].timestamp,
         });
       });
 
@@ -149,7 +154,8 @@ export default {
       const message = {
         username: this.$store.state.user.username,
         content: this.inputMessage,
-        image: this.$store.state.user.photo_url
+        image: this.$store.state.user.photo_url,
+        timestamp: DateTime.now(),
       };
 
       messagesRef.push(message);
