@@ -34,8 +34,6 @@ module.exports = {
    /* "connectionDisplay": connectionOptions */
 }
 
-//`/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}` || 
-
 // here lies the heroku deployment!
 
 /* "host": connectionOptions.host,
