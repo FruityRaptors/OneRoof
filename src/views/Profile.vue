@@ -137,6 +137,7 @@ export default {
     },
     copyText() {
       this.snackbar = true
+      console.log(this.$store.state.user.house_keys[0])
       navigator.clipboard.writeText(this.$store.state.user.house_keys[0])
         }
   },
