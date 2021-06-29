@@ -47,10 +47,10 @@
     "calendar": {
         "id": 6,
         "title": "Calendar",
-        "icon": "mdi-cog",
+        "icon": "mdi-calendar",
         "to": "/modules",
         "notifications": 0,
-        "purchased": false,
+        "purchased": true,
         "purchasable": true
     },
     "Shopping List": {
