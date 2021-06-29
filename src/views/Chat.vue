@@ -129,7 +129,8 @@ export default {
           username: data[key].username,
           content: data[key].content,
           image: data[key].image,
-          timestamp: data[key].timestamp,
+          timestamp: DateTime.fromISO(data[key].timestamp).toRelative({ days: 1 }),
+          seen: true
         });
       });
 
@@ -155,7 +156,8 @@ export default {
         username: this.$store.state.user.username,
         content: this.inputMessage,
         image: this.$store.state.user.photo_url,
-        timestamp: DateTime.now(),
+        timestamp: DateTime.now().toISO(),
+        seen: false,
       };
 
       messagesRef.push(message);
