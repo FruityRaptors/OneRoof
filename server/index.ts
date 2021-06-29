@@ -10,16 +10,43 @@ import { houseResolvers } from "./resolvers/houseResolvers";
 import { dmResolvers } from "./resolvers/dmResolvers"
 import { choreResolvers } from "./resolvers/choreResolvers"
 import { modulesResolvers } from "./resolvers/modulesResolvers"
+import path from "path"
+import history from 'connect-history-api-fallback'
+import sqlConfig from '../ormconfig'
 
+// import { parse } from 'pg-connection-string'
+// const databaseUrl:string = process.env.DATABASE_URL
+// const connectionOptions = parse(databaseUrl)
 
 (async () => {
-  console.log("spinning up express")
+  console.log("setting up express")
+
+  console.log('this is improted sql config', sqlConfig)
+
+  // console.log('this is connection options', connectionOptions)
+  
+
   const app = express();
-  console.log("connecting to SQL database")
+
+  app.use(express.static(path.resolve(__dirname,"..", "..", "dist")))
+
+  app.use(history({
+    disableDotRule: true,
+    verbose: true
+  }))
+
+  app.use(express.static(path.resolve(__dirname,"..", "..", "dist")))
+
+  app.set('view engine', 'pug');
+
+  app.enable('trust proxy');
+
+  console.log("About to connect SQL Database...")
   try {
     await connectDB()
+    console.log("connecting to SQL database")
   } catch (err) {
-    console.log(err)
+    console.log("err log when connecting to SQL", err)
   }
 
   console.log('Starting Apollo Server')
@@ -31,8 +58,12 @@ import { modulesResolvers } from "./resolvers/modulesResolvers"
     context: ({ req, res }) => ({ req, res })
   });
 
+  app.get("*", (req,res)=>{
+    res.sendFile(path.resolve(__dirname,"..", "..", "dist"))
+  })
+
   apolloServer.applyMiddleware({ app, cors: false });
-  const port = process.env.PORT || 4000;
+  const port = process.env.PORT || 8080;
 
   console.log('launching server...')
   app.listen(port, () => {
