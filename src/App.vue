@@ -120,7 +120,7 @@ export default {
     allNotifications: 0,
     loggedInFlag: false,
     login: true,
-    loading: true,
+    loading: false,
     houseName: '',
   }), // data ends
 
@@ -140,6 +140,7 @@ export default {
       let loggedInFlag = await this.$store.dispatch("checkIfLoggedInUser")
 
       if (loggedInFlag !== false){
+        console.log('passed log in flag in app.vue')
         let house_key = this.$store.state.user.house_keys[0]
 
         await this.$store.dispatch("getHouseName", house_key);
@@ -156,15 +157,16 @@ export default {
 
     console.time("app mounting");
 
-    this.loading = true;
+    // this.loading = true;
 
     let checkLogin = await this.appSetUp()
 
-    this.loading = false;
+    
 
     this.houseName = this.$store.state.houseName;
 
     if (checkLogin){
+      this.loading = false;
     //Setting all notifications from todoNotifications etc.
     this.moduleList.todo.notifications = this.$store.state.userTodoNotifications;
         for (let module in this.moduleList) {
