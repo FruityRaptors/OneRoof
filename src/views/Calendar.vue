@@ -6,14 +6,6 @@
           flat
         >
           <v-btn
-            outlined
-            class="mr-4"
-            color="grey darken-2"
-            @click="setToday"
-          >
-            Today
-          </v-btn>
-          <v-btn
             fab
             text
             small
@@ -44,17 +36,9 @@
             right
           >
             <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                outlined
-                color="grey darken-2"
-                v-bind="attrs"
-                v-on="on"
-              >
-                <span>{{ typeToLabel[type] }}</span>
-                <v-icon right>
-                  mdi-menu-down
-                </v-icon>
-              </v-btn>
+             <v-btn icon v-bind="attrs" v-on="on" >
+                <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
             </template>
             <v-list>
               <v-list-item @click="type = 'day'">
@@ -68,6 +52,9 @@
               </v-list-item>
               <v-list-item @click="type = '4day'">
                 <v-list-item-title>4 days</v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="setToday">
+                <v-list-item-title>Now</v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>
@@ -134,6 +121,7 @@
 
 <script>
   export default {
+    name: "Calendar",
     data: () => ({
       focus: '',
       type: 'month',

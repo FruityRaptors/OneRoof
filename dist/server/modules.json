@@ -48,9 +48,9 @@
         "id": 6,
         "title": "Calendar",
         "icon": "mdi-calendar",
-        "to": "/modules",
+        "to": "/calendar",
         "notifications": 0,
-        "purchased": true,
+        "purchased": false,
         "purchasable": true
     },
     "Shopping List": {

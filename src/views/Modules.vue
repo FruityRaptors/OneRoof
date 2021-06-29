@@ -5,7 +5,7 @@
     </v-card>
 
     <v-list v-for="(module, key) in modules" :key="module.id" elevation="0">
-      <v-list-item v-if="module.title === 'Chores'" @click="updateModule(key)">
+      <v-list-item v-if="module.title === 'Chores' || module.title === 'Calendar'" @click="updateModule(key)">
         <v-list-item-action>
           <v-checkbox
             :input-value="module.purchased"
@@ -13,7 +13,7 @@
           ></v-checkbox>
         </v-list-item-action>
 
-        <v-list-item-title v-if="module.title === 'Chores'">
+        <v-list-item-title v-if="module.title === 'Chores' || module.title === 'Calendar'">
           {{ module.title }}
           <span class="limited-time">Free for a limited time!</span>
         </v-list-item-title>
