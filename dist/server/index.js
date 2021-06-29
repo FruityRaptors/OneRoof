@@ -26,8 +26,14 @@ const choreResolvers_1 = require("./resolvers/choreResolvers");
 const modulesResolvers_1 = require("./resolvers/modulesResolvers");
 const path_1 = __importDefault(require("path"));
 const connect_history_api_fallback_1 = __importDefault(require("connect-history-api-fallback"));
+const ormconfig_1 = __importDefault(require("../ormconfig"));
+// import { parse } from 'pg-connection-string'
+// const databaseUrl:string = process.env.DATABASE_URL
+// const connectionOptions = parse(databaseUrl)
 (() => __awaiter(void 0, void 0, void 0, function* () {
     console.log("setting up express");
+    console.log('this is improted sql config', ormconfig_1.default);
+    // console.log('this is connection options', connectionOptions)
     const app = express_1.default();
     app.use(express_1.default.static(path_1.default.resolve(__dirname, "..", "..", "dist")));
     app.use(connect_history_api_fallback_1.default({
@@ -37,12 +43,13 @@ const connect_history_api_fallback_1 = __importDefault(require("connect-history-
     app.use(express_1.default.static(path_1.default.resolve(__dirname, "..", "..", "dist")));
     app.set('view engine', 'pug');
     app.enable('trust proxy');
+    console.log("About to connect SQL Database...");
     try {
         yield database_1.connectDB();
         console.log("connecting to SQL database");
     }
     catch (err) {
-        console.log(err);
+        console.log("err log when connecting to SQL", err);
     }
     console.log('Starting Apollo Server');
     const apolloServer = new apollo_server_express_1.ApolloServer({
