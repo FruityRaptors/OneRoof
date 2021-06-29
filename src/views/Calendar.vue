@@ -93,8 +93,8 @@
               </v-btn>
               <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
               <v-spacer></v-spacer>
-              <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
+              <v-btn icon @click="selectedOpen = false">
+                <v-icon>mdi-close-thick</v-icon>
               </v-btn>
               <v-btn icon>
                 <v-icon>mdi-dots-vertical</v-icon>
@@ -103,15 +103,6 @@
             <v-card-text>
               <span v-html="selectedEvent.details"></span>
             </v-card-text>
-            <v-card-actions>
-              <v-btn
-                text
-                color="secondary"
-                @click="selectedOpen = false"
-              >
-                Cancel
-              </v-btn>
-            </v-card-actions>
           </v-card>
         </v-menu>
       </v-sheet>
