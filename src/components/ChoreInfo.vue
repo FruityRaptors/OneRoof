@@ -30,7 +30,7 @@
         </v-container>
 
         <v-container v-else >
-          <v-avatar size="150" class="mr-10">
+          <v-avatar size="150" >
              <Avatar
             :username="this.unknown"
             :size="80"

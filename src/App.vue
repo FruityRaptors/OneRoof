@@ -26,7 +26,7 @@
             OneRoof
           </v-list-item-title>
           <v-list-item-subtitle>
-            {{this.$store.state.houseName}}
+            {{this.houseName}}
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -35,7 +35,7 @@
       <v-divider></v-divider>
 
       <!-- Navigation bar start -->
-      <v-list v-for="value in items" :key="value.title" >
+      <v-list v-for="value in moduleList" :key="value.title" >
         <v-list-item v-if="value.purchased" :to="value.to" dense nav link>
           <v-badge
             :content="value.notifications"
@@ -117,11 +117,11 @@ export default {
 
   data: () => ({
     drawer: null,
-    houseName: "", 
     allNotifications: 0,
     loggedInFlag: false,
     login: true,
     loading: true,
+    houseName: '',
   }), // data ends
 
   name: "App", //Name Ends
@@ -142,9 +142,10 @@ export default {
       if (loggedInFlag !== false){
         let house_key = this.$store.state.user.house_keys[0]
 
-        await this.$store.dispatch("populateVictimList", this.$store.state.user.house_keys[0]);
+        await this.$store.dispatch("getHouseName", house_key);
+        await this.$store.dispatch("populateVictimList", house_key);
         await this.$store.dispatch("getChores", house_key);
-        await this.$store.dispatch("getTodos", this.$store.state.user.house_keys[0]);
+        await this.$store.dispatch("getTodos", house_key);
 
         return loggedInFlag
       }
@@ -161,24 +162,25 @@ export default {
 
     this.loading = false;
 
+    this.houseName = this.$store.state.houseName;
+
     if (checkLogin){
-    //Setting notifications
-    this.items.todo.notifications = this.$store.state.userTodoNotifications;
-        for (let item in this.items) {
-            this.allNotifications += this.items[item].notifications;
+    //Setting all notifications from todoNotifications etc.
+    this.moduleList.todo.notifications = this.$store.state.userTodoNotifications;
+        for (let module in this.moduleList) {
+            this.allNotifications += this.moduleList[module].notifications;
         }
-    //Setting notifications
     }
 
     console.timeEnd("app mounting");
   }, //mounted ends
 
   computed: {
-    countNotifications() {
+    countTodoNotifications() {
       return this.$store.state.userTodoNotifications;
     },
 
-    items: function(){
+    moduleList: function(){
 
       let resultList = {};
       let moduleList = this.$store.state.currentHouseModules
@@ -193,11 +195,11 @@ export default {
   }, //computed ends
 
   watch: {
-    countNotifications(newCount) {
-      this.items['todo'].notifications = newCount;
+    countTodoNotifications(newCount) {
+      this.moduleList['todo'].notifications = newCount;
       this.allNotifications = 0;
-      for (let item in this.items) {
-        this.allNotifications += this.items[item].notifications;
+      for (let module in this.moduleList) {
+        this.allNotifications += this.moduleList[module].notifications;
       }
     },
   }, //watch ends

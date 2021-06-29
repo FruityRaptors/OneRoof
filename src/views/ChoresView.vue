@@ -98,9 +98,10 @@ export default {
       users: this.$store.state.usersInSameHouse,
     };
   },
-  mounted() {
+  async mounted() {
     this.currentUser = this.$store.state.user;
     this.updateChores();
+    await this.$store.dispatch("getChores", this.currentUser.house_keys[0]);
   },
   methods: {
     setChore(chore) {
