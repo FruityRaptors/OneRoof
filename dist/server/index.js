@@ -30,7 +30,6 @@ const connect_history_api_fallback_1 = __importDefault(require("connect-history-
 // const databaseUrl:string = process.env.DATABASE_URL
 // const connectionOptions = parse(databaseUrl)
 (() => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("here now");
     console.log("setting up express");
     /* console.log('this is improted sql config', sqlConfig) */
     // console.log('this is connection options', connectionOptions)

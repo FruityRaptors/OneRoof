@@ -3,16 +3,15 @@ require('dotenv').config();
 /* const databaseUrl = process.env.DATABASE_URL
 const connectionOptions = pgconnection.parse(databaseUrl) */
 module.exports = {
+    // the following has changed: change back for Heroku deploy:
     "name": 'default',
     "type": "postgres",
     "host": "localhost",
     "port": 5432,
-    "extra": {
-        ssl: { rejectUnauthorized: false }
-    },
     "username": process.env.DB_USER,
     "password": process.env.DB_PASS,
     "database": process.env.DB_NAME,
+    // replace the above with the long section below. In addition, uncomment line 34!
     "synchronize": true,
     "logging": false,
     "entities": [
@@ -31,7 +30,6 @@ module.exports = {
     // uncomment this for heroku!
     /* "connectionDisplay": connectionOptions */
 };
-//`/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}` || 
 // here lies the heroku deployment!
 /* "host": connectionOptions.host,
    "port": connectionOptions.port,
