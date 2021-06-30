@@ -60,6 +60,15 @@ const routes = [
     }
   },
   {
+    path: '/photos',
+    name: 'Photo Gallery',
+    component: () =>
+      import('../views/PhotosView.vue'),
+    meta: {
+      authRequired: false,
+    }  
+  },
+  {
     path: '/joinhouse',
     name: 'JoinHouse',
     component: () =>

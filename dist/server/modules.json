@@ -61,5 +61,14 @@
         "notifications": 0,
         "purchased": false,
         "purchasable": true
+    },
+    "photos": {
+        "id": 8,
+        "title": "Photo Gallery",
+        "icon": "mdi-image-frame",
+        "to": "/photos",
+        "notifications": 0,
+        "purchased": true,
+        "purchasable": true
     }
 }

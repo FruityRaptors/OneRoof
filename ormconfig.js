@@ -5,12 +5,12 @@ const databaseUrl = process.env.DATABASE_URL
 if (databaseUrl){
   connectionOptions = pgconnection.parse(databaseUrl)
 }
-let connectionConfig = {
+const connectionConfig = {
    "name": 'default',
    "type": "postgres",
    "host": connectionOptions.host || 'localhost',
    "port": connectionOptions.port || 5432,
-   "username": connectionOptions.user || 'postgres',
+   "username": connectionOptions.user || process.env.DB_USER,
    "password": connectionOptions.password || process.env.DB_PASS,
    "database": connectionOptions.database || process.env.DB_NAME,
    "synchronize": true,

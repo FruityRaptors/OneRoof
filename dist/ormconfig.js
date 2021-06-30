@@ -1,18 +1,18 @@
-/* const pgconnection = require("pg-connection-string") */
+const pgconnection = require("pg-connection-string");
 require('dotenv').config();
-/* const databaseUrl = process.env.DATABASE_URL
-const connectionOptions = pgconnection.parse(databaseUrl) */
-module.exports = {
+let connectionOptions = '';
+const databaseUrl = process.env.DATABASE_URL;
+if (databaseUrl) {
+    connectionOptions = pgconnection.parse(databaseUrl);
+}
+const connectionConfig = {
     "name": 'default',
     "type": "postgres",
-    "host": "localhost",
-    "port": 5432,
-    "extra": {
-        ssl: { rejectUnauthorized: false }
-    },
-    "username": process.env.DB_USER,
-    "password": process.env.DB_PASS,
-    "database": process.env.DB_NAME,
+    "host": connectionOptions.host || 'localhost',
+    "port": connectionOptions.port || 5432,
+    "username": connectionOptions.user || process.env.DB_USER,
+    "password": connectionOptions.password || process.env.DB_PASS,
+    "database": connectionOptions.database || process.env.DB_NAME,
     "synchronize": true,
     "logging": false,
     "entities": [
@@ -28,16 +28,9 @@ module.exports = {
         "entitiesDir": `${__dirname}/dist/server/entity`,
         "migrationsDir": `${__dirname}/dist/server/migration`,
     },
-    // uncomment this for heroku!
-    /* "connectionDisplay": connectionOptions */
+    "connectionDisplay": connectionOptions
 };
-//`/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}` || 
-// here lies the heroku deployment!
-/* "host": connectionOptions.host,
-   "port": connectionOptions.port,
-   "extra": {
-      ssl: { rejectUnauthorized: false }
-   },
-   "username": connectionOptions.user,
-   "password": connectionOptions.password,
-   "database": connectionOptions.database, */
+if (databaseUrl) {
+    connectionConfig.extra = { ssl: { rejectUnauthorized: false } };
+}
+module.exports = connectionConfig;

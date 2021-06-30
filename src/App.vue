@@ -112,7 +112,6 @@
 <script>
 import Login from "./views/Login.vue";
 import Register from "./views/Register";
-
 export default {
 
   data: () => ({
