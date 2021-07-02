@@ -18,7 +18,7 @@
 
     <v-text-field filled rounded dense v-model="email" label="Email"></v-text-field>
     <v-text-field filled rounded dense type="password" v-model="password" label="Password"></v-text-field>
-    <v-text-field filled rounded dense type="password" v-model="passwordConfirm" label="Confirm Password" :rules="[rules.samePass]"></v-text-field>
+    <v-text-field filled rounded dense type="password" v-model="passwordConfirm" label="Confirm Password" :rules="[formRules.samePass]"></v-text-field>
     <v-text-field filled rounded dense v-model="username" label="Username" hint="What do your housemates call you?"></v-text-field>
 
     <v-btn @click="register" class="orange lighten-2 white--text">
@@ -47,14 +47,15 @@ export default {
       password: "",
       username: "",
       passwordConfirm: "",
-      rules: {
+      formRules: {
         samePass: v => v === this.password || 'Passwords do not match'
       }
     };
   },
   methods: {
     register() {
-      if (this.password != this.passwordConfirm){
+      if (this.password !== this.passwordConfirm){
+        window.alert('Passwords do not match')
         return
       }
 

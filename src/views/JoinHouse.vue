@@ -10,7 +10,7 @@
          <v-text-field
             label="House Key..."
             class="ml-5 mr-5"
-            :rules="[rules.min]"
+            :rules="[formRules.minLength]"
             filled
             dense
             rounded
@@ -67,8 +67,8 @@ data(){
     return {
      roomkey: undefined,
      homename: undefined,
-     rules: {
-         min: v => v.length === 32 || 'House keys contains 32 characters'
+     formRules: {
+         minLength: v => v.length === 32 || 'House keys should contain 32 characters'
      }
     }
 }, // Data End
@@ -82,7 +82,9 @@ methods: {
     joinHouse(){
         if(this.roomkey === 32){
             this.$store.dispatch("joinHouse", {email: this.$store.state.user.email, roomkey: this.roomkey})
-        } 
+        } else {
+            window.alert('Wrong House Key Input')
+        }
     }
 } // Method End
 
