@@ -68,7 +68,7 @@ data(){
      roomkey: undefined,
      homename: undefined,
      formRules: {
-         minLength: v => v.length === 32 || 'House keys should contain 32 characters'
+         minLength: v => v.length === 32 || 'Your house key must be exactly 32 characters long'
      }
     }
 }, // Data End
