@@ -6,3 +6,4 @@ temp/
 .env
 .gcloudignore
 cloudsql/
+dist/
