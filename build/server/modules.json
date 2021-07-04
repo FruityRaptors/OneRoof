@@ -1,0 +1,47 @@
+{
+    "chat": {
+        "id": 1,
+        "title": "Chat",
+        "icon": "mdi-chat",
+        "to": "/yourhome",
+        "notifications": 0,
+        "purchased": true,
+        "purchasable": false
+    },
+    "directmessage": {
+        "id": 2,
+        "title": "Direct Messages",
+        "icon": "mdi-message-text",
+        "to": "/dm",
+        "notifications": 0,
+        "purchased": true,
+        "purchasable": false
+    },
+    "todo": {
+        "id": 3,
+        "title": "To-do",
+        "icon": "mdi-format-list-checks",
+        "to": "/todo",
+        "notifications": 0,
+        "purchased": true,
+        "purchasable": false
+    },
+    "chores": {
+        "id": 4,
+        "title": "Chores",
+        "icon": "mdi-clipboard-edit",
+        "to": "/chores",
+        "notifications": 0,
+        "purchased": false,
+        "purchasable": true
+    },
+    "modules": {
+        "id": 5,
+        "title": "Modules",
+        "icon": "mdi-cog",
+        "to": "/modules",
+        "notifications": 0,
+        "purchased": true,
+        "purchasable": false
+    }
+}
