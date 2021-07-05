@@ -13,7 +13,7 @@ let connectionConfig = {
    "type": "postgres",
    "host": connectionOptions.host || 'localhost',
    "port": connectionOptions.port || 5432,
-   "username": connectionOptions.user || process.env.DB_USERNAME,
+   "username": connectionOptions.user || process.env.DB_USER,
    "password": connectionOptions.password || process.env.DB_PASS,
    "database": connectionOptions.database || process.env.DB_NAME,
    "synchronize": true,

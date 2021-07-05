@@ -234,7 +234,6 @@ export default {
           this.currentTodo.assigneeURL = user.photo_url
         }
       }
-      console.log(this.currentTodo)
       await this.$store.dispatch("updateTodoVictim", this.currentTodo);
     },
   }, // method ends

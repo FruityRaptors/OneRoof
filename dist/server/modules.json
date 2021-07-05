@@ -7,7 +7,7 @@
         "notifications": 0,
         "purchased": true,
         "purchasable": false
-    }, 
+    },
     "directmessage": {
         "id": 2,
         "title": "Direct Messages",
