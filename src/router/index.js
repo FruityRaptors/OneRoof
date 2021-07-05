@@ -65,7 +65,7 @@ const routes = [
     component: () =>
       import('../views/PhotosView.vue'),
     meta: {
-      authRequired: false,
+      authRequired: true,
     }  
   },
   {

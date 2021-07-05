@@ -5,13 +5,14 @@
     <v-container fluid>
      <v-row>
       <v-col
-       v-for="n in 9"
+       v-for="n in 20"
        :key="n"
        class="d-flex child-flex"
        cols="4"
       >
         <v-card flat tile class="d-flex">
           <v-img
+            @click="singlePhoto"
             :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
             :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
             aspect-ratio="1"
@@ -38,9 +39,19 @@
 
 <script>
 export default {
-  name: "Home"
+  name: "Home",
+
+
+  methods: {
+
+    singlePhoto() {
+      console.log("CLICK!");
+    }
+
+}
     
 }
+
 </script>
 
 <style>
