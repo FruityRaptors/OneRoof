@@ -129,6 +129,7 @@ export default new Vuex.Store({
           }
         }).then((response) => {
 
+          context.commit("toggleLoginBool", "true")
           //If fetched user belonged to a house, set user normally
           if (response.data.data.getUserByEmail.house_keys) {
             
@@ -747,11 +748,12 @@ export default new Vuex.Store({
 
     async checkIfLoggedInUser(context) {
       const user = await firebase.auth().currentUser
+    
       if (user) {
         await context.dispatch("getUser", user.email)
         return true
       } else {
-        router.push('/login')
+        // router.push('/login')
         return false
       }
     },
