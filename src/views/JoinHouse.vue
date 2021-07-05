@@ -1,8 +1,8 @@
 <template>
 <!-- Main card starts -->
- <v-card class="mx-auto text-center mt-10 orange lighten-5" max-width="300px" rounded elevation="5">
+ <v-card class="mx-auto text-center mt-10 orange lighten-5" max-width="95%" rounded elevation="5">
 
-     <v-card-subtitle class="text-center text-justify font-weight-bold">Looks like you don't have a home yet...</v-card-subtitle>
+     <v-card-subtitle class="text-center text-justify font-weight-bold text--primary">Looks like you don't have a home yet...</v-card-subtitle>
 
          <v-card-text class="font-weight-bold">Enter House key</v-card-text>
    
@@ -10,6 +10,7 @@
          <v-text-field
             label="House Key..."
             class="ml-5 mr-5"
+            :rules="[formRules.minLength]"
             filled
             dense
             rounded
@@ -18,7 +19,7 @@
 
     <v-btn
       rounded
-      color="orange lighten-3"
+      color="orange lighten-2"
       dark
       class="mb-5"
       @click="joinHouse"
@@ -42,7 +43,7 @@
 
     <v-btn
       rounded
-      color="orange lighten-3"
+      color="orange lighten-2"
       dark
       class="mb-5"
       @click="createHouse"
@@ -65,7 +66,10 @@ export default {
 data(){
     return {
      roomkey: undefined,
-     homename: undefined
+     homename: undefined,
+     formRules: {
+         minLength: v => v.length === 32 || 'Your house key must be exactly 32 characters long'
+     }
     }
 }, // Data End
 
@@ -76,7 +80,11 @@ methods: {
     },
 
     joinHouse(){
-        this.$store.dispatch("joinHouse", {email: this.$store.state.user.email, roomkey: this.roomkey})
+        if(this.roomkey === 32){
+            this.$store.dispatch("joinHouse", {email: this.$store.state.user.email, roomkey: this.roomkey})
+        } else {
+            window.alert('Wrong House Key Input')
+        }
     }
 } // Method End
 
