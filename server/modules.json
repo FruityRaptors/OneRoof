@@ -47,8 +47,8 @@
     "calendar": {
         "id": 6,
         "title": "Calendar",
-        "icon": "mdi-cog",
-        "to": "/modules",
+        "icon": "mdi-calendar",
+        "to": "/calendar",
         "notifications": 0,
         "purchased": false,
         "purchasable": true

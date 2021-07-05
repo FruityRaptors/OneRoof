@@ -50,7 +50,7 @@
               ></Avatar>
               <v-img v-else :src="message.image"></v-img>
             </v-avatar>
-            <v-card-subtitle class="d-inline-flex redmessage">
+            <v-card-subtitle class="d-inline-flex">
               {{ message.username }}
             </v-card-subtitle>
           </v-subheader>
@@ -61,7 +61,7 @@
             rounded
             max-width="250"
             class="mb-2 mr-4 pa-2"
-            elevation="0"
+            elevation="2"
             :color="
               message.username == username
                 ? 'orange accent-2 font-weight-light text-justify'
@@ -69,11 +69,8 @@
             "
             >{{ message.content }}
           </v-card>
-          <v-card-subtitle class="d-inline-flex">
+          <v-card-subtitle class="d-sm-inline-flex mt-0 pt-0">
             {{ message.timestamp }}
-          </v-card-subtitle>
-          <v-card-subtitle class="d-inline-flex">
-            {{ message.read }}
           </v-card-subtitle>
           <!-- Message box ends -->
         </v-card>
@@ -175,7 +172,19 @@ export default {
 
       this.scrollBottom();
     });
-  }, // Mounted Ends
+  },
+  
+  // I think this is a way to get notifications "read" but there might be some lifecycle issues
+ /*  mounted() {
+    console.log(`mounting ${this.username}'s DMs`)
+    this.messages.forEach((message) => {
+      console.log(message.read)
+      message.read = true
+      console.log(message.read)
+    })
+    console.log(`finished mounting ${this.username}'s DMs`)
+  }, */
+    // Mounted Ends
 
   methods: {
     sendMessage() {
@@ -206,8 +215,3 @@ export default {
 };
 </script>
 
-<style scoped>
-  .redmessage {
-    color: red;
-  }
-</style>
