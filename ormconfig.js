@@ -1,10 +1,13 @@
 const pgconnection = require("pg-connection-string")
 require('dotenv').config()
+
 let connectionOptions = ''
 const databaseUrl = process.env.DATABASE_URL
+
 if (databaseUrl){
   connectionOptions = pgconnection.parse(databaseUrl)
 }
+
 let connectionConfig = {
    "name": 'default',
    "type": "postgres",
@@ -30,7 +33,13 @@ let connectionConfig = {
    },
    "connectionDisplay": connectionOptions
  }
+
  if (databaseUrl){
     connectionConfig.extra = {ssl: { rejectUnauthorized: false }}
  }
+
+
 module.exports = connectionConfig
+
+//`/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}` || 
+
