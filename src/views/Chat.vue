@@ -121,7 +121,7 @@ export default {
 
       if(!data){
        return
-     }
+      }
 
       Object.keys(data).forEach((key) => {
         messages.push({
