@@ -147,6 +147,7 @@ export default {
         await this.$store.dispatch("populateVictimList", house_key);
         await this.$store.dispatch("getChores", house_key);
         await this.$store.dispatch("getTodos", house_key);
+        await this.$store.dispatch("getShoppingList", house_key);
 
         return loggedInFlag
       }
