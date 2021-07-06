@@ -28,4 +28,8 @@ export class Groceries extends BaseEntity {
     @Field(() => String)
     @Column()
     date: string;
+
+    @Field(() => Boolean)
+    @Column()
+    inCart: boolean;
 } 
