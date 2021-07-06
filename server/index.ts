@@ -21,11 +21,7 @@ import sqlConfig from '../ormconfig'
 (async () => {
   console.log("setting up express")
 
-  /* console.log('this is improted sql config', sqlConfig) */
-
-  // console.log('this is connection options', connectionOptions)
   
-
   const app = express();
 
   app.use(express.static(path.resolve(__dirname,"..", "..", "dist")))
