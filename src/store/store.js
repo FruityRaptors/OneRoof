@@ -616,6 +616,10 @@ export default new Vuex.Store({
         })
           .then((response) => {
             let choresByHouse = response.data.data.getChoresByHouse
+<<<<<<< HEAD
+=======
+
+>>>>>>> d681b7bbc1aaa65c7ccd869a09cd8b7af0e75fd0
             context.commit("setChores", choresByHouse)
           })
       } catch (error) {

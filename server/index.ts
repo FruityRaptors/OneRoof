@@ -21,7 +21,6 @@ import sqlConfig from '../ormconfig'
 (async () => {
   console.log("setting up express")
 
-  // console.log('this is connection options', connectionOptions)
   
   const app = express();
 
@@ -31,6 +30,7 @@ import sqlConfig from '../ormconfig'
     disableDotRule: true,
     verbose: true
   }))
+
 
   app.use(express.static(path.resolve(__dirname,"..", "..", "dist")))
 
