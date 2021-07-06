@@ -25,15 +25,14 @@ import sqlConfig from '../ormconfig'
   
   const app = express();
 
-/*   app.use(express.static(path.resolve(__dirname,"..", "..", "dist")))
+  app.use(express.static(path.resolve(__dirname,"..", "..", "dist")))
 
   app.use(history({
     disableDotRule: true,
     verbose: true
   }))
 
-
-  app.use(express.static(path.resolve(__dirname,"..", "..", "dist"))) */
+  app.use(express.static(path.resolve(__dirname,"..", "..", "dist")))
 
   app.set('view engine', 'pug');
 
