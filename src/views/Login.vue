@@ -1,11 +1,11 @@
 <template>
-<v-card class="mx-auto text-center pa-5" width="300" max-width="100%" color="orange lighten-5" elevation="5">
+<v-card class="mx-auto text-center pa-5" width="95%" max-width="100%" color="orange lighten-5" elevation="5">
 
         <v-img
         src="@/assets/OneRoof.png"
         width="300"
         contain
-        class="mt-2 mr-3 pa-0"
+        class="mt-2 ml-3 pa-0"
         ></v-img>
         
       <v-container>
