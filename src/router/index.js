@@ -95,6 +95,15 @@ const routes = [
         authRequired: true,
       }
     },
+    {
+      path: '/shoppinglist',
+      name: 'Shopping List',
+      component: () =>
+        import('../views/ShoppingList.vue'),
+      meta: {
+        authRequired: true,
+      }
+    },
 ]
 
 const router = new VueRouter({
