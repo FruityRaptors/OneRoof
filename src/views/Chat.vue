@@ -119,6 +119,10 @@ export default {
       const data = snapshot.val();
       let messages = [];
 
+      if(!data){
+       return
+     }
+
       Object.keys(data).forEach((key) => {
         messages.push({
           id: key,
