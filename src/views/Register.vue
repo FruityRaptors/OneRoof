@@ -1,16 +1,14 @@
 <template>
-  <v-card class="mx-auto pa-5 text-center orange lighten-5" width="95%" max-width="350" elevation="5">
+  <v-card class="mx-auto text-center orange lighten-5" width="95%" max-width="350" elevation="0">
 
-    <v-img
+  <v-card class="d-flex justify-center" color="orange lighten-5"  elevation="0">
+  <v-img
         src="@/assets/OneRoof.png"
-        width="300"
         contain
-        class="mt-2 ml-1 pa-0"
-    ></v-img>
-
-    <v-card-title class="text-center d-flex justify-center">
-      Welcome to Oneroof
-    </v-card-title>
+        max-width="150"
+        class="pa-0"
+        ></v-img>
+  </v-card>
 
     <v-card-title class="text-center d-flex justify-center">
       Register

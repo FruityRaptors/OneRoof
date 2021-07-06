@@ -10,7 +10,7 @@ let connectionConfig = {
     "type": "postgres",
     "host": connectionOptions.host || 'localhost',
     "port": connectionOptions.port || 5432,
-    "username": connectionOptions.user || process.env.DB_USER,
+    "username": connectionOptions.user || process.env.DB_USERNAME,
     "password": connectionOptions.password || process.env.DB_PASS,
     "database": connectionOptions.database || process.env.DB_NAME,
     "synchronize": true,
@@ -34,3 +34,4 @@ if (databaseUrl) {
     connectionConfig.extra = { ssl: { rejectUnauthorized: false } };
 }
 module.exports = connectionConfig;
+//`/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}` || 

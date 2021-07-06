@@ -13,9 +13,7 @@
    
       </v-list-item-content>
 
-      <v-snackbar v-model="snackbar" timeout="2000">
-      Copied to Clipboard!
-      </v-snackbar>
+      
 
       
 
@@ -33,6 +31,7 @@
        <v-list-item-subtitle class="font-weight-bold mt-4  d-flex justify-center title ">
           Invite people to your home!
         </v-list-item-subtitle>
+
         <v-btn
             label="House Code"
             class="mt-3 black--text"
@@ -41,6 +40,21 @@
             block
             rounded
           > Copy House Key</v-btn>
+
+          <v-list-item-subtitle class="mt-3 mb-3 font-weight-bold">
+          Or.. Manually copy housekey
+          </v-list-item-subtitle>
+
+          <v-text-field
+            solo-inverted
+            dense
+            readonly
+            :value="$store.state.user.house_keys[0]"
+          ></v-text-field>
+
+          <v-snackbar v-model="snackbar" timeout="2000">
+      Copied to Clipboard!
+      </v-snackbar>
       
       </v-card>
        

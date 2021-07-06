@@ -31,8 +31,6 @@ const connect_history_api_fallback_1 = __importDefault(require("connect-history-
 // const connectionOptions = parse(databaseUrl)
 (() => __awaiter(void 0, void 0, void 0, function* () {
     console.log("setting up express");
-    /* console.log('this is improted sql config', sqlConfig) */
-    // console.log('this is connection options', connectionOptions)
     const app = express_1.default();
     app.use(express_1.default.static(path_1.default.resolve(__dirname, "..", "..", "dist")));
     app.use(connect_history_api_fallback_1.default({
