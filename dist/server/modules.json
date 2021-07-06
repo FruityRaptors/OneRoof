@@ -56,7 +56,7 @@
     "Shopping List": {
         "id": 7,
         "title": "Shopping List",
-        "icon": "mdi-cog",
+        "icon": "mdi-cart-outline",
         "to": "/modules",
         "notifications": 0,
         "purchased": false,

@@ -5,7 +5,7 @@
     </v-card>
 
     <v-list v-for="(module, key) in modules" :key="module.id" elevation="0">
-      <v-list-item v-if="module.title === 'Chores' || module.title === 'Calendar'" @click="updateModule(key)">
+      <v-list-item @click="updateModule(key)">
         <v-list-item-action>
           <v-checkbox
             :input-value="module.purchased"
@@ -13,15 +13,9 @@
           ></v-checkbox>
         </v-list-item-action>
 
-        <v-list-item-title v-if="module.title === 'Chores' || module.title === 'Calendar'">
-          {{ module.title }}
-          <span class="limited-time">Free for a limited time!</span>
-        </v-list-item-title>
-      </v-list-item>
-      <v-list-item v-else @click="updateModule(key)" disabled>
         <v-list-item-title>
           {{ module.title }}
-          <span class="coming-soon">Coming Soon!</span>
+          <span class="limited-time">Free for a limited time!</span>
         </v-list-item-title>
       </v-list-item>
     </v-list>
@@ -45,6 +39,7 @@ export default {
   },
   methods: {
     updateModule(module) {
+      console.log(module)
       this.moduleState[module].purchased = !this.moduleState[module].purchased;
     },
 
@@ -63,11 +58,12 @@ export default {
       let result = {};
 
       let moduleList = this.$store.state.currentHouseModules;
-
+      console.log(moduleList)
       for (let module in moduleList) {
-        if (moduleList[module].purchasable) result[module] = moduleList[module];
+        if (moduleList[module].purchasable) {
+          result[module] = moduleList[module]
+        } 
       }
-
       return result;
     },
   },

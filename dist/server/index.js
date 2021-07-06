@@ -25,7 +25,6 @@ const dmResolvers_1 = require("./resolvers/dmResolvers");
 const choreResolvers_1 = require("./resolvers/choreResolvers");
 const modulesResolvers_1 = require("./resolvers/modulesResolvers");
 const path_1 = __importDefault(require("path"));
-const connect_history_api_fallback_1 = __importDefault(require("connect-history-api-fallback"));
 // import { parse } from 'pg-connection-string'
 // const databaseUrl:string = process.env.DATABASE_URL
 // const connectionOptions = parse(databaseUrl)
@@ -34,11 +33,12 @@ const connect_history_api_fallback_1 = __importDefault(require("connect-history-
     /* console.log('this is improted sql config', sqlConfig) */
     // console.log('this is connection options', connectionOptions)
     const app = express_1.default();
-    app.use(express_1.default.static(path_1.default.resolve(__dirname, "..", "..", "dist")));
-    app.use(connect_history_api_fallback_1.default({
-        disableDotRule: true,
-        verbose: true
-    }));
+    /*  app.use(express.static(path.resolve(__dirname,"..", "..", "dist")))
+   
+     app.use(history({
+       disableDotRule: true,
+       verbose: true
+     })) */
     app.use(express_1.default.static(path_1.default.resolve(__dirname, "..", "..", "dist")));
     app.set('view engine', 'pug');
     app.enable('trust proxy');

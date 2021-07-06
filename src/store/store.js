@@ -334,6 +334,7 @@ export default new Vuex.Store({
           context.commit('setHouseName', response.data.data.getHouseName.house_name)
           return JSON.parse(response.data.data.getHouseName.modules)
         }).then((response) => {
+          console.log("response", response)
           context.commit('setCurrentHouseModules', response)
         })
       } catch(error) {
