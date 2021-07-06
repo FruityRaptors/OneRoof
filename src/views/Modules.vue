@@ -25,6 +25,11 @@
         SUBMIT
       </v-btn>
     </div>
+    <div class="text-center">
+      <v-btn class="mt-5" color="orange lighten-1" dark @click="adminUpdateModuleList">
+        UPDATE MODULES (admin)
+      </v-btn>
+    </div>
   </v-card>
 </template>
 
@@ -39,8 +44,11 @@ export default {
   },
   methods: {
     updateModule(module) {
-      console.log(module)
       this.moduleState[module].purchased = !this.moduleState[module].purchased;
+    },
+
+    adminUpdateModuleList() {
+      this.$store.dispatch("adminUpdateModulesList")
     },
 
     async submitUpdate() {
@@ -54,15 +62,15 @@ export default {
     },
   },
   computed: {
-    modules: function () {
+    modules: function() {
       let result = {};
 
       let moduleList = this.$store.state.currentHouseModules;
-      console.log(moduleList)
+
       for (let module in moduleList) {
         if (moduleList[module].purchasable) {
-          result[module] = moduleList[module]
-        } 
+          result[module] = moduleList[module];
+        }
       }
       return result;
     },

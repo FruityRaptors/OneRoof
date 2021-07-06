@@ -53,11 +53,11 @@
         "purchased": false,
         "purchasable": true
     },
-    "Shopping List": {
+    "shoppinglist": {
         "id": 7,
         "title": "Shopping List",
         "icon": "mdi-cart-outline",
-        "to": "/modules",
+        "to": "/shoppinglist",
         "notifications": 0,
         "purchased": false,
         "purchasable": true

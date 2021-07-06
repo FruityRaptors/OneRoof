@@ -359,6 +359,25 @@ export default new Vuex.Store({
       })
     },
 
+    async adminUpdateModulesList() {
+      let house_name = this.state.houseName;
+      let house_key = this.state.user.house_keys[0]
+
+      axios({
+        method: "POST",
+        url: "/graphql",
+        data: {
+          query:`
+          mutation{
+            updateHouseModules(house_key:"${house_key}", house_name:"${house_name}")
+          }
+          `
+        }
+      }).then((response) => {
+        console.log(response.data.data.updateHouseModules)
+      })
+    },
+
     ///////
     //House related actions ends
     ///////
@@ -480,7 +499,6 @@ export default new Vuex.Store({
       }
     },
 
-    // I changed this, maybe didn't need to. Jay didn't like it ;)
     populateVictimList(context, house_key) {
       axios({
         method: "POST",
