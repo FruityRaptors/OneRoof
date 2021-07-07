@@ -22,9 +22,10 @@ export class groceryItemResolvers {
         @Arg('creatorid') creatorid: string,   
         @Arg('house_key') house_key: string, 
         @Arg('inCart') inCart: boolean,
+        @Arg('creatorURL') creatorURL: string,
         ){
 
-        await Groceries.insert({ item, date, creatorid, house_key, inCart })
+        await Groceries.insert({ item, date, creatorid, house_key, inCart, creatorURL })
         return "New Grocery Item Added!"
       }
 

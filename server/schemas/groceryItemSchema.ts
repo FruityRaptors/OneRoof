@@ -16,4 +16,7 @@ import { Field, ObjectType } from 'type-graphql';
 
         @Field()
         date: string
+
+        @Field()
+        creatorURL: string
     }

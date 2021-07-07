@@ -32,4 +32,11 @@ export class Groceries extends BaseEntity {
     @Field(() => Boolean)
     @Column()
     inCart: boolean;
+
+    @Field(() => String)
+    @Column({
+        nullable: true
+    }
+    )
+    creatorURL: string;
 } 

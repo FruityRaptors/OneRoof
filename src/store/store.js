@@ -437,7 +437,6 @@ export default new Vuex.Store({
     },
 
     async deleteTodo(context, id) {
-  
       try {
         await axios({
           method: "POST",
@@ -477,7 +476,6 @@ export default new Vuex.Store({
     },
 
     async addTodo(context, newTodo) {
-
       try {
         await axios({
           method: "POST",
@@ -733,6 +731,7 @@ export default new Vuex.Store({
                 house_key
                 date
                 inCart
+                creatorURL
               }
             }`
           }
@@ -761,6 +760,7 @@ export default new Vuex.Store({
               house_key: "${newItem.house_key}",
               date: "${newItem.date}",
               inCart: false,
+              creatorURL: "${newItem.creatorURL}"
             )
           }`
           }
@@ -768,6 +768,27 @@ export default new Vuex.Store({
           .then(() => { })
       } catch (error) {
         console.log("This is your error", error)
+      }
+    },
+
+    async deleteAllCheckedShoppingItems(context, arr) {
+      console.log(arr)
+      for (let id of arr) {
+        try {
+          await axios({
+            method: "POST",
+            url: "/graphql",
+            data: {
+              query: `
+              mutation{
+                deleteGroceryItem(id:${id})
+              }`
+            }
+          })
+            .then(() => {})
+        } catch (error) {
+          console.log("This is your error", error)
+        }
       }
     },
 

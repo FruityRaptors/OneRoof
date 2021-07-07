@@ -1,5 +1,8 @@
 <template>
-  <div class="todo-page orange lighten-5" id="shoppinglist-page-container">
+  <div
+    class="shoppinglist-page orange lighten-5"
+    id="shoppinglist-page-container"
+  >
     <v-text-field
       v-model="newItem"
       @click:append.prevent="addShoppingListItem"
@@ -12,13 +15,23 @@
       hide-details
     >
     </v-text-field>
+    <div class="text-center">
+      <v-btn
+        class="mt-5"
+        color="orange lighten-1"
+        dark
+        @click="clearCheckedItems"
+      >
+        Clear checked items
+      </v-btn>
+    </div>
     <v-list
       v-if="checkShoppingList.length"
       class="pa-0 orange lighten-5"
       two-line
       flat
     >
-      <!-- Each Todo in Todo list -->
+      <!-- Each item in Shopping list -->
       <div
         id="item-container"
         class="orange lighten-4"
@@ -29,13 +42,9 @@
           @click="putItemInCart(item.id)"
           :class="{ 'light-green accent-1': item.inCart }"
         >
-        
           <!-- Todo tick box     -->
           <v-list-item-action>
-            <v-checkbox
-              :input-value="item.inCart"
-              color="light-green darken-4"
-            >
+            <v-checkbox :input-value="item.inCart" color="light-green darken-4">
             </v-checkbox>
           </v-list-item-action>
           <!-- Todo tick box ends -->
@@ -47,8 +56,15 @@
             >
               {{ item.item }}
             </v-list-item-title>
-
           </v-list-item-content>
+          <v-avatar size="20">
+              <Avatar
+                v-if="item.creatorURL === undefined"
+                :username="item.creatorid"
+                :size="50"
+              ></Avatar>
+              <v-img v-else :src="item.creatorURL"></v-img>
+            </v-avatar>
           <!-- Todo list text ends -->
 
           <!-- Todo Menu Ends -->
@@ -63,9 +79,14 @@
 
 <script>
 import { DateTime } from "luxon";
+import Avatar from "vue-avatar";
 
 export default {
   name: "ShoppingList",
+  components: {
+    Avatar,
+  },
+
   data() {
     return {
       newItem: "",
@@ -82,8 +103,11 @@ export default {
         item: this.newItem,
         date: DateTime.now().toISO(),
         creatorid: this.$store.state.user.username,
+        creatorURL: this.$store.state.user.photo_url,
         house_key: this.$store.state.user.house_keys[0],
       };
+
+      console.log(newItem)
 
       await this.$store.dispatch("addNewShoppingListItem", newItem);
       await this.$store.dispatch(
@@ -91,17 +115,28 @@ export default {
         this.$store.state.user.house_keys[0]
       );
 
-      this.newItem = ""
+      this.newItem = "";
     },
 
     putItemInCart(id) {
       let item = this.checkShoppingList.filter((item) => item.id === id)[0];
       item.inCart = !item.inCart;
     },
+    // Stopped here; must figure out how to build the array of checked items to send to store
+    async clearCheckedItems() {
+      let shoppingList = this.$store.state.shoppingList;
+      let arr = shoppingList
+        .filter((item) => item.inCart === true)
+        .map((item) => item.id);
+      await this.$store.dispatch("deleteAllCheckedShoppingItems", arr);
+      await this.$store.dispatch(
+        "getShoppingList",
+        this.$store.state.user.house_keys[0]
+      );
+    },
   },
-
   computed: {
-    checkShoppingList: function () {
+    checkShoppingList: function() {
       let shoppingList = this.$store.state.shoppingList;
       /* for (let item of shoppingList) {
         let timestamp = item.date;
@@ -118,4 +153,8 @@ export default {
 .redtext {
   color: red !important;
 }
+
+#item-container {}
 </style>
+
+
