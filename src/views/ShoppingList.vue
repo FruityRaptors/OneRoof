@@ -42,14 +42,14 @@
           @click="putItemInCart(item.id)"
           :class="{ 'light-green accent-1': item.inCart }"
         >
-          <!-- Todo tick box     -->
+          <!-- tick box     -->
           <v-list-item-action>
             <v-checkbox :input-value="item.inCart" color="light-green darken-4">
             </v-checkbox>
           </v-list-item-action>
-          <!-- Todo tick box ends -->
+          <!-- tick box ends -->
 
-          <!-- Todo list text -->
+          <!-- Item list text -->
           <v-list-item-content>
             <v-list-item-title
               :class="{ 'text-decoration-line-through': item.inCart }"
@@ -65,14 +65,14 @@
               ></Avatar>
               <v-img v-else :src="item.creatorURL"></v-img>
             </v-avatar>
-          <!-- Todo list text ends -->
+          <!-- Item list text ends -->
 
-          <!-- Todo Menu Ends -->
+          <!-- Item Menu Ends -->
         </v-list-item>
-        <!-- Border Between Todos -->
+        <!-- Border Between Items -->
         <v-divider :key="item.id"></v-divider>
       </div>
-      <!-- Each Todo in Todo list ends-->
+      <!-- Each item in Shopping List ends-->
     </v-list>
   </div>
 </template>
