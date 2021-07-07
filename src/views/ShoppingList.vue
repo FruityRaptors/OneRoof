@@ -107,8 +107,6 @@ export default {
         house_key: this.$store.state.user.house_keys[0],
       };
 
-      console.log(newItem)
-
       await this.$store.dispatch("addNewShoppingListItem", newItem);
       await this.$store.dispatch(
         "getShoppingList",

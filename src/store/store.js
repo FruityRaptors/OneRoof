@@ -772,7 +772,6 @@ export default new Vuex.Store({
     },
 
     async deleteAllCheckedShoppingItems(context, arr) {
-      console.log(arr)
       for (let id of arr) {
         try {
           await axios({
