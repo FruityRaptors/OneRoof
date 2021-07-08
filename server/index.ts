@@ -3,13 +3,14 @@ import "reflect-metadata";
 import { ApolloServer } from 'apollo-server-express'
 import { connectDB } from "./database";
 import express from "express";
-import { buildSchema } from 'type-graphql'
-import { userResolvers } from "./resolvers/userResolvers"
+import { buildSchema } from 'type-graphql';
+import { userResolvers } from "./resolvers/userResolvers";
 import { todoResolvers } from "./resolvers/todoResolvers";
 import { houseResolvers } from "./resolvers/houseResolvers";
-import { dmResolvers } from "./resolvers/dmResolvers"
-import { choreResolvers } from "./resolvers/choreResolvers"
-import { modulesResolvers } from "./resolvers/modulesResolvers"
+import { dmResolvers } from "./resolvers/dmResolvers";
+import { choreResolvers } from "./resolvers/choreResolvers";
+import { moduleResolvers } from "./resolvers/moduleResolvers";
+import { groceryItemResolvers } from "./resolvers/groceryItemResolvers";
 import path from "path"
 import history from 'connect-history-api-fallback'
 import sqlConfig from '../ormconfig'
@@ -24,15 +25,14 @@ import sqlConfig from '../ormconfig'
   
   const app = express();
 
-  app.use(express.static(path.resolve(__dirname,"..", "..", "dist")))
+ /*  app.use(express.static(path.resolve(__dirname,"..", "..", "dist")))
 
   app.use(history({
     disableDotRule: true,
     verbose: true
   }))
 
-
-  app.use(express.static(path.resolve(__dirname,"..", "..", "dist")))
+  app.use(express.static(path.resolve(__dirname,"..", "..", "dist"))) */
 
   app.set('view engine', 'pug');
 
@@ -49,7 +49,7 @@ import sqlConfig from '../ormconfig'
   console.log('Starting Apollo Server')
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [userResolvers, todoResolvers, houseResolvers, choreResolvers, dmResolvers, modulesResolvers],
+      resolvers: [userResolvers, todoResolvers, houseResolvers, choreResolvers, dmResolvers, moduleResolvers, groceryItemResolvers],
       validate: true
     }),
     context: ({ req, res }) => ({ req, res })
