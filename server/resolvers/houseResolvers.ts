@@ -22,6 +22,22 @@ export class houseResolvers {
         await Houses.insert({ house_name, house_key, modules })
         return `${house_name} has been added to database!`
     }
+
+    @Mutation(() => String)
+    async updateHouseModules(
+        @Arg("house_name") house_name: string,
+        @Arg("house_key") house_key: string,
+        ){
+        let modules = JSON.stringify(Modules)
+
+        let houseToBeUpdated = await Houses.findOne({ where: { house_key }})
+        houseToBeUpdated.modules = modules
+
+        Houses.save(houseToBeUpdated)
+        return `${house_name}'s modules have been updated!'`
+    }
+
+
         
     
 
