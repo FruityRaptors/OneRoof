@@ -25,14 +25,24 @@ import sqlConfig from '../ormconfig'
   
   const app = express();
 
+
+  // for dev serving (locally), comment out the following lines:
+//   app.use(express.static(path.resolve(__dirname,"..", "..", "dist")))
+// =======
  /*  app.use(express.static(path.resolve(__dirname,"..", "..", "dist")))
+
 
   app.use(history({
     disableDotRule: true,
     verbose: true
   }))
 
-  app.use(express.static(path.resolve(__dirname,"..", "..", "dist"))) */
+
+//   app.use(express.static(path.resolve(__dirname,"..", "..", "dist")))
+//   // ^^until here^^
+// =======
+//   app.use(express.static(path.resolve(__dirname,"..", "..", "dist"))) */
+
 
   app.set('view engine', 'pug');
 
