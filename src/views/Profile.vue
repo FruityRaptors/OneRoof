@@ -81,7 +81,7 @@
       <UpdateUser @setProfilePageUsername="changeUsername" />
       <UpdatePhoto />
     </v-card>
-
+    <!-- this is the mailto button, we'll want to move this deeper when we aren't all worried about getting jobs😉 -->
     <v-card
       class="mt-2 mb-2 d-flex justify-center orange lighten-4"
       elevation="0"
@@ -92,7 +92,6 @@
         </v-btn></a
       >
     </v-card>
-
     <v-divider></v-divider>
     <v-card
       class="d-flex justify-center mt-3 mb-2"
@@ -160,6 +159,7 @@ export default {
     },
   },
 };
+ 
 </script>
 
 <style scoped>
