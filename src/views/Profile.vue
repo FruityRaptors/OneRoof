@@ -87,7 +87,7 @@
       elevation="0"
     >
       <a href="mailto:fruityraptors@gmail.com" target="_blank" class="email-button"
-        ><v-btn color="orange lighten-2 black--text mb-5">
+        ><v-btn color="green lighten-2 black--text mb-5">
           Email the dev team
         </v-btn></a
       >
