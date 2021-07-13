@@ -1,12 +1,15 @@
 <template>
-<v-card class="mx-auto text-center pa-5" width="300" max-width="100%" color="orange lighten-5" elevation="5">
+<v-card class="mx-auto text-center" width="95%" max-width="100%" color="orange lighten-5" elevation="0">
 
-        <v-img
+<v-card class="d-flex justify-center" color="orange lighten-5" elevation="0">
+ <v-img
         src="@/assets/OneRoof.png"
-        width="300"
+        max-width="250"
         contain
-        class="mt-2 mr-3 pa-0"
+        class="pa-0"
         ></v-img>
+</v-card>
+       
         
       <v-container>
         <v-card-title class="text-center d-flex justify-center">
@@ -14,8 +17,8 @@
         </v-card-title>
       </v-container>
 
-      <v-text-field  filled  label="Email" v-model="email"></v-text-field>
-      <v-text-field filled  type="password" label="Password" v-model="password"></v-text-field>
+      <v-text-field  filled  rounded label="Email" v-model="email"></v-text-field>
+      <v-text-field filled rounded type="password" label="Password" v-model="password"></v-text-field>
 
       <v-btn class="text-center ma-2 pa-5 orange lighten-2 white--text" @click="login">
         Login

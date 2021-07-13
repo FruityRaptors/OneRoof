@@ -18,6 +18,7 @@ export default new Vuex.Store({
     isUserLoggedIn: false,
     todos: [],
     chores: [],
+    shoppingList: [],
     usersInSameHouse: [],
     houseName: '',
     currentTodo: {},
@@ -100,6 +101,9 @@ export default new Vuex.Store({
     },
     setCurrentHouseModules(state, modules) {
       state.currentHouseModules = modules
+    },
+    setShoppingList(state, shoppingList) {
+      state.shoppingList = shoppingList
     }
   },
 
@@ -129,6 +133,7 @@ export default new Vuex.Store({
           }
         }).then((response) => {
 
+          context.commit("toggleLoginBool", "true")
           //If fetched user belonged to a house, set user normally
           if (response.data.data.getUserByEmail.house_keys) {
             
@@ -357,6 +362,25 @@ export default new Vuex.Store({
       })
     },
 
+    async adminUpdateModulesList() {
+      let house_name = this.state.houseName;
+      let house_key = this.state.user.house_keys[0]
+
+      axios({
+        method: "POST",
+        url: "/graphql",
+        data: {
+          query:`
+          mutation{
+            updateHouseModules(house_key:"${house_key}", house_name:"${house_name}")
+          }
+          `
+        }
+      }).then((response) => {
+        console.log(response.data.data.updateHouseModules)
+      })
+    },
+
     ///////
     //House related actions ends
     ///////
@@ -413,7 +437,6 @@ export default new Vuex.Store({
     },
 
     async deleteTodo(context, id) {
-  
       try {
         await axios({
           method: "POST",
@@ -453,7 +476,6 @@ export default new Vuex.Store({
     },
 
     async addTodo(context, newTodo) {
-
       try {
         await axios({
           method: "POST",
@@ -478,7 +500,6 @@ export default new Vuex.Store({
       }
     },
 
-    // I changed this, maybe didn't need to. Jay didn't like it ;)
     populateVictimList(context, house_key) {
       axios({
         method: "POST",
@@ -615,7 +636,6 @@ export default new Vuex.Store({
         })
           .then((response) => {
             let choresByHouse = response.data.data.getChoresByHouse
-            console.log(choresByHouse)
             context.commit("setChores", choresByHouse)
           })
       } catch (error) {
@@ -692,6 +712,89 @@ export default new Vuex.Store({
     //Chores related actions end
     ///////
 
+    ///////
+    //Shopping List related actions begin
+    ///////
+
+    async getShoppingList(context, house_key) {
+      try {
+        await axios({
+          method: "POST",
+          url: "/graphql",
+          data: {
+            query: `
+            {
+              getGroceryItemsByHouse(house_key:"${house_key}"){
+                id
+                creatorid
+                item
+                house_key
+                date
+                inCart
+                creatorURL
+              }
+            }`
+          }
+        })
+          .then((response) => {
+            let shoppingListByHouse = response.data.data.getGroceryItemsByHouse
+            context.commit("setShoppingList", shoppingListByHouse)
+          })
+      } catch (error) {
+        console.log("No user is logged in or house key not recognized")
+        return
+      }
+    },
+
+    async addNewShoppingListItem(context, newItem) {
+      try {
+        await axios({
+          method: "POST",
+          url: "/graphql",
+          data: {
+            query: `
+          mutation {
+            createGroceryItem(
+              item: "${newItem.item}", 
+              creatorid: "${newItem.creatorid}",
+              house_key: "${newItem.house_key}",
+              date: "${newItem.date}",
+              inCart: false,
+              creatorURL: "${newItem.creatorURL}"
+            )
+          }`
+          }
+        })
+          .then(() => { })
+      } catch (error) {
+        console.log("This is your error", error)
+      }
+    },
+
+    async deleteAllCheckedShoppingItems(context, arr) {
+      for (let id of arr) {
+        try {
+          await axios({
+            method: "POST",
+            url: "/graphql",
+            data: {
+              query: `
+              mutation{
+                deleteGroceryItem(id:${id})
+              }`
+            }
+          })
+            .then(() => {})
+        } catch (error) {
+          console.log("This is your error", error)
+        }
+      }
+    },
+
+    ///////
+    //Shopping List related actions end
+    ///////
+
 
 
     ///////
@@ -747,11 +850,12 @@ export default new Vuex.Store({
 
     async checkIfLoggedInUser(context) {
       const user = await firebase.auth().currentUser
+    
       if (user) {
         await context.dispatch("getUser", user.email)
         return true
       } else {
-        router.push('/login')
+        // router.push('/login')
         return false
       }
     },
