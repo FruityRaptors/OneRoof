@@ -95,7 +95,7 @@
       elevation="0"
     >
       <a href="mailto:fruityraptors@gmail.com" target="_blank" class="email-button">
-        <v-btn rounded color="green lighten-2 black--text mb-5">
+        <v-btn rounded color="blue lighten-2 black--text mb-5">
           Email the dev team
         </v-btn>
       </a>
