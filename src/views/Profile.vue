@@ -40,6 +40,14 @@
       >
         Copy House Key</v-btn
       >
+
+      <v-text-field
+            solo-inverted
+            dense
+            readonly
+            :value="$store.state.user.house_keys[0]"
+            class="mt-5"
+          ></v-text-field>
     </v-card>
 
     <v-divider></v-divider>
