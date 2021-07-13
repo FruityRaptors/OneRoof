@@ -86,11 +86,11 @@
       class="mt-2 mb-2 d-flex justify-center orange lighten-4"
       elevation="0"
     >
-      <a href="mailto:fruityraptors@gmail.com" target="_blank" class="email-button"
-        ><v-btn color="green lighten-2 black--text mb-5">
+      <a href="mailto:fruityraptors@gmail.com" target="_blank" class="email-button">
+        <v-btn rounded color="green lighten-2 black--text mb-5">
           Email the dev team
-        </v-btn></a
-      >
+        </v-btn>
+      </a>
     </v-card>
     <v-divider></v-divider>
     <v-card
