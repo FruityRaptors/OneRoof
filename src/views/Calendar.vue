@@ -23,7 +23,7 @@
             color="grey darken-2"
             @click="next"
           >
-            <v-icon small>
+            <v-icon small class="mr-4">
               mdi-chevron-right
             </v-icon>
           </v-btn>
@@ -114,7 +114,8 @@
   export default {
     name: "Calendar",
     data: () => ({
-      focus: '',
+      today: new Date().toISOString().substr(0,10),
+      focus: new Date().toISOString().substr(0,10),
       type: 'month',
       typeToLabel: {
         month: 'Month',
@@ -122,17 +123,23 @@
         day: 'Day',
         '4day': '4 Days',
       },
+      name: null,
       selectedEvent: {},
       selectedElement: null,
       selectedOpen: false,
+      color: "#1976D2",
+      currentEdit: null,
       events: [],
-      colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
-      names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
+      dialog: false,
     }),
     mounted () {
-      this.$refs.calendar.checkChange()
+      this.updateCalendar()
     },
     methods: {
+      async updateCalendar() {
+        await this.$store.dispatch("getEvents", this.currentUser.house_keys[0]); //needs to be made
+        this.events = this.$store.state.events
+      },
       viewDay ({ date }) {
         this.focus = date
         this.type = 'day'
@@ -144,7 +151,7 @@
         this.focus = ''
       },
       prev () {
-        this.$refs.calendar.prev()
+        this.$refs.calendar.prev() //built into Vuetify calendar API
       },
       next () {
         this.$refs.calendar.next()
