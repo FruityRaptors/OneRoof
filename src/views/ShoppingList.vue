@@ -25,12 +25,7 @@
         Clear checked items
       </v-btn>
     </div>
-    <v-list
-      v-if="checkShoppingList.length"
-      class="pa-0 orange lighten-5"
-      two-line
-      flat
-    >
+    <v-list v-if="checkShoppingList.length" class="pa-0 orange lighten-5" flat>
       <!-- Each item in Shopping list -->
       <div
         id="item-container"
@@ -58,13 +53,13 @@
             </v-list-item-title>
           </v-list-item-content>
           <v-avatar size="20">
-              <Avatar
-                v-if="item.creatorURL === undefined"
-                :username="item.creatorid"
-                :size="50"
-              ></Avatar>
-              <v-img v-else :src="item.creatorURL"></v-img>
-            </v-avatar>
+            <Avatar
+              v-if="item.creatorURL === undefined"
+              :username="item.creatorid"
+              :size="50"
+            ></Avatar>
+            <v-img v-else :src="item.creatorURL"></v-img>
+          </v-avatar>
           <!-- Item list text ends -->
 
           <!-- Item Menu Ends -->
@@ -151,8 +146,4 @@ export default {
 .redtext {
   color: red !important;
 }
-
-#item-container {}
 </style>
-
-
