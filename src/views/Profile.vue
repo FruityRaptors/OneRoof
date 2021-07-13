@@ -40,6 +40,14 @@
       >
         Copy House Key</v-btn
       >
+
+      <v-text-field
+            solo-inverted
+            dense
+            readonly
+            :value="$store.state.user.house_keys[0]"
+            class="mt-5"
+          ></v-text-field>
     </v-card>
 
     <v-divider></v-divider>
@@ -87,7 +95,7 @@
       elevation="0"
     >
       <a href="mailto:fruityraptors@gmail.com" target="_blank" class="email-button">
-        <v-btn rounded color="green lighten-2 black--text mb-5">
+        <v-btn rounded color="blue lighten-2 black--text mb-5">
           Email the dev team
         </v-btn>
       </a>
