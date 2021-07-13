@@ -80,7 +80,7 @@ methods: {
     },
 
     joinHouse(){
-        if(this.roomkey === 32){
+        if(this.roomkey.length === 32){
             this.$store.dispatch("joinHouse", {email: this.$store.state.user.email, roomkey: this.roomkey})
         } else {
             window.alert('Wrong House Key Input')
