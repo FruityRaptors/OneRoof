@@ -5,7 +5,7 @@
     </v-card>
 
     <v-list v-for="(module, key) in modules" :key="module.id" elevation="0">
-      <v-list-item v-if="module.title === 'Chores' || module.title === 'Calendar'" @click="updateModule(key)">
+      <v-list-item @click="updateModule(key)">
         <v-list-item-action>
           <v-checkbox
             :input-value="module.purchased"
@@ -13,15 +13,9 @@
           ></v-checkbox>
         </v-list-item-action>
 
-        <v-list-item-title v-if="module.title === 'Chores' || module.title === 'Calendar'">
-          {{ module.title }}
-          <span class="limited-time">Free for a limited time!</span>
-        </v-list-item-title>
-      </v-list-item>
-      <v-list-item v-else @click="updateModule(key)" disabled>
         <v-list-item-title>
           {{ module.title }}
-          <span class="coming-soon">Coming Soon!</span>
+          <span class="limited-time">Free for a limited time!</span>
         </v-list-item-title>
       </v-list-item>
     </v-list>
@@ -29,6 +23,11 @@
     <div class="text-center">
       <v-btn class="mt-5" color="orange lighten-1" dark @click="submitUpdate">
         SUBMIT
+      </v-btn>
+    </div>
+    <div class="text-center">
+      <v-btn class="mt-5" color="orange lighten-1" dark @click="adminUpdateModuleList">
+        UPDATE MODULES (admin)
       </v-btn>
     </div>
   </v-card>
@@ -48,6 +47,10 @@ export default {
       this.moduleState[module].purchased = !this.moduleState[module].purchased;
     },
 
+    adminUpdateModuleList() {
+      this.$store.dispatch("adminUpdateModulesList")
+    },
+
     async submitUpdate() {
       let payload = {
         house_key: this.$store.state.user.house_keys[0],
@@ -59,15 +62,16 @@ export default {
     },
   },
   computed: {
-    modules: function () {
+    modules: function() {
       let result = {};
 
       let moduleList = this.$store.state.currentHouseModules;
 
       for (let module in moduleList) {
-        if (moduleList[module].purchasable) result[module] = moduleList[module];
+        if (moduleList[module].purchasable) {
+          result[module] = moduleList[module];
+        }
       }
-
       return result;
     },
   },

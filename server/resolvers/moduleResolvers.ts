@@ -5,7 +5,7 @@ import { Houses } from '../entity/Houses'
 
 
 @Resolver()
-export class modulesResolvers {
+export class moduleResolvers {
     @Mutation(() => String)
     async updateModules(
         @Arg("house_key") house_key: string,
