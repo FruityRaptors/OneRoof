@@ -7,7 +7,7 @@
     elevation="5"
   >
     <v-card-title
-      class="text-center title mt-6 text-justify font-weight-bold"
+      class="text-center orange headline font-weight-bold"
       >Looks like you don't have a home yet.</v-card-title
     >
 
