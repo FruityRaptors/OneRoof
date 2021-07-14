@@ -6,9 +6,9 @@
     rounded
     elevation="5"
   >
-    <v-card-subtitle
-      class="text-center title mt-6 text-justify font-weight-bold text--primary"
-      >Looks like you don't have a home yet.</v-card-subtitle
+    <v-card-title
+      class="text-center title mt-6 text-justify font-weight-bold"
+      >Looks like you don't have a home yet.</v-card-title
     >
 
     <v-divider></v-divider>
