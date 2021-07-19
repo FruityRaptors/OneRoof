@@ -1,6 +1,6 @@
-import { Query, Resolver, Mutation, Arg } from 'type-graphql'
-import { House } from '../schemas/houseSchema'
+import { Resolver, Mutation, Arg } from 'type-graphql'
 import { Houses } from '../entity/Houses'
+import ImportedModules from '../modules.json'
 
 
 
@@ -11,9 +11,15 @@ export class moduleResolvers {
         @Arg("house_key") house_key: string,
         @Arg("modules") modules: string,
     ){
-        let houseToBeUpdated = await Houses.findOne({ where: { house_key }})
-        houseToBeUpdated.modules = modules
+        let modulesToBeSaved : any = ImportedModules
+        let parsedModules = JSON.parse(modules)
 
+        for (const eachModule in parsedModules) {
+            modulesToBeSaved[eachModule].purchased = parsedModules[eachModule].purchased
+        }
+   
+        let houseToBeUpdated = await Houses.findOne({ where: { house_key }})
+        houseToBeUpdated.modules = JSON.stringify(modulesToBeSaved)
         Houses.save(houseToBeUpdated)
 
         return "House Modules Updated"

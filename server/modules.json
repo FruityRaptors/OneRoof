@@ -35,15 +35,6 @@
         "purchased": false,
         "purchasable": true
     },
-    "modules": {
-        "id": 5,
-        "title": "Add Modules",
-        "icon": "mdi-cog",
-        "to": "/modules",
-        "notifications": 0,
-        "purchased": true,
-        "purchasable": false
-    },
     "calendar": {
         "id": 6,
         "title": "Calendar",
@@ -61,5 +52,14 @@
         "notifications": 0,
         "purchased": false,
         "purchasable": true
+    },
+    "modules": {
+        "id": 5,
+        "title": "Add Modules",
+        "icon": "mdi-cog",
+        "to": "/modules",
+        "notifications": 0,
+        "purchased": true,
+        "purchasable": false
     }
 }

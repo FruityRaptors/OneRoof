@@ -34,7 +34,7 @@
           <v-card
             rounded
             max-width="250"
-            class="mb-2 mr-4 pa-2"
+            class="mr-4 pa-2"
             elevation="0"
             :color="
               message.username == username ? 'orange accent-2 font-weight-normal text-justify' : 'orange accent-1 font-weight-normal'
@@ -59,7 +59,7 @@
     <v-footer
       class=""
       rounded
-      max-height="65"
+      max-height="90"
       color="orange lighten-4"
       padless
       fixed
