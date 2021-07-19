@@ -14,8 +14,8 @@ export class moduleResolvers {
         let modulesToBeSaved : any = ImportedModules
         let parsedModules = JSON.parse(modules)
 
-        for (const eachModule in parsedModules) {
-            modulesToBeSaved[eachModule].purchased = parsedModules[eachModule].purchased
+        for (const moduleKey in parsedModules) {
+            modulesToBeSaved[moduleKey].purchased = parsedModules[moduleKey].purchased
         }
    
         let houseToBeUpdated = await Houses.findOne({ where: { house_key }})
