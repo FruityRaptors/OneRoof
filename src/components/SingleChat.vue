@@ -83,7 +83,7 @@
     <v-footer
       class=""
       rounded
-      max-height="65"
+      max-height="90"
       color="orange lighten-4"
       padless
       fixed
