@@ -84,7 +84,7 @@ Thank you very much!
 
 * [Evan](https://github.com/Evomatic)
 * [Ken](https://github.com/KuroKen91)
-* [Pete](https://github.com/griffitp12)
+* [Pete](https://github.com/petegriffith)
 * [Jay](https://github.com/jaysutham)
 
 
